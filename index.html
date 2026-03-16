@@ -100,9 +100,7 @@
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; display: flex; align-items: flex-end; justify-content: center; }
         .modal-overlay.is-active { opacity: 1; pointer-events: auto; }
         
-        .modal-sheet { background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glass-border); width: 100%; max-width: 600px; height: calc(100dvh - 16px); max-height: 96vh; border-radius: 32px 32px 0 0; padding: 20px 16px; padding-bottom: calc(env(safe-area-inset-bottom) + 20px); transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); display: flex; flex-direction: column; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); }
-        .modal-overlay.is-active .modal-sheet { transform: translateY(0); }
-
+        /* 数据管理菜单 */
         .action-sheet { width: 100%; max-width: 400px; padding: 16px; padding-bottom: calc(env(safe-area-inset-bottom) + 16px); transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .modal-overlay.is-active .action-sheet { transform: translateY(0); }
         .action-group { background: var(--action-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-radius: 20px; margin-bottom: 12px; overflow: hidden; border: 1px solid var(--glass-border); }
@@ -112,102 +110,108 @@
         .action-btn-danger { color: var(--neon-red); }
         .action-btn-cancel { font-weight: 700; color: var(--text-primary); }
 
-        .sheet-drag-handle { width: 40px; height: 5px; background: var(--text-secondary); border-radius: 3px; margin: 0 auto 16px auto; opacity: 0.5; }
-        .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .sheet-title { font-size: 22px; font-weight: 800; }
-        .sheet-body { flex: 1; overflow-y: auto; padding-right: 4px; padding-bottom: 80px; }
+        /* ==================== 核心修改：iPhone 16 Pro Max 超大屏专项适配 ==================== */
+        .modal-sheet { 
+            background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); 
+            border: 1px solid var(--glass-border); 
+            width: 100%; max-width: 600px; 
+            height: calc(100dvh - 12px); max-height: 98vh; 
+            
+            /* 1. 圆角提升至 40px，完美契合 Pro Max R角 */
+            border-radius: 40px 40px 0 0; 
+            
+            /* 2. 左右呼吸感拉满：内边距增至 24px */
+            padding: 24px 24px; 
+            padding-bottom: calc(env(safe-area-inset-bottom) + 24px); 
+            transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); 
+            display: flex; flex-direction: column; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); 
+        }
+        .modal-overlay.is-active .modal-sheet { transform: translateY(0); }
+
+        .sheet-drag-handle { width: 44px; height: 6px; background: var(--text-secondary); border-radius: 3px; margin: 0 auto 20px auto; opacity: 0.5; }
+        
+        .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        /* 标题字号拉大 */
+        .sheet-title { font-size: 26px; font-weight: 800; }
+        
+        /* 3. 巨幅底部安全区：确保键盘弹起时，仍能舒适滚动 */
+        .sheet-body { flex: 1; overflow-y: auto; padding-right: 4px; padding-bottom: 120px; }
         .sheet-body::-webkit-scrollbar { display: none; }
 
-        .input-group { margin-bottom: 16px; position: relative; }
-        .input-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; display: block; padding-left: 4px;}
+        /* 4. 行间距大幅放宽，减少大屏局促感 */
+        .input-group { margin-bottom: 22px; position: relative; }
+        .input-label { font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 10px; display: block; padding-left: 6px;}
         
-        .glass-input { width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); padding: 12px 14px; border-radius: 16px; font-size: 16px; color: var(--text-primary); font-family: inherit; transition: all 0.3s ease; }
-        .glass-input:focus { border-color: var(--neon-blue); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15); }
-        textarea.glass-input { min-height: 100px; resize: none; }
+        /* 5. 输入框触控区提升：加厚 Padding，字号提升至苹果官方 17px */
+        .glass-input { 
+            width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); 
+            padding: 16px 18px; 
+            border-radius: 20px; 
+            font-size: 17px; 
+            color: var(--text-primary); font-family: inherit; transition: all 0.3s ease; 
+        }
+        .glass-input:focus { border-color: var(--neon-blue); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15); }
+        .glass-input::placeholder { color: var(--text-secondary); opacity: 0.6;}
+        textarea.glass-input { min-height: 120px; resize: none; } /* 文本域加大 */
         
-        .form-row-2 { display: flex; gap: 10px; margin-bottom: 16px; }
+        /* 两列排版间距加大 */
+        .form-row-2 { display: flex; gap: 14px; margin-bottom: 22px; }
         .form-row-2 .input-group { margin-bottom: 0; }
         .flex-2 { flex: 2; }
         .flex-1 { flex: 1; }
 
-        /* ==================== 核心修改：类型胶囊动效优化 ==================== */
+        /* 6. 胶囊按钮等比例放大 */
         .type-pills-container {
-            display: flex; overflow-x: auto; gap: 10px; padding-bottom: 6px; padding-top: 4px;
+            display: flex; overflow-x: auto; gap: 12px; 
+            padding-bottom: 8px; padding-top: 4px;
             -ms-overflow-style: none; scrollbar-width: none;
         }
         .type-pills-container::-webkit-scrollbar { display: none; }
 
         .type-pill {
             position: relative;
-            padding: 10px 20px; border-radius: 20px; 
+            padding: 14px 24px; /* 加厚加宽 */
+            border-radius: 24px; 
             background: var(--input-bg);
             border: 1px solid var(--glass-border); color: var(--text-secondary);
-            font-size: 15px; font-weight: 600; white-space: nowrap; cursor: pointer;
+            font-size: 16px; font-weight: 600; white-space: nowrap; cursor: pointer;
             
+            display: flex; align-items: center; justify-content: center;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             overflow: hidden; 
         }
 
-        .type-pill:active {
-            transform: scale(0.92);
-            transition-duration: 0.1s;
-        }
+        .type-pill:active { transform: scale(0.92); transition-duration: 0.1s; }
+        .type-pill.is-active { color: #fff; transform: translateY(-2px) scale(1.05); }
 
-        .type-pill.is-active {
-            color: #fff;
-            /* 缩小了浮动的高度和放大的比例，使其更克制精致 */
-            transform: translateY(-1px) scale(1.03); 
-        }
+        .type-pill::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent); transform: skewX(-20deg); transition: none; pointer-events: none; }
+        .type-pill.is-active::before { animation: spatial-shine 0.8s ease-out forwards; }
+        @keyframes spatial-shine { 0% { left: -100%; } 100% { left: 200%; } }
 
-        .type-pill::before {
-            content: '';
-            position: absolute; top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transform: skewX(-20deg);
-            transition: none;
-        }
-        .type-pill.is-active::before {
-            animation: spatial-shine 0.8s ease-out forwards;
-        }
-        @keyframes spatial-shine {
-            0% { left: -100%; }
-            100% { left: 200%; }
-        }
+        .type-pill.pill-buy.is-active { background: var(--neon-red); border-color: var(--neon-red); box-shadow: 0 4px 12px -2px rgba(255, 59, 48, 0.4); }
+        .type-pill.pill-sell.is-active { background: var(--neon-green); border-color: var(--neon-green); box-shadow: 0 4px 12px -2px rgba(52, 199, 89, 0.4); }
+        .type-pill.pill-div.is-active { background: var(--neon-orange); border-color: var(--neon-orange); box-shadow: 0 4px 12px -2px rgba(255, 149, 0, 0.4); }
+        .type-pill.pill-fee.is-active { background: var(--neon-blue); border-color: var(--neon-blue); box-shadow: 0 4px 12px -2px rgba(0, 122, 255, 0.4); }
 
-        /* 缩小了阴影的扩散半径 (从 24px 降至 10px)，并降低了透明度 (从 0.5 降至 0.35) */
-        .type-pill.pill-buy.is-active {
-            background: var(--neon-red);
-            border-color: var(--neon-red);
-            box-shadow: 0 4px 10px -2px rgba(255, 59, 48, 0.35);
-        }
-        .type-pill.pill-sell.is-active {
-            background: var(--neon-green);
-            border-color: var(--neon-green);
-            box-shadow: 0 4px 10px -2px rgba(52, 199, 89, 0.35);
-        }
-        .type-pill.pill-div.is-active {
-            background: var(--neon-orange);
-            border-color: var(--neon-orange);
-            box-shadow: 0 4px 10px -2px rgba(255, 149, 0, 0.35);
-        }
-        .type-pill.pill-fee.is-active {
-            background: var(--neon-blue);
-            border-color: var(--neon-blue);
-            box-shadow: 0 4px 10px -2px rgba(0, 122, 255, 0.35);
-        }
-        /* ==================================================================== */
-
-        .glass-dropdown-menu { position: absolute; bottom: calc(100% + 8px); left: 0; right: 0; background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 6px; z-index: 100; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); max-height: 160px; overflow-y: auto; animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .glass-dropdown-menu { position: absolute; bottom: calc(100% + 12px); left: 0; right: 0; background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 8px; z-index: 100; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); max-height: 180px; overflow-y: auto; animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
         @keyframes popIn { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .glass-dropdown-item { padding: 12px 14px; border-radius: 10px; font-size: 15px; color: var(--text-primary); cursor: pointer; transition: background 0.2s; }
+        .glass-dropdown-item { padding: 14px 16px; border-radius: 14px; font-size: 16px; color: var(--text-primary); cursor: pointer; transition: background 0.2s; }
         .glass-dropdown-item:active { background: var(--input-bg); color: var(--neon-blue); font-weight: 600; }
 
-        .btn-primary { background: var(--neon-blue); color: #fff; border: none; padding: 16px; border-radius: 20px; font-size: 17px; font-weight: 700; width: 100%; cursor: pointer; box-shadow: 0 4px 15px rgba(0,122,255,0.4); margin-top: 10px; transition: transform 0.2s; }
+        /* 7. 主按钮升级：更加厚重且醒目 */
+        .btn-primary { 
+            background: var(--neon-blue); color: #fff; border: none; 
+            padding: 18px; /* 增加按压高度 */
+            border-radius: 22px; 
+            font-size: 18px; /* 大号字体 */
+            font-weight: 700; width: 100%; cursor: pointer; box-shadow: 0 6px 20px rgba(0,122,255,0.4); 
+            margin-top: 16px; transition: transform 0.2s; 
+        }
         .btn-primary:active { transform: scale(0.96); }
         .btn-primary:disabled { opacity: 0.5; box-shadow: none; }
-        .btn-icon-close { background: var(--input-bg); border: none; width: 34px; height: 34px; border-radius: 17px; color: var(--text-primary); font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .btn-danger { background: rgba(255,59,48,0.1); color: var(--neon-red); border: 1px solid rgba(255,59,48,0.2); padding: 16px; border-radius: 20px; font-size: 17px; font-weight: 700; width: 100%; margin-top: 12px; cursor: pointer; }
+        
+        .btn-icon-close { background: var(--input-bg); border: none; width: 36px; height: 36px; border-radius: 18px; color: var(--text-primary); font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .btn-danger { background: rgba(255,59,48,0.1); color: var(--neon-red); border: 1px solid rgba(255,59,48,0.2); padding: 18px; border-radius: 22px; font-size: 18px; font-weight: 700; width: 100%; margin-top: 16px; cursor: pointer; }
 
         .empty-state { text-align: center; color: var(--text-secondary); margin-top: 30vh; font-size: 16px; font-weight: 500; }
         .empty-orb { width: 80px; height: 80px; margin: 0 auto 20px auto; border-radius: 40px; background: radial-gradient(circle at 30% 30%, var(--neon-blue), transparent); filter: blur(10px); opacity: 0.5; animation: pulse 4s infinite alternate; }
@@ -268,6 +272,7 @@
             </div>
         </main>
 
+        <!-- 数据管理 -->
         <div class="modal-overlay" :class="{'is-active': showDataMenu}" @click.self="showDataMenu = false">
             <div class="action-sheet">
                 <div class="action-group">
@@ -283,6 +288,7 @@
             </div>
         </div>
 
+        <!-- 交易表单 (Pro Max 适配版) -->
         <div class="modal-overlay" :class="{'is-active': dialog}">
             <div class="modal-sheet">
                 <div class="sheet-drag-handle"></div>
@@ -508,7 +514,7 @@
                     if (['买入', '加仓'].includes(type)) return 'pill-buy';
                     if (['卖出', '减仓'].includes(type)) return 'pill-sell';
                     if (['分红'].includes(type)) return 'pill-div';
-                    return 'pill-fee';
+                    return 'pill-fee'; 
                 };
 
                 const getBadgeClass = (type) => {
