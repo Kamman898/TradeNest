@@ -24,7 +24,6 @@
             --neon-orange: #ff9500;
         }
 
-        /* 自动深色模式 (Dark Mode) */
         @media (prefers-color-scheme: dark) {
             :root {
                 --glass-bg: rgba(30, 30, 30, 0.55);
@@ -49,8 +48,7 @@
         body {
             margin: 0; padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Text", sans-serif;
-            color: var(--text-primary);
-            background-color: #f2f2f7;
+            color: var(--text-primary); background-color: #f2f2f7;
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(10, 132, 255, 0.15), transparent 40%),
                 radial-gradient(circle at 85% 30%, rgba(52, 199, 89, 0.1), transparent 40%),
@@ -71,199 +69,163 @@
             }
         }
 
-        /* --- 灵动岛导航 --- */
-        .dynamic-island-container {
-            position: fixed; top: calc(env(safe-area-inset-top) + 12px);
-            left: 0; right: 0; display: flex; justify-content: center; z-index: 990;
-        }
-        .dynamic-island {
-            background: var(--island-bg);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border); color: var(--island-text);
-            height: 44px; border-radius: 22px;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 8px 0 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.25, 1); width: 280px;
-        }
+        .dynamic-island-container { position: fixed; top: calc(env(safe-area-inset-top) + 12px); left: 0; right: 0; display: flex; justify-content: center; z-index: 990; }
+        .dynamic-island { background: var(--island-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); color: var(--island-text); height: 44px; border-radius: 22px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); transition: all 0.4s cubic-bezier(0.25, 1, 0.25, 1); width: 280px; }
         .island-title { font-weight: 600; font-size: 15px; letter-spacing: 0.5px; }
-        .island-btn {
-            background: rgba(255,255,255,0.2); border: none; color: white;
-            height: 30px; width: 30px; border-radius: 15px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: transform 0.2s;
-        }
+        .island-btn { background: rgba(255,255,255,0.2); border: none; color: white; height: 30px; width: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s; }
         .island-btn:active { transform: scale(0.9); }
 
-        /* --- 主体内容区 --- */
         .main-content { padding-top: 80px; padding-bottom: 40px; max-width: 600px; margin: 0 auto; }
 
-        /* --- 空间玻璃卡片 --- */
-        .glass-card {
-            background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border); border-radius: 24px;
-            margin: 16px; padding: 20px; box-shadow: var(--glass-shadow);
-            transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; position: relative; overflow: hidden;
-        }
+        .glass-card { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: 24px; margin: 16px; padding: 20px; box-shadow: var(--glass-shadow); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; position: relative; overflow: hidden; }
         .glass-card:active { transform: scale(0.97); }
 
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
         .asset-info { display: flex; flex-direction: column; gap: 4px;}
         .asset-name { font-size: 19px; font-weight: 700; display: flex; align-items: center; gap: 8px;}
         .asset-code { font-size: 13px; color: var(--text-secondary); background: var(--input-bg); padding: 2px 8px; border-radius: 8px;}
+        .total-amount { font-size: 20px; font-weight: 800; font-family: "SF Pro Rounded", sans-serif; text-align: right;}
         
-        .amount-display { text-align: right; }
-        .total-amount { font-size: 20px; font-weight: 800; font-family: "SF Pro Rounded", sans-serif;}
-        
-        .card-details {
-            display: flex; flex-wrap: wrap; gap: 12px; font-size: 14px; color: var(--text-secondary);
-            background: var(--input-bg); padding: 12px; border-radius: 16px;
-        }
+        .card-details { display: flex; flex-wrap: wrap; gap: 12px; font-size: 14px; color: var(--text-secondary); background: var(--input-bg); padding: 12px; border-radius: 16px; }
         .detail-item { width: calc(50% - 6px); display: flex; flex-direction: column; }
         .detail-label { font-size: 11px; text-transform: uppercase; opacity: 0.7; margin-bottom: 2px;}
         .detail-value { font-size: 14px; font-weight: 600; color: var(--text-primary);}
-        .card-notes {
-            margin-top: 12px; font-size: 14px; color: var(--text-secondary); line-height: 1.5;
-            padding-left: 12px; border-left: 2px solid var(--neon-blue); white-space: pre-wrap;
-        }
+        .card-notes { margin-top: 12px; font-size: 14px; color: var(--text-secondary); line-height: 1.5; padding-left: 12px; border-left: 2px solid var(--neon-blue); white-space: pre-wrap; }
 
         .glow-badge { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 12px; display: inline-block; }
         .badge-buy { background: rgba(255,59,48,0.15); color: var(--neon-red); box-shadow: 0 0 10px rgba(255,59,48,0.2); }
         .badge-sell { background: rgba(52,199,89,0.15); color: var(--neon-green); box-shadow: 0 0 10px rgba(52,199,89,0.2); }
         .badge-div { background: rgba(255,149,0,0.15); color: var(--neon-orange); }
 
-        /* --- 弹窗遮罩层 --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
-            display: flex; align-items: flex-end; justify-content: center;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; display: flex; align-items: flex-end; justify-content: center; }
         .modal-overlay.is-active { opacity: 1; pointer-events: auto; }
         
-        /* --- 空间表单弹窗 (Vision Modal) --- */
-        .modal-sheet {
-            background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            border: 1px solid var(--glass-border); 
-            width: 100%; max-width: 600px; height: 92vh;
-            border-radius: 32px 32px 0 0;
-            padding: 24px; padding-bottom: calc(env(safe-area-inset-bottom) + 24px);
-            transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-            display: flex; flex-direction: column; box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
-        }
+        .modal-sheet { background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glass-border); width: 100%; max-width: 600px; height: calc(100dvh - 16px); max-height: 96vh; border-radius: 32px 32px 0 0; padding: 20px 16px; padding-bottom: calc(env(safe-area-inset-bottom) + 20px); transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); display: flex; flex-direction: column; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); }
         .modal-overlay.is-active .modal-sheet { transform: translateY(0); }
 
-        /* --- 数据管理菜单 (Action Sheet) --- */
-        .action-sheet {
-            width: 100%; max-width: 400px; padding: 16px; padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
-            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
+        .action-sheet { width: 100%; max-width: 400px; padding: 16px; padding-bottom: calc(env(safe-area-inset-bottom) + 16px); transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .modal-overlay.is-active .action-sheet { transform: translateY(0); }
-        
-        .action-group {
-            background: var(--action-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            border-radius: 20px; margin-bottom: 12px; overflow: hidden;
-            border: 1px solid var(--glass-border);
-        }
-        .action-btn {
-            width: 100%; padding: 18px; background: transparent; border: none;
-            font-size: 17px; font-weight: 600; color: var(--neon-blue);
-            border-bottom: 1px solid var(--glass-border); cursor: pointer;
-            transition: background 0.2s; font-family: inherit;
-        }
+        .action-group { background: var(--action-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-radius: 20px; margin-bottom: 12px; overflow: hidden; border: 1px solid var(--glass-border); }
+        .action-btn { width: 100%; padding: 18px; background: transparent; border: none; font-size: 17px; font-weight: 600; color: var(--neon-blue); border-bottom: 1px solid var(--glass-border); cursor: pointer; transition: background 0.2s; font-family: inherit; }
         .action-btn:last-child { border-bottom: none; }
         .action-btn:active { background: var(--input-bg); }
         .action-btn-danger { color: var(--neon-red); }
         .action-btn-cancel { font-weight: 700; color: var(--text-primary); }
 
-        /* 弹窗内部通用组件 */
-        .sheet-drag-handle { width: 40px; height: 5px; background: var(--text-secondary); border-radius: 3px; margin: 0 auto 20px auto; opacity: 0.5; }
-        .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .sheet-title { font-size: 24px; font-weight: 800; }
-        .sheet-body { flex: 1; overflow-y: auto; padding-right: 4px; padding-bottom: 20px;}
+        .sheet-drag-handle { width: 40px; height: 5px; background: var(--text-secondary); border-radius: 3px; margin: 0 auto 16px auto; opacity: 0.5; }
+        .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .sheet-title { font-size: 22px; font-weight: 800; }
+        .sheet-body { flex: 1; overflow-y: auto; padding-right: 4px; padding-bottom: 80px; }
         .sheet-body::-webkit-scrollbar { display: none; }
 
-        .input-group { margin-bottom: 20px; position: relative; }
+        .input-group { margin-bottom: 16px; position: relative; }
         .input-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; display: block; padding-left: 4px;}
-        .glass-input {
-            width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border);
-            padding: 14px 16px; border-radius: 16px; font-size: 17px; color: var(--text-primary); font-family: inherit;
-            transition: all 0.3s ease;
-        }
+        
+        .glass-input { width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); padding: 12px 14px; border-radius: 16px; font-size: 16px; color: var(--text-primary); font-family: inherit; transition: all 0.3s ease; }
         .glass-input:focus { border-color: var(--neon-blue); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15); }
         textarea.glass-input { min-height: 100px; resize: none; }
-        .form-row-2 { display: flex; gap: 12px; margin-bottom: 20px; }
-        .form-row-2 .input-group { margin-bottom: 0; flex: 1; }
+        
+        .form-row-2 { display: flex; gap: 10px; margin-bottom: 16px; }
+        .form-row-2 .input-group { margin-bottom: 0; }
+        .flex-2 { flex: 2; }
+        .flex-1 { flex: 1; }
 
+        /* ==================== 核心修改：类型胶囊动效优化 ==================== */
         .type-pills-container {
-            display: flex; overflow-x: auto; gap: 10px; padding-bottom: 8px;
+            display: flex; overflow-x: auto; gap: 10px; padding-bottom: 6px; padding-top: 4px;
             -ms-overflow-style: none; scrollbar-width: none;
         }
         .type-pills-container::-webkit-scrollbar { display: none; }
+
         .type-pill {
-            padding: 12px 20px; border-radius: 20px; background: var(--input-bg);
+            position: relative;
+            padding: 10px 20px; border-radius: 20px; 
+            background: var(--input-bg);
             border: 1px solid var(--glass-border); color: var(--text-secondary);
             font-size: 15px; font-weight: 600; white-space: nowrap; cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.25, 1);
+            
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden; 
         }
+
+        .type-pill:active {
+            transform: scale(0.92);
+            transition-duration: 0.1s;
+        }
+
         .type-pill.is-active {
-            background: var(--neon-blue); color: #fff; border-color: var(--neon-blue);
-            box-shadow: 0 6px 16px rgba(0, 122, 255, 0.3); transform: translateY(-2px);
+            color: #fff;
+            /* 缩小了浮动的高度和放大的比例，使其更克制精致 */
+            transform: translateY(-1px) scale(1.03); 
         }
 
-        .glass-dropdown-menu {
-            position: absolute; top: calc(100% + 8px); left: 0; right: 0;
-            background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            border: 1px solid var(--glass-border); border-radius: 16px;
-            padding: 8px; z-index: 100; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            max-height: 180px; overflow-y: auto;
-            animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        .type-pill::before {
+            content: '';
+            position: absolute; top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: skewX(-20deg);
+            transition: none;
         }
-        @keyframes popIn { from { opacity: 0; transform: translateY(-10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .glass-dropdown-item { padding: 12px 16px; border-radius: 10px; font-size: 16px; color: var(--text-primary); cursor: pointer; transition: background 0.2s; }
-        .glass-dropdown-item:active, .glass-dropdown-item:hover { background: var(--input-bg); color: var(--neon-blue); font-weight: 600; }
+        .type-pill.is-active::before {
+            animation: spatial-shine 0.8s ease-out forwards;
+        }
+        @keyframes spatial-shine {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
 
-        .btn-primary {
-            background: var(--neon-blue); color: #fff; border: none; padding: 16px; border-radius: 20px;
-            font-size: 17px; font-weight: 700; width: 100%; cursor: pointer; box-shadow: 0 4px 15px rgba(0,122,255,0.4);
-            margin-top: 10px; transition: transform 0.2s;
+        /* 缩小了阴影的扩散半径 (从 24px 降至 10px)，并降低了透明度 (从 0.5 降至 0.35) */
+        .type-pill.pill-buy.is-active {
+            background: var(--neon-red);
+            border-color: var(--neon-red);
+            box-shadow: 0 4px 10px -2px rgba(255, 59, 48, 0.35);
         }
+        .type-pill.pill-sell.is-active {
+            background: var(--neon-green);
+            border-color: var(--neon-green);
+            box-shadow: 0 4px 10px -2px rgba(52, 199, 89, 0.35);
+        }
+        .type-pill.pill-div.is-active {
+            background: var(--neon-orange);
+            border-color: var(--neon-orange);
+            box-shadow: 0 4px 10px -2px rgba(255, 149, 0, 0.35);
+        }
+        .type-pill.pill-fee.is-active {
+            background: var(--neon-blue);
+            border-color: var(--neon-blue);
+            box-shadow: 0 4px 10px -2px rgba(0, 122, 255, 0.35);
+        }
+        /* ==================================================================== */
+
+        .glass-dropdown-menu { position: absolute; bottom: calc(100% + 8px); left: 0; right: 0; background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 6px; z-index: 100; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); max-height: 160px; overflow-y: auto; animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        @keyframes popIn { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .glass-dropdown-item { padding: 12px 14px; border-radius: 10px; font-size: 15px; color: var(--text-primary); cursor: pointer; transition: background 0.2s; }
+        .glass-dropdown-item:active { background: var(--input-bg); color: var(--neon-blue); font-weight: 600; }
+
+        .btn-primary { background: var(--neon-blue); color: #fff; border: none; padding: 16px; border-radius: 20px; font-size: 17px; font-weight: 700; width: 100%; cursor: pointer; box-shadow: 0 4px 15px rgba(0,122,255,0.4); margin-top: 10px; transition: transform 0.2s; }
         .btn-primary:active { transform: scale(0.96); }
-        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
-        
-        .btn-icon-close {
-            background: var(--input-bg); border: none; width: 32px; height: 32px; border-radius: 16px;
-            color: var(--text-primary); font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer;
-        }
-        .btn-danger {
-            background: rgba(255,59,48,0.1); color: var(--neon-red); border: 1px solid rgba(255,59,48,0.2);
-            padding: 16px; border-radius: 20px; font-size: 17px; font-weight: 700; width: 100%; margin-top: 12px; cursor: pointer;
-        }
+        .btn-primary:disabled { opacity: 0.5; box-shadow: none; }
+        .btn-icon-close { background: var(--input-bg); border: none; width: 34px; height: 34px; border-radius: 17px; color: var(--text-primary); font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .btn-danger { background: rgba(255,59,48,0.1); color: var(--neon-red); border: 1px solid rgba(255,59,48,0.2); padding: 16px; border-radius: 20px; font-size: 17px; font-weight: 700; width: 100%; margin-top: 12px; cursor: pointer; }
 
         .empty-state { text-align: center; color: var(--text-secondary); margin-top: 30vh; font-size: 16px; font-weight: 500; }
-        .empty-orb {
-            width: 80px; height: 80px; margin: 0 auto 20px auto; border-radius: 40px;
-            background: radial-gradient(circle at 30% 30%, var(--neon-blue), transparent);
-            filter: blur(10px); opacity: 0.5; animation: pulse 4s infinite alternate;
-        }
+        .empty-orb { width: 80px; height: 80px; margin: 0 auto 20px auto; border-radius: 40px; background: radial-gradient(circle at 30% 30%, var(--neon-blue), transparent); filter: blur(10px); opacity: 0.5; animation: pulse 4s infinite alternate; }
         @keyframes pulse { 0% { transform: scale(0.8); opacity: 0.3; } 100% { transform: scale(1.2); opacity: 0.6; } }
     </style>
 </head>
 <body>
     <div id="app">
-        <!-- 隐藏的文件导入框 -->
         <input type="file" id="fileInput" accept=".json" @change="handleImport" style="display: none">
 
-        <!-- 灵动岛导航 -->
         <div class="dynamic-island-container">
             <div class="dynamic-island">
-                <!-- 唤出数据菜单的按钮 (•••) -->
                 <button class="island-btn" @click="showDataMenu = true" title="数据管理">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle>
                     </svg>
                 </button>
                 <div class="island-title">投资空间</div>
-                <!-- 新增记录按钮 -->
                 <button class="island-btn" @click="openDialog" style="background: var(--neon-blue);">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
@@ -276,7 +238,6 @@
                 尚未记录任何交易<br><span style="font-size: 14px; opacity: 0.7;">点击上方 + 开启您的财富映射</span>
             </div>
 
-            <!-- 空间卡片列表 -->
             <div class="glass-card" v-for="item in sortedTransactions" :key="item.id" @click="editTransaction(item)">
                 <div class="card-header">
                     <div class="asset-info">
@@ -307,7 +268,6 @@
             </div>
         </main>
 
-        <!-- 数据管理底部面板 (Action Sheet) -->
         <div class="modal-overlay" :class="{'is-active': showDataMenu}" @click.self="showDataMenu = false">
             <div class="action-sheet">
                 <div class="action-group">
@@ -323,7 +283,6 @@
             </div>
         </div>
 
-        <!-- 交易编辑模态弹窗 -->
         <div class="modal-overlay" :class="{'is-active': dialog}">
             <div class="modal-sheet">
                 <div class="sheet-drag-handle"></div>
@@ -338,7 +297,10 @@
                         <div class="type-pills-container">
                             <div v-for="type in transactionTypes" :key="type" 
                                  class="type-pill" 
-                                 :class="{'is-active': editedItem.type === type}"
+                                 :class="[
+                                     {'is-active': editedItem.type === type},
+                                     getPillColorClass(type)
+                                 ]"
                                  @click="editedItem.type = type">
                                 {{ type }}
                             </div>
@@ -351,36 +313,36 @@
                     </div>
 
                     <div class="form-row-2">
-                        <div class="input-group">
+                        <div class="input-group flex-2">
                             <label class="input-label">标的名称</label>
-                            <input type="text" v-model="editedItem.name" placeholder="如: 苹果公司 / BTC" class="glass-input">
+                            <input type="text" v-model="editedItem.name" placeholder="如: 苹果 / BTC" class="glass-input">
                         </div>
-                        <div class="input-group">
-                            <label class="input-label">代码 (选填)</label>
-                            <input type="text" v-model="editedItem.code" placeholder="如: AAPL" class="glass-input">
+                        <div class="input-group flex-1">
+                            <label class="input-label">代码(选填)</label>
+                            <input type="text" v-model="editedItem.code" placeholder="AAPL" class="glass-input">
                         </div>
                     </div>
 
                     <div class="form-row-2">
-                        <div class="input-group">
+                        <div class="input-group flex-1">
                             <label class="input-label">单价</label>
                             <input type="number" step="0.0001" v-model.number="editedItem.price" placeholder="0.00" class="glass-input">
                         </div>
-                        <div class="input-group">
+                        <div class="input-group flex-1">
                             <label class="input-label">数量</label>
                             <input type="number" step="0.0001" v-model.number="editedItem.quantity" placeholder="0" class="glass-input">
                         </div>
                     </div>
 
                     <div class="form-row-2">
-                        <div class="input-group">
+                        <div class="input-group flex-1">
                             <label class="input-label">手续费</label>
                             <input type="number" step="0.01" v-model.number="editedItem.fee" placeholder="0.00" class="glass-input">
                         </div>
-                        <div class="input-group">
+                        <div class="input-group flex-1">
                             <label class="input-label">平台</label>
                             <input type="text" v-model="editedItem.platform" 
-                                   placeholder="如: 币安 / 富途" class="glass-input" 
+                                   placeholder="如: 币安" class="glass-input" 
                                    @focus="showPlatformMenu = true" 
                                    @blur="delayHidePlatformMenu">
                             
@@ -394,7 +356,7 @@
 
                     <div class="input-group">
                         <label class="input-label">决策日志与环境复盘</label>
-                        <textarea v-model="editedItem.notes" placeholder="记录当下的思考：为什么做这笔交易？宏观环境如何？情绪状态如何？" class="glass-input"></textarea>
+                        <textarea v-model="editedItem.notes" placeholder="记录当下的思考：为什么做这笔交易？宏观环境如何？" class="glass-input"></textarea>
                     </div>
 
                     <button class="btn-primary" @click="save" :disabled="!editedItem.name">
@@ -409,29 +371,24 @@
         </div>
     </div>
 
-    <!-- Vue 3 核心逻辑 -->
+    <!-- Vue 3 -->
     <script>
         const { createApp, ref, computed, watch, onMounted } = Vue;
 
         createApp({
             setup() {
-                // UI 状态
                 const dialog = ref(false);
                 const showDataMenu = ref(false);
                 const showPlatformMenu = ref(false);
-                
-                // 数据状态
                 const transactions = ref([]);
                 const editedIndex = ref(-1);
                 
-                // 常量与默认值
                 const transactionTypes =['买入', '卖出', '加仓', '减仓', '分红', '手续费'];
-                const platforms =['富途牛牛', '币安(Binance)', '欧易(OKX)', '华泰证券', '天天基金', '长桥证券'];
+                const platforms =['富途牛牛', '币安(Binance)', '欧易(OKX)', '华泰证券', '天天基金', '长桥'];
 
                 const defaultItem = { id: null, type: '买入', name: '', code: '', price: null, quantity: null, fee: null, date: '', platform: '', notes: '' };
                 const editedItem = ref({ ...defaultItem });
 
-                // 计算属性
                 const formTitle = computed(() => editedIndex.value === -1 ? '新建交易映射' : '调整交易参数');
                 const sortedTransactions = computed(() => [...transactions.value].sort((a, b) => new Date(b.date) - new Date(a.date)));
 
@@ -441,7 +398,6 @@
                     return now.toISOString().slice(0, 16);
                 };
 
-                // 表单控制
                 const openDialog = () => {
                     editedIndex.value = -1;
                     editedItem.value = { ...defaultItem, date: initDate() };
@@ -456,7 +412,6 @@
 
                 const closeDialog = () => { dialog.value = false; };
 
-                // 平台下拉菜单选择逻辑
                 const selectPlatform = (p) => {
                     editedItem.value.platform = p;
                     showPlatformMenu.value = false;
@@ -466,7 +421,6 @@
                     setTimeout(() => { showPlatformMenu.value = false; }, 150);
                 };
 
-                // 保存与删除
                 const save = () => {
                     let total = 0;
                     if (editedItem.value.price && editedItem.value.quantity) {
@@ -489,10 +443,7 @@
                         closeDialog();
                     }
                 };
-
-                // ==================== 数据管理核心功能 ====================
                 
-                // 1. 导出数据
                 const exportData = () => {
                     if (transactions.value.length === 0) {
                         alert("当前没有数据可供导出");
@@ -504,29 +455,21 @@
                     a.href = URL.createObjectURL(blob);
                     a.download = `Space_InvestLog_${new Date().toISOString().slice(0, 10)}.json`;
                     a.click();
-                    showDataMenu.value = false; // 导出后关闭菜单
+                    showDataMenu.value = false;
                 };
 
-                // 2. 触发导入按钮
-                const triggerImport = () => {
-                    document.getElementById('fileInput').click();
-                };
+                const triggerImport = () => { document.getElementById('fileInput').click(); };
 
-                // 3. 处理文件导入 (合并逻辑)
                 const handleImport = (event) => {
                     const file = event.target.files[0];
                     if (!file) return;
-
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         try {
                             const importedData = JSON.parse(e.target.result);
                             if (Array.isArray(importedData)) {
-                                // 执行合并：如果有相同的 ID 就覆盖，没有就追加
                                 const existingIds = new Set(transactions.value.map(t => t.id));
-                                let newCount = 0;
-                                let updateCount = 0;
-
+                                let newCount = 0; let updateCount = 0;
                                 importedData.forEach(item => {
                                     if (item.id) {
                                         if (!existingIds.has(item.id)) {
@@ -540,7 +483,6 @@
                                         }
                                     }
                                 });
-                                
                                 alert(`导入成功！\n新增 ${newCount} 条记录，更新 ${updateCount} 条记录。`);
                             } else {
                                 alert('文件格式不正确，请选择有效的 JSON 备份文件。');
@@ -548,14 +490,12 @@
                         } catch (error) {
                             alert('解析文件失败，文件可能已损坏。');
                         }
-                        // 重置 input，允许重复上传同一个文件
                         event.target.value = '';
                         showDataMenu.value = false;
                     };
                     reader.readAsText(file);
                 };
 
-                // 4. 清空所有数据
                 const clearAllData = () => {
                     if (transactions.value.length === 0) return;
                     if (confirm('警告：此操作将永久抹除所有本地记录！\n建议先执行导出备份。\n\n您确定要继续吗？')) {
@@ -564,9 +504,13 @@
                     }
                 };
 
-                // ==========================================================
+                const getPillColorClass = (type) => {
+                    if (['买入', '加仓'].includes(type)) return 'pill-buy';
+                    if (['卖出', '减仓'].includes(type)) return 'pill-sell';
+                    if (['分红'].includes(type)) return 'pill-div';
+                    return 'pill-fee';
+                };
 
-                // UI 辅助方法
                 const getBadgeClass = (type) => {
                     if (['买入', '加仓'].includes(type)) return 'badge-buy';
                     if (['卖出', '减仓'].includes(type)) return 'badge-sell';
@@ -585,7 +529,6 @@
                     return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
                 };
 
-                // 生命周期钩子 (持久化存储)
                 onMounted(() => {
                     const saved = localStorage.getItem('ios26_investment_data');
                     if (saved) transactions.value = JSON.parse(saved);
@@ -596,7 +539,7 @@
                     dialog, showDataMenu, showPlatformMenu, transactions, sortedTransactions, editedItem, editedIndex,
                     formTitle, transactionTypes, platforms,
                     openDialog, closeDialog, save, editTransaction, confirmDelete, selectPlatform, delayHidePlatformMenu,
-                    getBadgeClass, getValueColor, formatNumber, formatDateSimple,
+                    getPillColorClass, getBadgeClass, getValueColor, formatNumber, formatDateSimple,
                     exportData, triggerImport, handleImport, clearAllData
                 };
             }
