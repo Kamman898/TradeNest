@@ -136,6 +136,21 @@
         .glass-input { width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); padding: 12px 10px; border-radius: 14px; font-size: 16px; color: var(--text-primary); font-family: inherit; transition: all 0.3s ease; }
         .glass-input:focus { border-color: var(--neon-blue); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15); }
         textarea.glass-input { min-height: 80px; resize: none; }
+        
+        /* 强制覆盖 iOS 原生时间选择器的样式，保证与 Textarea 绝对等宽 */
+        input[type="datetime-local"].glass-input {
+            -webkit-appearance: none;
+            appearance: none;
+            display: block;
+            width: 100%;
+            /* 保证文字在部分安卓机型上垂直居中 */
+            min-height: 44px;
+        }
+        /* 让 iOS Safari 中 DatePicker 的文本靠左对齐，跟其他输入框一致 */
+        input[type="datetime-local"].glass-input::-webkit-date-and-time-value {
+            text-align: left;
+        }
+
         .form-row-2 { display: flex; gap: 8px; margin-bottom: 12px; }
         .form-row-2 .input-group { margin-bottom: 0; flex: 1; }
 
@@ -194,7 +209,7 @@
                 尚未记录任何交易<br><span style="font-size: 13px; opacity: 0.7;">点击上方 + 开启您的财富映射</span>
             </div>
 
-            <!-- 核心：基于标的合并的资产卡片 -->
+            <!-- 基于标的合并的资产卡片 -->
             <div class="asset-card" v-for="group in groupedAssets" :key="group.name">
                 <div class="card-header">
                     <div style="display: flex; flex-direction: column; gap: 4px;">
@@ -204,7 +219,6 @@
                         <span class="asset-code" v-if="group.code">{{ group.code }}</span>
                     </div>
                     
-                    <!-- 目前单价动态输入区 -->
                     <div class="current-price-box">
                         <span class="price-label">目前单价</span>
                         <div class="price-input-wrapper">
@@ -218,7 +232,6 @@
                     </div>
                 </div>
 
-                <!-- 自动计算的盈亏指标面板 -->
                 <div class="stats-grid">
                     <div class="stat-box">
                         <div class="stat-label">持仓市值 (Value)</div>
@@ -244,13 +257,11 @@
                     </div>
                 </div>
 
-                <!-- 同一标的的交易流水折叠菜单 -->
                 <button class="tx-accordion-btn" @click="toggleGroup(group.name)">
                     <span>查看此标的交易记录 ({{ group.transactions.length }}笔)</span>
                     <span :style="{ transform: expandedGroups.has(group.name) ? 'rotate(180deg)' : 'rotate(0)' }" style="transition: 0.3s;">▼</span>
                 </button>
 
-                <!-- 流水列表 -->
                 <div class="tx-list" v-show="expandedGroups.has(group.name)">
                     <div class="tx-item" v-for="tx in group.transactions" :key="tx.id" @click="editTransaction(tx)">
                         <div class="tx-left">
@@ -315,6 +326,7 @@
                         </div>
                     </div>
 
+                    <!-- 【宽度修复区：这里的 input 现已强制 100% 渲染】 -->
                     <div class="input-group">
                         <label class="input-label">交易时间</label>
                         <input type="datetime-local" v-model="editedItem.date" class="glass-input">
@@ -375,9 +387,7 @@
                 const showDataMenu = ref(false);
                 const expandedGroups = ref(new Set());
                 
-                // 核心数据源
                 const transactions = ref([]); 
-                // 用于存储各标的的单独现价映射：{ "台积电": { currentPrice: 1000 } }
                 const assetMeta = ref({}); 
 
                 const editedIndex = ref(-1);
@@ -387,20 +397,17 @@
 
                 const formTitle = computed(() => editedIndex.value === -1 ? '新建交易' : '修改交易');
 
-                // 🌟 核心算法：将流水账折叠合并为资产组合并计算盈亏
                 const groupedAssets = computed(() => {
                     const groups = {};
                     
-                    // 1. 按名称分组
                     transactions.value.forEach(t => {
                         if (!groups[t.name]) {
-                            groups[t.name] = { name: t.name, code: t.code, transactions: [], lastTradePrice: 0 };
+                            groups[t.name] = { name: t.name, code: t.code, transactions:[], lastTradePrice: 0 };
                         }
                         groups[t.name].transactions.push(t);
-                        if (t.price > 0) groups[t.name].lastTradePrice = t.price; // 暂存最后一次交易价格作为默认现价
+                        if (t.price > 0) groups[t.name].lastTradePrice = t.price; 
                     });
 
-                    // 2. 为每个标的计算汇总数据
                     return Object.values(groups).map(g => {
                         let qty = 0, invested = 0, realized = 0, fees = 0, dividends = 0;
                         
@@ -418,14 +425,11 @@
                                 qty -= q;
                                 realized += amount;
                             } else if (t.type === '分红') {
-                                dividends += amount || parseFloat(t.totalAmount || 0); // 假设分红直接填入了数量和单价或者被处理成了总额
+                                dividends += amount || parseFloat(t.totalAmount || 0); 
                             }
                         });
 
-                        // 净成本 = 总投入 + 总手续费 - 总套现 - 总分红
                         let netCost = invested + fees - realized - dividends;
-                        
-                        // 从 Meta 获取目前单价（用户手动修改的），如果没有则用最后一次交易价
                         let currentPrice = parseFloat(assetMeta.value[g.name]?.currentPrice || g.lastTradePrice || 0);
 
                         g.qty = qty;
@@ -433,20 +437,17 @@
                         g.marketValue = qty * currentPrice;
                         g.profit = g.marketValue - netCost;
                         
-                        // 收益率文字处理 (处理已收回本金的无限收益情况)
                         if (netCost > 0) {
                             g.roiText = ((g.profit / netCost) * 100).toFixed(2) + '%';
                         } else {
                             g.roiText = g.profit > 0 ? '已收回本金' : '0.00%';
                         }
 
-                        // 对内部的流水按时间倒序排列
                         g.transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
                         return g;
                     });
                 });
 
-                // 交互控制
                 const toggleGroup = (name) => {
                     const newSet = new Set(expandedGroups.value);
                     if (newSet.has(name)) newSet.delete(name);
@@ -500,7 +501,6 @@
                     }
                 };
                 
-                // 导入导出逻辑
                 const exportData = () => {
                     if (transactions.value.length === 0) return alert("没有数据可导出");
                     const dump = { transactions: transactions.value, meta: assetMeta.value };
@@ -522,8 +522,6 @@
                         try {
                             const data = JSON.parse(e.target.result);
                             let importedTxs = Array.isArray(data) ? data : (data.transactions ||[]);
-                            
-                            // 导入现价数据
                             if (data.meta) assetMeta.value = { ...assetMeta.value, ...data.meta };
 
                             const existingIds = new Set(transactions.value.map(t => t.id));
@@ -558,7 +556,6 @@
                     }
                 };
 
-                // UI 辅助
                 const getPillColorClass = (type) => {
                     if (['买入', '加仓'].includes(type)) return 'pill-buy';
                     if (['卖出', '减仓'].includes(type)) return 'pill-sell';
@@ -586,7 +583,6 @@
                     return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
                 };
 
-                // 数据持久化初始化
                 onMounted(() => {
                     const savedTxs = localStorage.getItem('ios26_investment_data');
                     const savedMeta = localStorage.getItem('ios26_asset_meta');
