@@ -75,24 +75,25 @@
         .island-btn { background: rgba(255,255,255,0.2); border: none; color: white; height: 30px; width: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s; }
         .island-btn:active { transform: scale(0.9); }
 
-        .main-content { padding-top: 80px; padding-bottom: 40px; max-width: 600px; margin: 0 auto; }
+        /* 优化：收敛主视图最大宽度，使其看起来更像手机 App */
+        .main-content { padding-top: 80px; padding-bottom: 40px; max-width: 480px; margin: 0 auto; }
 
-        .glass-card { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: 24px; margin: 16px; padding: 20px; box-shadow: var(--glass-shadow); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; position: relative; overflow: hidden; }
+        .glass-card { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: 24px; margin: 16px; padding: 16px; box-shadow: var(--glass-shadow); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; position: relative; overflow: hidden; }
         .glass-card:active { transform: scale(0.97); }
 
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
         .asset-info { display: flex; flex-direction: column; gap: 4px;}
-        .asset-name { font-size: 19px; font-weight: 700; display: flex; align-items: center; gap: 8px;}
+        .asset-name { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px;}
         .asset-code { font-size: 13px; color: var(--text-secondary); background: var(--input-bg); padding: 2px 8px; border-radius: 8px;}
-        .total-amount { font-size: 20px; font-weight: 800; font-family: "SF Pro Rounded", sans-serif; text-align: right;}
+        .total-amount { font-size: 18px; font-weight: 800; font-family: "SF Pro Rounded", sans-serif; text-align: right;}
         
-        .card-details { display: flex; flex-wrap: wrap; gap: 12px; font-size: 14px; color: var(--text-secondary); background: var(--input-bg); padding: 12px; border-radius: 16px; }
-        .detail-item { width: calc(50% - 6px); display: flex; flex-direction: column; }
+        .card-details { display: flex; flex-wrap: wrap; gap: 10px; font-size: 14px; color: var(--text-secondary); background: var(--input-bg); padding: 10px 12px; border-radius: 16px; }
+        .detail-item { width: calc(50% - 5px); display: flex; flex-direction: column; }
         .detail-label { font-size: 11px; text-transform: uppercase; opacity: 0.7; margin-bottom: 2px;}
         .detail-value { font-size: 14px; font-weight: 600; color: var(--text-primary);}
-        .card-notes { margin-top: 12px; font-size: 14px; color: var(--text-secondary); line-height: 1.5; padding-left: 12px; border-left: 2px solid var(--neon-blue); white-space: pre-wrap; }
+        .card-notes { margin-top: 12px; font-size: 14px; color: var(--text-secondary); line-height: 1.5; padding-left: 10px; border-left: 2px solid var(--neon-blue); white-space: pre-wrap; }
 
-        .glow-badge { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 12px; display: inline-block; }
+        .glow-badge { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 10px; display: inline-block; }
         .badge-buy { background: rgba(255,59,48,0.15); color: var(--neon-red); box-shadow: 0 0 10px rgba(255,59,48,0.2); }
         .badge-sell { background: rgba(52,199,89,0.15); color: var(--neon-green); box-shadow: 0 0 10px rgba(52,199,89,0.2); }
         .badge-div { background: rgba(255,149,0,0.15); color: var(--neon-orange); }
@@ -100,7 +101,10 @@
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; display: flex; align-items: flex-end; justify-content: center; }
         .modal-overlay.is-active { opacity: 1; pointer-events: auto; }
         
-        /* 数据管理菜单 */
+        /* 优化：弹窗最大宽度统一收敛到 480px，并略微减少左右内边距，给窄屏留足空间 */
+        .modal-sheet { background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glass-border); width: 100%; max-width: 480px; height: calc(100dvh - 16px); max-height: 96vh; border-radius: 32px 32px 0 0; padding: 20px 14px; padding-bottom: calc(env(safe-area-inset-bottom) + 20px); transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); display: flex; flex-direction: column; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); }
+        .modal-overlay.is-active .modal-sheet { transform: translateY(0); }
+
         .action-sheet { width: 100%; max-width: 400px; padding: 16px; padding-bottom: calc(env(safe-area-inset-bottom) + 16px); transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .modal-overlay.is-active .action-sheet { transform: translateY(0); }
         .action-group { background: var(--action-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-radius: 20px; margin-bottom: 12px; overflow: hidden; border: 1px solid var(--glass-border); }
@@ -110,72 +114,40 @@
         .action-btn-danger { color: var(--neon-red); }
         .action-btn-cancel { font-weight: 700; color: var(--text-primary); }
 
-        /* ==================== 核心修改：iPhone 16 Pro Max 超大屏专项适配 ==================== */
-        .modal-sheet { 
-            background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); 
-            border: 1px solid var(--glass-border); 
-            width: 100%; max-width: 600px; 
-            height: calc(100dvh - 12px); max-height: 98vh; 
-            
-            /* 1. 圆角提升至 40px，完美契合 Pro Max R角 */
-            border-radius: 40px 40px 0 0; 
-            
-            /* 2. 左右呼吸感拉满：内边距增至 24px */
-            padding: 24px 24px; 
-            padding-bottom: calc(env(safe-area-inset-bottom) + 24px); 
-            transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); 
-            display: flex; flex-direction: column; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); 
-        }
-        .modal-overlay.is-active .modal-sheet { transform: translateY(0); }
-
-        .sheet-drag-handle { width: 44px; height: 6px; background: var(--text-secondary); border-radius: 3px; margin: 0 auto 20px auto; opacity: 0.5; }
-        
-        .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        /* 标题字号拉大 */
-        .sheet-title { font-size: 26px; font-weight: 800; }
-        
-        /* 3. 巨幅底部安全区：确保键盘弹起时，仍能舒适滚动 */
-        .sheet-body { flex: 1; overflow-y: auto; padding-right: 4px; padding-bottom: 120px; }
+        .sheet-drag-handle { width: 40px; height: 5px; background: var(--text-secondary); border-radius: 3px; margin: 0 auto 12px auto; opacity: 0.5; }
+        .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .sheet-title { font-size: 20px; font-weight: 800; }
+        .sheet-body { flex: 1; overflow-y: auto; padding-right: 4px; padding-bottom: 80px; }
         .sheet-body::-webkit-scrollbar { display: none; }
 
-        /* 4. 行间距大幅放宽，减少大屏局促感 */
-        .input-group { margin-bottom: 22px; position: relative; }
-        .input-label { font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 10px; display: block; padding-left: 6px;}
+        /* 优化：压缩垂直间距和字体大小 */
+        .input-group { margin-bottom: 12px; position: relative; }
+        .input-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; display: block; padding-left: 4px;}
         
-        /* 5. 输入框触控区提升：加厚 Padding，字号提升至苹果官方 17px */
-        .glass-input { 
-            width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); 
-            padding: 16px 18px; 
-            border-radius: 20px; 
-            font-size: 17px; 
-            color: var(--text-primary); font-family: inherit; transition: all 0.3s ease; 
-        }
-        .glass-input:focus { border-color: var(--neon-blue); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15); }
-        .glass-input::placeholder { color: var(--text-secondary); opacity: 0.6;}
-        textarea.glass-input { min-height: 120px; resize: none; } /* 文本域加大 */
+        /* 优化：减少左右 padding 从 14px 到 10px，小屏幕能显示更多文字 */
+        .glass-input { width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); padding: 12px 10px; border-radius: 14px; font-size: 16px; color: var(--text-primary); font-family: inherit; transition: all 0.3s ease; }
+        .glass-input:focus { border-color: var(--neon-blue); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15); }
+        textarea.glass-input { min-height: 80px; resize: none; }
         
-        /* 两列排版间距加大 */
-        .form-row-2 { display: flex; gap: 14px; margin-bottom: 22px; }
+        /* 优化：并排元素间隙收紧至 8px */
+        .form-row-2 { display: flex; gap: 8px; margin-bottom: 12px; }
         .form-row-2 .input-group { margin-bottom: 0; }
         .flex-2 { flex: 2; }
         .flex-1 { flex: 1; }
 
-        /* 6. 胶囊按钮等比例放大 */
         .type-pills-container {
-            display: flex; overflow-x: auto; gap: 12px; 
-            padding-bottom: 8px; padding-top: 4px;
+            display: flex; overflow-x: auto; gap: 8px; 
+            padding-bottom: 6px; padding-top: 4px;
             -ms-overflow-style: none; scrollbar-width: none;
         }
         .type-pills-container::-webkit-scrollbar { display: none; }
 
         .type-pill {
             position: relative;
-            padding: 14px 24px; /* 加厚加宽 */
-            border-radius: 24px; 
+            padding: 8px 16px; border-radius: 20px; 
             background: var(--input-bg);
             border: 1px solid var(--glass-border); color: var(--text-secondary);
-            font-size: 16px; font-weight: 600; white-space: nowrap; cursor: pointer;
-            
+            font-size: 14px; font-weight: 600; white-space: nowrap; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             overflow: hidden; 
@@ -184,7 +156,11 @@
         .type-pill:active { transform: scale(0.92); transition-duration: 0.1s; }
         .type-pill.is-active { color: #fff; transform: translateY(-2px) scale(1.05); }
 
-        .type-pill::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent); transform: skewX(-20deg); transition: none; pointer-events: none; }
+        .type-pill::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: skewX(-20deg); transition: none; pointer-events: none;
+        }
         .type-pill.is-active::before { animation: spatial-shine 0.8s ease-out forwards; }
         @keyframes spatial-shine { 0% { left: -100%; } 100% { left: 200%; } }
 
@@ -193,27 +169,18 @@
         .type-pill.pill-div.is-active { background: var(--neon-orange); border-color: var(--neon-orange); box-shadow: 0 4px 12px -2px rgba(255, 149, 0, 0.4); }
         .type-pill.pill-fee.is-active { background: var(--neon-blue); border-color: var(--neon-blue); box-shadow: 0 4px 12px -2px rgba(0, 122, 255, 0.4); }
 
-        .glass-dropdown-menu { position: absolute; bottom: calc(100% + 12px); left: 0; right: 0; background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 8px; z-index: 100; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); max-height: 180px; overflow-y: auto; animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .glass-dropdown-menu { position: absolute; bottom: calc(100% + 8px); left: 0; right: 0; background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glass-border); border-radius: 14px; padding: 6px; z-index: 100; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); max-height: 140px; overflow-y: auto; animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
         @keyframes popIn { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .glass-dropdown-item { padding: 14px 16px; border-radius: 14px; font-size: 16px; color: var(--text-primary); cursor: pointer; transition: background 0.2s; }
+        .glass-dropdown-item { padding: 10px 12px; border-radius: 10px; font-size: 14px; color: var(--text-primary); cursor: pointer; transition: background 0.2s; }
         .glass-dropdown-item:active { background: var(--input-bg); color: var(--neon-blue); font-weight: 600; }
 
-        /* 7. 主按钮升级：更加厚重且醒目 */
-        .btn-primary { 
-            background: var(--neon-blue); color: #fff; border: none; 
-            padding: 18px; /* 增加按压高度 */
-            border-radius: 22px; 
-            font-size: 18px; /* 大号字体 */
-            font-weight: 700; width: 100%; cursor: pointer; box-shadow: 0 6px 20px rgba(0,122,255,0.4); 
-            margin-top: 16px; transition: transform 0.2s; 
-        }
+        .btn-primary { background: var(--neon-blue); color: #fff; border: none; padding: 14px; border-radius: 18px; font-size: 16px; font-weight: 700; width: 100%; cursor: pointer; box-shadow: 0 4px 15px rgba(0,122,255,0.4); margin-top: 8px; transition: transform 0.2s; }
         .btn-primary:active { transform: scale(0.96); }
         .btn-primary:disabled { opacity: 0.5; box-shadow: none; }
-        
-        .btn-icon-close { background: var(--input-bg); border: none; width: 36px; height: 36px; border-radius: 18px; color: var(--text-primary); font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .btn-danger { background: rgba(255,59,48,0.1); color: var(--neon-red); border: 1px solid rgba(255,59,48,0.2); padding: 18px; border-radius: 22px; font-size: 18px; font-weight: 700; width: 100%; margin-top: 16px; cursor: pointer; }
+        .btn-icon-close { background: var(--input-bg); border: none; width: 30px; height: 30px; border-radius: 15px; color: var(--text-primary); font-size: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .btn-danger { background: rgba(255,59,48,0.1); color: var(--neon-red); border: 1px solid rgba(255,59,48,0.2); padding: 14px; border-radius: 18px; font-size: 16px; font-weight: 700; width: 100%; margin-top: 10px; cursor: pointer; }
 
-        .empty-state { text-align: center; color: var(--text-secondary); margin-top: 30vh; font-size: 16px; font-weight: 500; }
+        .empty-state { text-align: center; color: var(--text-secondary); margin-top: 30vh; font-size: 15px; font-weight: 500; }
         .empty-orb { width: 80px; height: 80px; margin: 0 auto 20px auto; border-radius: 40px; background: radial-gradient(circle at 30% 30%, var(--neon-blue), transparent); filter: blur(10px); opacity: 0.5; animation: pulse 4s infinite alternate; }
         @keyframes pulse { 0% { transform: scale(0.8); opacity: 0.3; } 100% { transform: scale(1.2); opacity: 0.6; } }
     </style>
@@ -239,7 +206,7 @@
         <main class="main-content">
             <div class="empty-state" v-if="transactions.length === 0">
                 <div class="empty-orb"></div>
-                尚未记录任何交易<br><span style="font-size: 14px; opacity: 0.7;">点击上方 + 开启您的财富映射</span>
+                尚未记录任何交易<br><span style="font-size: 13px; opacity: 0.7;">点击上方 + 开启您的财富映射</span>
             </div>
 
             <div class="glass-card" v-for="item in sortedTransactions" :key="item.id" @click="editTransaction(item)">
@@ -249,7 +216,7 @@
                             <span class="glow-badge" :class="getBadgeClass(item.type)">{{ item.type }}</span>
                             {{ item.name }}
                         </div>
-                        <div style="display: flex; gap: 8px; margin-top: 4px;">
+                        <div style="display: flex; gap: 6px; margin-top: 4px;">
                             <span class="asset-code" v-if="item.code">{{ item.code }}</span>
                             <span class="asset-code" style="background: transparent; padding:0;">{{ formatDateSimple(item.date) }}</span>
                         </div>
@@ -288,7 +255,7 @@
             </div>
         </div>
 
-        <!-- 交易表单 (Pro Max 适配版) -->
+        <!-- 交易表单 -->
         <div class="modal-overlay" :class="{'is-active': dialog}">
             <div class="modal-sheet">
                 <div class="sheet-drag-handle"></div>
@@ -321,11 +288,13 @@
                     <div class="form-row-2">
                         <div class="input-group flex-2">
                             <label class="input-label">标的名称</label>
-                            <input type="text" v-model="editedItem.name" placeholder="如: 苹果 / BTC" class="glass-input">
+                            <!-- 优化：简化占位符长度 -->
+                            <input type="text" v-model="editedItem.name" placeholder="名称 (如: 台积电)" class="glass-input">
                         </div>
                         <div class="input-group flex-1">
                             <label class="input-label">代码(选填)</label>
-                            <input type="text" v-model="editedItem.code" placeholder="AAPL" class="glass-input">
+                            <!-- 优化：简化占位符长度 -->
+                            <input type="text" v-model="editedItem.code" placeholder="代码" class="glass-input">
                         </div>
                     </div>
 
@@ -348,7 +317,7 @@
                         <div class="input-group flex-1">
                             <label class="input-label">平台</label>
                             <input type="text" v-model="editedItem.platform" 
-                                   placeholder="如: 币安" class="glass-input" 
+                                   placeholder="如: 富途" class="glass-input" 
                                    @focus="showPlatformMenu = true" 
                                    @blur="delayHidePlatformMenu">
                             
@@ -362,7 +331,7 @@
 
                     <div class="input-group">
                         <label class="input-label">决策日志与环境复盘</label>
-                        <textarea v-model="editedItem.notes" placeholder="记录当下的思考：为什么做这笔交易？宏观环境如何？" class="glass-input"></textarea>
+                        <textarea v-model="editedItem.notes" placeholder="记录当下的思考：为什么做这笔交易？" class="glass-input"></textarea>
                     </div>
 
                     <button class="btn-primary" @click="save" :disabled="!editedItem.name">
@@ -395,7 +364,7 @@
                 const defaultItem = { id: null, type: '买入', name: '', code: '', price: null, quantity: null, fee: null, date: '', platform: '', notes: '' };
                 const editedItem = ref({ ...defaultItem });
 
-                const formTitle = computed(() => editedIndex.value === -1 ? '新建交易映射' : '调整交易参数');
+                const formTitle = computed(() => editedIndex.value === -1 ? '新建交易' : '修改交易');
                 const sortedTransactions = computed(() => [...transactions.value].sort((a, b) => new Date(b.date) - new Date(a.date)));
 
                 const initDate = () => {
