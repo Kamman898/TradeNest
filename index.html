@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>投资空间</title>
+    <title>TradeNest</title>
+    <!-- 专属纯代码矢量图标 (蓝色iOS圆角+上涨趋势线) -->
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cmVjdCB3aWR0aD0nMTAwJyBoZWlnaHQ9JzEwMCcgcng9JzIyJyBmaWxsPScjMDA3YWZmJy8+PHBhdGggZD0nTTI1IDY1IEw0NSA0NSBMNjAgNTUgTDc1IDMwJyBzdHJva2U9J3doaXRlJyBzdHJva2Utd2lkdGg9JzgnIGZpbGw9J25vbmUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPjxwb2x5bGluZSBwb2ludHM9JzYwIDMwIDc1IDMwIDc1IDQ1JyBzdHJva2U9J3doaXRlJyBzdHJva2Utd2lkdGg9JzgnIGZpbGw9J25vbmUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPjwvc3ZnPg==">
+    
     <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.prod.js"></script>
     <style>
         /* --- iOS 26 空间计算风格全局变量 --- */
@@ -137,19 +140,15 @@
         .glass-input:focus { border-color: var(--neon-blue); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15); }
         textarea.glass-input { min-height: 80px; resize: none; }
         
-        /* 强制覆盖 iOS 原生时间选择器的样式，保证与 Textarea 绝对等宽 */
+        /* 强制覆盖 iOS 原生时间选择器的样式，保证绝对等宽 */
         input[type="datetime-local"].glass-input {
             -webkit-appearance: none;
             appearance: none;
             display: block;
             width: 100%;
-            /* 保证文字在部分安卓机型上垂直居中 */
             min-height: 44px;
         }
-        /* 让 iOS Safari 中 DatePicker 的文本靠左对齐，跟其他输入框一致 */
-        input[type="datetime-local"].glass-input::-webkit-date-and-time-value {
-            text-align: left;
-        }
+        input[type="datetime-local"].glass-input::-webkit-date-and-time-value { text-align: left; }
 
         .form-row-2 { display: flex; gap: 8px; margin-bottom: 12px; }
         .form-row-2 .input-group { margin-bottom: 0; flex: 1; }
@@ -196,7 +195,7 @@
                         <circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle>
                     </svg>
                 </button>
-                <div class="island-title">投资空间</div>
+                <div class="island-title">TradeNest</div>
                 <button class="island-btn" @click="openDialog" style="background: var(--neon-blue);">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
@@ -206,10 +205,9 @@
         <main class="main-content">
             <div class="empty-state" v-if="groupedAssets.length === 0">
                 <div class="empty-orb"></div>
-                尚未记录任何交易<br><span style="font-size: 13px; opacity: 0.7;">点击上方 + 开启您的财富映射</span>
+                尚未记录任何交易<br><span style="font-size: 13px; opacity: 0.7;">点击上方 + 开启您的 TradeNest</span>
             </div>
 
-            <!-- 基于标的合并的资产卡片 -->
             <div class="asset-card" v-for="group in groupedAssets" :key="group.name">
                 <div class="card-header">
                     <div style="display: flex; flex-direction: column; gap: 4px;">
@@ -285,7 +283,6 @@
             </div>
         </main>
 
-        <!-- 数据管理 -->
         <div class="modal-overlay" :class="{'is-active': showDataMenu}" @click.self="showDataMenu = false">
             <div class="action-sheet">
                 <div class="action-group">
@@ -301,7 +298,6 @@
             </div>
         </div>
 
-        <!-- 交易表单 -->
         <div class="modal-overlay" :class="{'is-active': dialog}">
             <div class="modal-sheet">
                 <div class="sheet-drag-handle"></div>
@@ -326,7 +322,6 @@
                         </div>
                     </div>
 
-                    <!-- 【宽度修复区：这里的 input 现已强制 100% 渲染】 -->
                     <div class="input-group">
                         <label class="input-label">交易时间</label>
                         <input type="datetime-local" v-model="editedItem.date" class="glass-input">
@@ -507,7 +502,7 @@
                     const blob = new Blob([JSON.stringify(dump, null, 2)], { type: "application/json" });
                     const a = document.createElement("a");
                     a.href = URL.createObjectURL(blob);
-                    a.download = `InvestLog_V2_${new Date().toISOString().slice(0, 10)}.json`;
+                    a.download = `TradeNest_InvestLog_${new Date().toISOString().slice(0, 10)}.json`;
                     a.click();
                     showDataMenu.value = false;
                 };
@@ -522,6 +517,7 @@
                         try {
                             const data = JSON.parse(e.target.result);
                             let importedTxs = Array.isArray(data) ? data : (data.transactions ||[]);
+                            
                             if (data.meta) assetMeta.value = { ...assetMeta.value, ...data.meta };
 
                             const existingIds = new Set(transactions.value.map(t => t.id));
@@ -557,49 +553,4 @@
                 };
 
                 const getPillColorClass = (type) => {
-                    if (['买入', '加仓'].includes(type)) return 'pill-buy';
-                    if (['卖出', '减仓'].includes(type)) return 'pill-sell';
-                    if (['分红'].includes(type)) return 'pill-div';
-                    return 'pill-fee'; 
-                };
-                
-                const getTxTypeClass = (type) => {
-                    if (['买入', '加仓'].includes(type)) return 'type-buy';
-                    if (['卖出', '减仓'].includes(type)) return 'type-sell';
-                    if (['分红'].includes(type)) return 'type-div';
-                    return 'type-fee'; 
-                };
-
-                const getProfitClass = (val) => {
-                    if (val > 0) return 'color-profit';
-                    if (val < 0) return 'color-loss';
-                    return '';
-                };
-
-                const formatNumber = (num) => parseFloat(num).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                const formatDateSimple = (dateStr) => {
-                    if (!dateStr) return '';
-                    const d = new Date(dateStr);
-                    return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
-                };
-
-                onMounted(() => {
-                    const savedTxs = localStorage.getItem('ios26_investment_data');
-                    const savedMeta = localStorage.getItem('ios26_asset_meta');
-                    if (savedTxs) transactions.value = JSON.parse(savedTxs);
-                    if (savedMeta) assetMeta.value = JSON.parse(savedMeta);
-                });
-                
-                watch(transactions, (newVal) => localStorage.setItem('ios26_investment_data', JSON.stringify(newVal)), { deep: true });
-
-                return {
-                    dialog, showDataMenu, expandedGroups, transactions, assetMeta, groupedAssets, editedItem, editedIndex, formTitle, transactionTypes,
-                    toggleGroup, updatePrice, openDialog, closeDialog, save, editTransaction, confirmDelete, 
-                    getPillColorClass, getTxTypeClass, getProfitClass, formatNumber, formatDateSimple,
-                    exportData, triggerImport, handleImport, clearAllData
-                };
-            }
-        }).mount('#app');
-    </script>
-</body>
-</html>
+                    if (
