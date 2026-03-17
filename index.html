@@ -18,8 +18,8 @@
             --input-bg: rgba(255, 255, 255, 0.6);
             --action-bg: rgba(255, 255, 255, 0.75);
             
-            --neon-red: #ff3b30;
-            --neon-green: #34c759;
+            --neon-red: #ff3b30; /* 盈利红 */
+            --neon-green: #34c759; /* 亏损绿 */
             --neon-blue: #007aff;
             --neon-orange: #ff9500;
         }
@@ -69,116 +69,101 @@
             }
         }
 
+        /* --- 导航栏 --- */
         .dynamic-island-container { position: fixed; top: calc(env(safe-area-inset-top) + 12px); left: 0; right: 0; display: flex; justify-content: center; z-index: 990; }
-        .dynamic-island { background: var(--island-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); color: var(--island-text); height: 44px; border-radius: 22px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); transition: all 0.4s cubic-bezier(0.25, 1, 0.25, 1); width: 280px; }
+        .dynamic-island { background: var(--island-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); color: var(--island-text); height: 44px; border-radius: 22px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); width: 280px; }
         .island-title { font-weight: 600; font-size: 15px; letter-spacing: 0.5px; }
         .island-btn { background: rgba(255,255,255,0.2); border: none; color: white; height: 30px; width: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s; }
         .island-btn:active { transform: scale(0.9); }
 
-        /* 优化：收敛主视图最大宽度，使其看起来更像手机 App */
         .main-content { padding-top: 80px; padding-bottom: 40px; max-width: 480px; margin: 0 auto; }
 
-        .glass-card { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: 24px; margin: 16px; padding: 16px; box-shadow: var(--glass-shadow); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; position: relative; overflow: hidden; }
-        .glass-card:active { transform: scale(0.97); }
-
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-        .asset-info { display: flex; flex-direction: column; gap: 4px;}
-        .asset-name { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px;}
-        .asset-code { font-size: 13px; color: var(--text-secondary); background: var(--input-bg); padding: 2px 8px; border-radius: 8px;}
-        .total-amount { font-size: 18px; font-weight: 800; font-family: "SF Pro Rounded", sans-serif; text-align: right;}
+        /* --- 资产组合卡片 --- */
+        .asset-card { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: 24px; margin: 16px; padding: 16px; box-shadow: var(--glass-shadow); position: relative; overflow: hidden; }
         
-        .card-details { display: flex; flex-wrap: wrap; gap: 10px; font-size: 14px; color: var(--text-secondary); background: var(--input-bg); padding: 10px 12px; border-radius: 16px; }
-        .detail-item { width: calc(50% - 5px); display: flex; flex-direction: column; }
-        .detail-label { font-size: 11px; text-transform: uppercase; opacity: 0.7; margin-bottom: 2px;}
-        .detail-value { font-size: 14px; font-weight: 600; color: var(--text-primary);}
-        .card-notes { margin-top: 12px; font-size: 14px; color: var(--text-secondary); line-height: 1.5; padding-left: 10px; border-left: 2px solid var(--neon-blue); white-space: pre-wrap; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .asset-name { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px;}
+        .asset-code { font-size: 12px; color: var(--text-secondary); background: var(--input-bg); padding: 2px 8px; border-radius: 8px;}
+        
+        /* 现价输入框 */
+        .current-price-box { display: flex; flex-direction: column; align-items: flex-end; }
+        .price-label { font-size: 11px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; }
+        .price-input-wrapper { background: var(--input-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 4px 8px; display: flex; align-items: center; }
+        .price-input { background: transparent; border: none; width: 80px; text-align: right; font-size: 18px; font-weight: 700; color: var(--text-primary); font-family: "SF Pro Rounded", sans-serif; }
+        .price-input:focus { color: var(--neon-blue); }
 
-        .glow-badge { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 10px; display: inline-block; }
-        .badge-buy { background: rgba(255,59,48,0.15); color: var(--neon-red); box-shadow: 0 0 10px rgba(255,59,48,0.2); }
-        .badge-sell { background: rgba(52,199,89,0.15); color: var(--neon-green); box-shadow: 0 0 10px rgba(52,199,89,0.2); }
-        .badge-div { background: rgba(255,149,0,0.15); color: var(--neon-orange); }
+        /* 核心数据网格 */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+        .stat-box { background: var(--input-bg); padding: 12px; border-radius: 16px; }
+        .stat-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
+        .stat-val { font-size: 16px; font-weight: 700; }
+        .color-profit { color: var(--neon-red); }
+        .color-loss { color: var(--neon-green); }
 
+        /* 交易流水折叠面板 */
+        .tx-accordion-btn { width: 100%; background: transparent; border: 1px dashed var(--glass-border); border-radius: 12px; padding: 10px; font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .tx-accordion-btn:active { background: var(--input-bg); }
+        .tx-list { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+        
+        /* 单笔流水记录 */
+        .tx-item { background: var(--input-bg); border-radius: 12px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border: 1px solid transparent; transition: border 0.2s; }
+        .tx-item:active { border-color: var(--neon-blue); }
+        .tx-left { display: flex; flex-direction: column; gap: 4px; }
+        .tx-type { font-size: 13px; font-weight: 700; }
+        .tx-date { font-size: 11px; color: var(--text-secondary); }
+        .tx-right { text-align: right; display: flex; flex-direction: column; gap: 4px; }
+        .tx-amount { font-size: 14px; font-weight: 700; }
+        .tx-detail { font-size: 11px; color: var(--text-secondary); }
+
+        .type-buy { color: var(--neon-red); }
+        .type-sell { color: var(--neon-green); }
+        .type-div { color: var(--neon-orange); }
+        .type-fee { color: var(--neon-blue); }
+
+        /* --- 表单弹窗 --- */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; display: flex; align-items: flex-end; justify-content: center; }
         .modal-overlay.is-active { opacity: 1; pointer-events: auto; }
-        
-        /* 优化：弹窗最大宽度统一收敛到 480px，并略微减少左右内边距，给窄屏留足空间 */
         .modal-sheet { background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glass-border); width: 100%; max-width: 480px; height: calc(100dvh - 16px); max-height: 96vh; border-radius: 32px 32px 0 0; padding: 20px 14px; padding-bottom: calc(env(safe-area-inset-bottom) + 20px); transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); display: flex; flex-direction: column; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); }
         .modal-overlay.is-active .modal-sheet { transform: translateY(0); }
-
-        .action-sheet { width: 100%; max-width: 400px; padding: 16px; padding-bottom: calc(env(safe-area-inset-bottom) + 16px); transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .modal-overlay.is-active .action-sheet { transform: translateY(0); }
-        .action-group { background: var(--action-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-radius: 20px; margin-bottom: 12px; overflow: hidden; border: 1px solid var(--glass-border); }
-        .action-btn { width: 100%; padding: 18px; background: transparent; border: none; font-size: 17px; font-weight: 600; color: var(--neon-blue); border-bottom: 1px solid var(--glass-border); cursor: pointer; transition: background 0.2s; font-family: inherit; }
-        .action-btn:last-child { border-bottom: none; }
-        .action-btn:active { background: var(--input-bg); }
-        .action-btn-danger { color: var(--neon-red); }
-        .action-btn-cancel { font-weight: 700; color: var(--text-primary); }
-
         .sheet-drag-handle { width: 40px; height: 5px; background: var(--text-secondary); border-radius: 3px; margin: 0 auto 12px auto; opacity: 0.5; }
         .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
         .sheet-title { font-size: 20px; font-weight: 800; }
         .sheet-body { flex: 1; overflow-y: auto; padding-right: 4px; padding-bottom: 80px; }
         .sheet-body::-webkit-scrollbar { display: none; }
 
-        /* 优化：压缩垂直间距和字体大小 */
         .input-group { margin-bottom: 12px; position: relative; }
         .input-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; display: block; padding-left: 4px;}
-        
-        /* 优化：减少左右 padding 从 14px 到 10px，小屏幕能显示更多文字 */
         .glass-input { width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); padding: 12px 10px; border-radius: 14px; font-size: 16px; color: var(--text-primary); font-family: inherit; transition: all 0.3s ease; }
         .glass-input:focus { border-color: var(--neon-blue); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15); }
         textarea.glass-input { min-height: 80px; resize: none; }
-        
-        /* 优化：并排元素间隙收紧至 8px */
         .form-row-2 { display: flex; gap: 8px; margin-bottom: 12px; }
-        .form-row-2 .input-group { margin-bottom: 0; }
-        .flex-2 { flex: 2; }
-        .flex-1 { flex: 1; }
+        .form-row-2 .input-group { margin-bottom: 0; flex: 1; }
 
-        .type-pills-container {
-            display: flex; overflow-x: auto; gap: 8px; 
-            padding-bottom: 6px; padding-top: 4px;
-            -ms-overflow-style: none; scrollbar-width: none;
-        }
+        /* 类型胶囊 */
+        .type-pills-container { display: flex; overflow-x: auto; gap: 8px; padding-bottom: 6px; padding-top: 4px; -ms-overflow-style: none; scrollbar-width: none; }
         .type-pills-container::-webkit-scrollbar { display: none; }
-
-        .type-pill {
-            position: relative;
-            padding: 8px 16px; border-radius: 20px; 
-            background: var(--input-bg);
-            border: 1px solid var(--glass-border); color: var(--text-secondary);
-            font-size: 14px; font-weight: 600; white-space: nowrap; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            overflow: hidden; 
-        }
-
+        .type-pill { position: relative; padding: 8px 16px; border-radius: 20px; background: var(--input-bg); border: 1px solid var(--glass-border); color: var(--text-secondary); font-size: 14px; font-weight: 600; white-space: nowrap; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); overflow: hidden; }
         .type-pill:active { transform: scale(0.92); transition-duration: 0.1s; }
         .type-pill.is-active { color: #fff; transform: translateY(-2px) scale(1.05); }
-
-        .type-pill::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transform: skewX(-20deg); transition: none; pointer-events: none;
-        }
-        .type-pill.is-active::before { animation: spatial-shine 0.8s ease-out forwards; }
-        @keyframes spatial-shine { 0% { left: -100%; } 100% { left: 200%; } }
-
         .type-pill.pill-buy.is-active { background: var(--neon-red); border-color: var(--neon-red); box-shadow: 0 4px 12px -2px rgba(255, 59, 48, 0.4); }
         .type-pill.pill-sell.is-active { background: var(--neon-green); border-color: var(--neon-green); box-shadow: 0 4px 12px -2px rgba(52, 199, 89, 0.4); }
-        .type-pill.pill-div.is-active { background: var(--neon-orange); border-color: var(--neon-orange); box-shadow: 0 4px 12px -2px rgba(255, 149, 0, 0.4); }
-        .type-pill.pill-fee.is-active { background: var(--neon-blue); border-color: var(--neon-blue); box-shadow: 0 4px 12px -2px rgba(0, 122, 255, 0.4); }
-
-        .glass-dropdown-menu { position: absolute; bottom: calc(100% + 8px); left: 0; right: 0; background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glass-border); border-radius: 14px; padding: 6px; z-index: 100; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); max-height: 140px; overflow-y: auto; animation: popIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        @keyframes popIn { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .glass-dropdown-item { padding: 10px 12px; border-radius: 10px; font-size: 14px; color: var(--text-primary); cursor: pointer; transition: background 0.2s; }
-        .glass-dropdown-item:active { background: var(--input-bg); color: var(--neon-blue); font-weight: 600; }
+        .type-pill.pill-div.is-active { background: var(--neon-orange); border-color: var(--neon-orange); }
+        .type-pill.pill-fee.is-active { background: var(--neon-blue); border-color: var(--neon-blue); }
 
         .btn-primary { background: var(--neon-blue); color: #fff; border: none; padding: 14px; border-radius: 18px; font-size: 16px; font-weight: 700; width: 100%; cursor: pointer; box-shadow: 0 4px 15px rgba(0,122,255,0.4); margin-top: 8px; transition: transform 0.2s; }
         .btn-primary:active { transform: scale(0.96); }
         .btn-primary:disabled { opacity: 0.5; box-shadow: none; }
         .btn-icon-close { background: var(--input-bg); border: none; width: 30px; height: 30px; border-radius: 15px; color: var(--text-primary); font-size: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .btn-danger { background: rgba(255,59,48,0.1); color: var(--neon-red); border: 1px solid rgba(255,59,48,0.2); padding: 14px; border-radius: 18px; font-size: 16px; font-weight: 700; width: 100%; margin-top: 10px; cursor: pointer; }
+
+        /* 菜单弹窗 */
+        .action-sheet { width: 100%; max-width: 400px; padding: 16px; padding-bottom: calc(env(safe-area-inset-bottom) + 16px); transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .modal-overlay.is-active .action-sheet { transform: translateY(0); }
+        .action-group { background: var(--action-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-radius: 20px; margin-bottom: 12px; overflow: hidden; border: 1px solid var(--glass-border); }
+        .action-btn { width: 100%; padding: 18px; background: transparent; border: none; font-size: 17px; font-weight: 600; color: var(--neon-blue); border-bottom: 1px solid var(--glass-border); cursor: pointer; }
+        .action-btn:last-child { border-bottom: none; }
+        .action-btn:active { background: var(--input-bg); }
+        .action-btn-danger { color: var(--neon-red); }
 
         .empty-state { text-align: center; color: var(--text-secondary); margin-top: 30vh; font-size: 15px; font-weight: 500; }
         .empty-orb { width: 80px; height: 80px; margin: 0 auto 20px auto; border-radius: 40px; background: radial-gradient(circle at 30% 30%, var(--neon-blue), transparent); filter: blur(10px); opacity: 0.5; animation: pulse 4s infinite alternate; }
@@ -204,38 +189,88 @@
         </div>
 
         <main class="main-content">
-            <div class="empty-state" v-if="transactions.length === 0">
+            <div class="empty-state" v-if="groupedAssets.length === 0">
                 <div class="empty-orb"></div>
                 尚未记录任何交易<br><span style="font-size: 13px; opacity: 0.7;">点击上方 + 开启您的财富映射</span>
             </div>
 
-            <div class="glass-card" v-for="item in sortedTransactions" :key="item.id" @click="editTransaction(item)">
+            <!-- 核心：基于标的合并的资产卡片 -->
+            <div class="asset-card" v-for="group in groupedAssets" :key="group.name">
                 <div class="card-header">
-                    <div class="asset-info">
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
                         <div class="asset-name">
-                            <span class="glow-badge" :class="getBadgeClass(item.type)">{{ item.type }}</span>
-                            {{ item.name }}
+                            {{ group.name }}
                         </div>
-                        <div style="display: flex; gap: 6px; margin-top: 4px;">
-                            <span class="asset-code" v-if="item.code">{{ item.code }}</span>
-                            <span class="asset-code" style="background: transparent; padding:0;">{{ formatDateSimple(item.date) }}</span>
-                        </div>
+                        <span class="asset-code" v-if="group.code">{{ group.code }}</span>
                     </div>
-                    <div class="amount-display">
-                        <div class="total-amount" :style="{ color: getValueColor(item.type) }">
-                            {{ item.totalAmount > 0 ? '¥' + formatNumber(item.totalAmount) : '--' }}
+                    
+                    <!-- 目前单价动态输入区 -->
+                    <div class="current-price-box">
+                        <span class="price-label">目前单价</span>
+                        <div class="price-input-wrapper">
+                            <input type="number" 
+                                   class="price-input" 
+                                   step="0.001"
+                                   :value="assetMeta[group.name]?.currentPrice || group.lastTradePrice" 
+                                   @input="updatePrice(group.name, $event.target.value)"
+                                   placeholder="输入现价">
                         </div>
                     </div>
                 </div>
 
-                <div class="card-details">
-                    <div class="detail-item"><span class="detail-label">单价</span><span class="detail-value">{{ item.price || '--' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">数量</span><span class="detail-value">{{ item.quantity || '--' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">交易平台</span><span class="detail-value">{{ item.platform || '未记录' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">手续费</span><span class="detail-value">{{ item.fee ? '¥'+item.fee : '无' }}</span></div>
+                <!-- 自动计算的盈亏指标面板 -->
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">持仓市值 (Value)</div>
+                        <div class="stat-val">{{ formatNumber(group.marketValue) }}</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">浮动盈亏 (P/L)</div>
+                        <div class="stat-val" :class="getProfitClass(group.profit)">
+                            {{ group.profit > 0 ? '+' : '' }}{{ formatNumber(group.profit) }}
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">持仓数量 | 均本</div>
+                        <div class="stat-val" style="font-size: 14px;">
+                            {{ group.qty }} | {{ formatNumber(group.avgCost) }}
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">收益率 (ROI)</div>
+                        <div class="stat-val" :class="getProfitClass(group.profit)">
+                            {{ group.roiText }}
+                        </div>
+                    </div>
                 </div>
 
-                <div class="card-notes" v-if="item.notes">{{ item.notes }}</div>
+                <!-- 同一标的的交易流水折叠菜单 -->
+                <button class="tx-accordion-btn" @click="toggleGroup(group.name)">
+                    <span>查看此标的交易记录 ({{ group.transactions.length }}笔)</span>
+                    <span :style="{ transform: expandedGroups.has(group.name) ? 'rotate(180deg)' : 'rotate(0)' }" style="transition: 0.3s;">▼</span>
+                </button>
+
+                <!-- 流水列表 -->
+                <div class="tx-list" v-show="expandedGroups.has(group.name)">
+                    <div class="tx-item" v-for="tx in group.transactions" :key="tx.id" @click="editTransaction(tx)">
+                        <div class="tx-left">
+                            <span class="tx-type" :class="getTxTypeClass(tx.type)">{{ tx.type }}</span>
+                            <span class="tx-date">{{ formatDateSimple(tx.date) }}</span>
+                        </div>
+                        <div class="tx-right">
+                            <span class="tx-amount">{{ formatNumber((tx.price * tx.quantity) || tx.fee || 0) }}</span>
+                            <span class="tx-detail">
+                                <template v-if="tx.price && tx.quantity">
+                                    {{ tx.price }} × {{ tx.quantity }}
+                                </template>
+                                <template v-else-if="tx.fee">
+                                    手续费: {{ tx.fee }}
+                                </template>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
 
@@ -250,7 +285,7 @@
                     <button class="action-btn action-btn-danger" @click="clearAllData">🗑️ 清空所有数据</button>
                 </div>
                 <div class="action-group">
-                    <button class="action-btn action-btn-cancel" @click="showDataMenu = false">取消</button>
+                    <button class="action-btn" style="font-weight: 700; color: var(--text-primary);" @click="showDataMenu = false">取消</button>
                 </div>
             </div>
         </div>
@@ -286,67 +321,51 @@
                     </div>
 
                     <div class="form-row-2">
-                        <div class="input-group flex-2">
+                        <div class="input-group" style="flex: 2;">
                             <label class="input-label">标的名称</label>
-                            <!-- 优化：简化占位符长度 -->
-                            <input type="text" v-model="editedItem.name" placeholder="名称 (如: 台积电)" class="glass-input">
+                            <input type="text" v-model="editedItem.name" placeholder="必填 (如: 台积电)" class="glass-input">
                         </div>
-                        <div class="input-group flex-1">
+                        <div class="input-group" style="flex: 1;">
                             <label class="input-label">代码(选填)</label>
-                            <!-- 优化：简化占位符长度 -->
                             <input type="text" v-model="editedItem.code" placeholder="代码" class="glass-input">
                         </div>
                     </div>
 
                     <div class="form-row-2">
-                        <div class="input-group flex-1">
+                        <div class="input-group">
                             <label class="input-label">单价</label>
                             <input type="number" step="0.0001" v-model.number="editedItem.price" placeholder="0.00" class="glass-input">
                         </div>
-                        <div class="input-group flex-1">
+                        <div class="input-group">
                             <label class="input-label">数量</label>
                             <input type="number" step="0.0001" v-model.number="editedItem.quantity" placeholder="0" class="glass-input">
                         </div>
                     </div>
 
                     <div class="form-row-2">
-                        <div class="input-group flex-1">
+                        <div class="input-group">
                             <label class="input-label">手续费</label>
                             <input type="number" step="0.01" v-model.number="editedItem.fee" placeholder="0.00" class="glass-input">
                         </div>
-                        <div class="input-group flex-1">
+                        <div class="input-group">
                             <label class="input-label">平台</label>
-                            <input type="text" v-model="editedItem.platform" 
-                                   placeholder="如: 富途" class="glass-input" 
-                                   @focus="showPlatformMenu = true" 
-                                   @blur="delayHidePlatformMenu">
-                            
-                            <div class="glass-dropdown-menu" v-if="showPlatformMenu">
-                                <div class="glass-dropdown-item" v-for="p in platforms" :key="p" @mousedown="selectPlatform(p)">
-                                    {{ p }}
-                                </div>
-                            </div>
+                            <input type="text" v-model="editedItem.platform" placeholder="选填" class="glass-input">
                         </div>
                     </div>
 
                     <div class="input-group">
-                        <label class="input-label">决策日志与环境复盘</label>
+                        <label class="input-label">决策日志 (选填)</label>
                         <textarea v-model="editedItem.notes" placeholder="记录当下的思考：为什么做这笔交易？" class="glass-input"></textarea>
                     </div>
 
-                    <button class="btn-primary" @click="save" :disabled="!editedItem.name">
-                        保存数据节点
-                    </button>
-                    
-                    <button class="btn-danger" v-if="editedIndex > -1" @click="confirmDelete">
-                        抹除该记录
-                    </button>
+                    <button class="btn-primary" @click="save" :disabled="!editedItem.name">保存记录</button>
+                    <button class="btn-danger" v-if="editedIndex > -1" @click="confirmDelete">抹除该记录</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Vue 3 -->
+    <!-- Vue 3 核心逻辑 -->
     <script>
         const { createApp, ref, computed, watch, onMounted } = Vue;
 
@@ -354,18 +373,95 @@
             setup() {
                 const dialog = ref(false);
                 const showDataMenu = ref(false);
-                const showPlatformMenu = ref(false);
-                const transactions = ref([]);
-                const editedIndex = ref(-1);
+                const expandedGroups = ref(new Set());
                 
-                const transactionTypes =['买入', '卖出', '加仓', '减仓', '分红', '手续费'];
-                const platforms =['富途牛牛', '币安(Binance)', '欧易(OKX)', '华泰证券', '天天基金', '长桥'];
+                // 核心数据源
+                const transactions = ref([]); 
+                // 用于存储各标的的单独现价映射：{ "台积电": { currentPrice: 1000 } }
+                const assetMeta = ref({}); 
 
+                const editedIndex = ref(-1);
+                const transactionTypes =['买入', '卖出', '加仓', '减仓', '分红', '手续费'];
                 const defaultItem = { id: null, type: '买入', name: '', code: '', price: null, quantity: null, fee: null, date: '', platform: '', notes: '' };
                 const editedItem = ref({ ...defaultItem });
 
                 const formTitle = computed(() => editedIndex.value === -1 ? '新建交易' : '修改交易');
-                const sortedTransactions = computed(() => [...transactions.value].sort((a, b) => new Date(b.date) - new Date(a.date)));
+
+                // 🌟 核心算法：将流水账折叠合并为资产组合并计算盈亏
+                const groupedAssets = computed(() => {
+                    const groups = {};
+                    
+                    // 1. 按名称分组
+                    transactions.value.forEach(t => {
+                        if (!groups[t.name]) {
+                            groups[t.name] = { name: t.name, code: t.code, transactions: [], lastTradePrice: 0 };
+                        }
+                        groups[t.name].transactions.push(t);
+                        if (t.price > 0) groups[t.name].lastTradePrice = t.price; // 暂存最后一次交易价格作为默认现价
+                    });
+
+                    // 2. 为每个标的计算汇总数据
+                    return Object.values(groups).map(g => {
+                        let qty = 0, invested = 0, realized = 0, fees = 0, dividends = 0;
+                        
+                        g.transactions.forEach(t => {
+                            let q = parseFloat(t.quantity || 0);
+                            let p = parseFloat(t.price || 0);
+                            let f = parseFloat(t.fee || 0);
+                            let amount = p * q;
+                            
+                            fees += f;
+                            if (['买入', '加仓'].includes(t.type)) {
+                                qty += q;
+                                invested += amount;
+                            } else if (['卖出', '减仓'].includes(t.type)) {
+                                qty -= q;
+                                realized += amount;
+                            } else if (t.type === '分红') {
+                                dividends += amount || parseFloat(t.totalAmount || 0); // 假设分红直接填入了数量和单价或者被处理成了总额
+                            }
+                        });
+
+                        // 净成本 = 总投入 + 总手续费 - 总套现 - 总分红
+                        let netCost = invested + fees - realized - dividends;
+                        
+                        // 从 Meta 获取目前单价（用户手动修改的），如果没有则用最后一次交易价
+                        let currentPrice = parseFloat(assetMeta.value[g.name]?.currentPrice || g.lastTradePrice || 0);
+
+                        g.qty = qty;
+                        g.avgCost = qty > 0 ? (netCost / qty) : 0;
+                        g.marketValue = qty * currentPrice;
+                        g.profit = g.marketValue - netCost;
+                        
+                        // 收益率文字处理 (处理已收回本金的无限收益情况)
+                        if (netCost > 0) {
+                            g.roiText = ((g.profit / netCost) * 100).toFixed(2) + '%';
+                        } else {
+                            g.roiText = g.profit > 0 ? '已收回本金' : '0.00%';
+                        }
+
+                        // 对内部的流水按时间倒序排列
+                        g.transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+                        return g;
+                    });
+                });
+
+                // 交互控制
+                const toggleGroup = (name) => {
+                    const newSet = new Set(expandedGroups.value);
+                    if (newSet.has(name)) newSet.delete(name);
+                    else newSet.add(name);
+                    expandedGroups.value = newSet;
+                };
+
+                const updatePrice = (name, val) => {
+                    const price = parseFloat(val);
+                    if (!isNaN(price)) {
+                        if (!assetMeta.value[name]) assetMeta.value[name] = {};
+                        assetMeta.value[name].currentPrice = price;
+                        localStorage.setItem('ios26_asset_meta', JSON.stringify(assetMeta.value));
+                    }
+                };
 
                 const initDate = () => {
                     const now = new Date();
@@ -387,22 +483,7 @@
 
                 const closeDialog = () => { dialog.value = false; };
 
-                const selectPlatform = (p) => {
-                    editedItem.value.platform = p;
-                    showPlatformMenu.value = false;
-                };
-                
-                const delayHidePlatformMenu = () => {
-                    setTimeout(() => { showPlatformMenu.value = false; }, 150);
-                };
-
                 const save = () => {
-                    let total = 0;
-                    if (editedItem.value.price && editedItem.value.quantity) {
-                        total = editedItem.value.price * editedItem.value.quantity;
-                    }
-                    editedItem.value.totalAmount = total;
-
                     if (editedIndex.value > -1) {
                         transactions.value[editedIndex.value] = { ...editedItem.value };
                     } else {
@@ -413,22 +494,20 @@
                 };
 
                 const confirmDelete = () => {
-                    if (confirm('是否永久抹除该条记录？此操作不可逆。')) {
+                    if (confirm('是否永久抹除该条流水记录？')) {
                         transactions.value.splice(editedIndex.value, 1);
                         closeDialog();
                     }
                 };
                 
+                // 导入导出逻辑
                 const exportData = () => {
-                    if (transactions.value.length === 0) {
-                        alert("当前没有数据可供导出");
-                        return;
-                    }
-                    const dataStr = JSON.stringify(transactions.value, null, 2);
-                    const blob = new Blob([dataStr], { type: "application/json" });
+                    if (transactions.value.length === 0) return alert("没有数据可导出");
+                    const dump = { transactions: transactions.value, meta: assetMeta.value };
+                    const blob = new Blob([JSON.stringify(dump, null, 2)], { type: "application/json" });
                     const a = document.createElement("a");
                     a.href = URL.createObjectURL(blob);
-                    a.download = `Space_InvestLog_${new Date().toISOString().slice(0, 10)}.json`;
+                    a.download = `InvestLog_V2_${new Date().toISOString().slice(0, 10)}.json`;
                     a.click();
                     showDataMenu.value = false;
                 };
@@ -441,30 +520,30 @@
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         try {
-                            const importedData = JSON.parse(e.target.result);
-                            if (Array.isArray(importedData)) {
-                                const existingIds = new Set(transactions.value.map(t => t.id));
-                                let newCount = 0; let updateCount = 0;
-                                importedData.forEach(item => {
-                                    if (item.id) {
-                                        if (!existingIds.has(item.id)) {
-                                            transactions.value.push(item);
-                                            existingIds.add(item.id);
-                                            newCount++;
-                                        } else {
-                                            const idx = transactions.value.findIndex(t => t.id === item.id);
-                                            transactions.value[idx] = item;
-                                            updateCount++;
-                                        }
+                            const data = JSON.parse(e.target.result);
+                            let importedTxs = Array.isArray(data) ? data : (data.transactions ||[]);
+                            
+                            // 导入现价数据
+                            if (data.meta) assetMeta.value = { ...assetMeta.value, ...data.meta };
+
+                            const existingIds = new Set(transactions.value.map(t => t.id));
+                            let newCount = 0; let updateCount = 0;
+                            
+                            importedTxs.forEach(item => {
+                                if (item.id) {
+                                    if (!existingIds.has(item.id)) {
+                                        transactions.value.push(item);
+                                        existingIds.add(item.id);
+                                        newCount++;
+                                    } else {
+                                        const idx = transactions.value.findIndex(t => t.id === item.id);
+                                        transactions.value[idx] = item;
+                                        updateCount++;
                                     }
-                                });
-                                alert(`导入成功！\n新增 ${newCount} 条记录，更新 ${updateCount} 条记录。`);
-                            } else {
-                                alert('文件格式不正确，请选择有效的 JSON 备份文件。');
-                            }
-                        } catch (error) {
-                            alert('解析文件失败，文件可能已损坏。');
-                        }
+                                }
+                            });
+                            alert(`导入成功！新增 ${newCount} 条，更新 ${updateCount} 条。`);
+                        } catch (error) { alert('解析文件失败。'); }
                         event.target.value = '';
                         showDataMenu.value = false;
                     };
@@ -472,31 +551,34 @@
                 };
 
                 const clearAllData = () => {
-                    if (transactions.value.length === 0) return;
-                    if (confirm('警告：此操作将永久抹除所有本地记录！\n建议先执行导出备份。\n\n您确定要继续吗？')) {
+                    if (confirm('警告：此操作将永久抹除所有本地记录！\n确定要继续吗？')) {
                         transactions.value =[];
+                        assetMeta.value = {};
                         showDataMenu.value = false;
                     }
                 };
 
+                // UI 辅助
                 const getPillColorClass = (type) => {
                     if (['买入', '加仓'].includes(type)) return 'pill-buy';
                     if (['卖出', '减仓'].includes(type)) return 'pill-sell';
                     if (['分红'].includes(type)) return 'pill-div';
                     return 'pill-fee'; 
                 };
+                
+                const getTxTypeClass = (type) => {
+                    if (['买入', '加仓'].includes(type)) return 'type-buy';
+                    if (['卖出', '减仓'].includes(type)) return 'type-sell';
+                    if (['分红'].includes(type)) return 'type-div';
+                    return 'type-fee'; 
+                };
 
-                const getBadgeClass = (type) => {
-                    if (['买入', '加仓'].includes(type)) return 'badge-buy';
-                    if (['卖出', '减仓'].includes(type)) return 'badge-sell';
-                    if (['分红'].includes(type)) return 'badge-div';
+                const getProfitClass = (val) => {
+                    if (val > 0) return 'color-profit';
+                    if (val < 0) return 'color-loss';
                     return '';
                 };
-                const getValueColor = (type) => {
-                    if (['买入', '加仓'].includes(type)) return 'var(--neon-red)';
-                    if (['卖出', '减仓'].includes(type)) return 'var(--neon-green)';
-                    return 'var(--text-primary)';
-                };
+
                 const formatNumber = (num) => parseFloat(num).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 const formatDateSimple = (dateStr) => {
                     if (!dateStr) return '';
@@ -504,17 +586,20 @@
                     return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
                 };
 
+                // 数据持久化初始化
                 onMounted(() => {
-                    const saved = localStorage.getItem('ios26_investment_data');
-                    if (saved) transactions.value = JSON.parse(saved);
+                    const savedTxs = localStorage.getItem('ios26_investment_data');
+                    const savedMeta = localStorage.getItem('ios26_asset_meta');
+                    if (savedTxs) transactions.value = JSON.parse(savedTxs);
+                    if (savedMeta) assetMeta.value = JSON.parse(savedMeta);
                 });
+                
                 watch(transactions, (newVal) => localStorage.setItem('ios26_investment_data', JSON.stringify(newVal)), { deep: true });
 
                 return {
-                    dialog, showDataMenu, showPlatformMenu, transactions, sortedTransactions, editedItem, editedIndex,
-                    formTitle, transactionTypes, platforms,
-                    openDialog, closeDialog, save, editTransaction, confirmDelete, selectPlatform, delayHidePlatformMenu,
-                    getPillColorClass, getBadgeClass, getValueColor, formatNumber, formatDateSimple,
+                    dialog, showDataMenu, expandedGroups, transactions, assetMeta, groupedAssets, editedItem, editedIndex, formTitle, transactionTypes,
+                    toggleGroup, updatePrice, openDialog, closeDialog, save, editTransaction, confirmDelete, 
+                    getPillColorClass, getTxTypeClass, getProfitClass, formatNumber, formatDateSimple,
                     exportData, triggerImport, handleImport, clearAllData
                 };
             }
