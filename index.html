@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>TradeNest</title>
-    <!-- 专属纯代码矢量图标 (蓝色iOS圆角+上涨趋势线) -->
+    <!-- 专属纯代码矢量图标 -->
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cmVjdCB3aWR0aD0nMTAwJyBoZWlnaHQ9JzEwMCcgcng9JzIyJyBmaWxsPScjMDA3YWZmJy8+PHBhdGggZD0nTTI1IDY1IEw0NSA0NSBMNjAgNTUgTDc1IDMwJyBzdHJva2U9J3doaXRlJyBzdHJva2Utd2lkdGg9JzgnIGZpbGw9J25vbmUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPjxwb2x5bGluZSBwb2ludHM9JzYwIDMwIDc1IDMwIDc1IDQ1JyBzdHJva2U9J3doaXRlJyBzdHJva2Utd2lkdGg9JzgnIGZpbGw9J25vbmUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPjwvc3ZnPg==">
     
     <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.prod.js"></script>
@@ -21,7 +21,7 @@
             --input-bg: rgba(255, 255, 255, 0.6);
             --action-bg: rgba(255, 255, 255, 0.75);
             
-            --neon-red: #ff3b30; /* 盈利红 */
+            --neon-red: #ff3b30; /* 盈利红 (台/A股习惯) */
             --neon-green: #34c759; /* 亏损绿 */
             --neon-blue: #007aff;
             --neon-orange: #ff9500;
@@ -89,57 +89,22 @@
         .asset-code { font-size: 12px; color: var(--text-secondary); background: var(--input-bg); padding: 3px 8px; border-radius: 8px; font-weight: 600;}
         .header-roi { font-size: 16px; font-weight: 700; font-family: "SF Pro Rounded", sans-serif; display: flex; align-items: center; gap: 2px;}
 
-        /* ==================== 核心重构：全新现价调节条 ==================== */
-        .current-price-bar {
-            background: rgba(0, 122, 255, 0.05);
-            border: 1px solid rgba(0, 122, 255, 0.15);
-            border-radius: 16px;
-            padding: 12px 14px;
-            margin-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.05);
-        }
-        @media (prefers-color-scheme: dark) {
-            .current-price-bar { background: rgba(10, 132, 255, 0.1); border-color: rgba(10, 132, 255, 0.2); }
-        }
+        /* 现价全宽调节条 */
+        .current-price-bar { background: rgba(0, 122, 255, 0.05); border: 1px solid rgba(0, 122, 255, 0.15); border-radius: 16px; padding: 12px 14px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0, 122, 255, 0.05); }
+        @media (prefers-color-scheme: dark) { .current-price-bar { background: rgba(10, 132, 255, 0.1); border-color: rgba(10, 132, 255, 0.2); } }
         .price-bar-left { display: flex; flex-direction: column; }
         .price-label { font-size: 14px; font-weight: 700; color: var(--text-primary); }
         .price-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
-        
-        /* 输入框包裹层动效 */
-        .price-input-wrapper {
-            display: flex; align-items: center;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 6px 12px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
-            width: 140px; /* 默认宽度显著加宽 */
-            transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s;
-        }
-        .price-input-wrapper:focus-within {
-            width: 180px; /* 聚焦时进一步拉长 */
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
-        }
-        .price-input {
-            background: transparent; border: none;
-            width: 100%;
-            font-size: 20px; font-weight: 800;
-            color: var(--neon-blue);
-            font-family: "SF Pro Rounded", sans-serif;
-            text-align: right;
-        }
+        .price-input-wrapper { display: flex; align-items: center; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 6px 12px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); width: 140px; transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s; }
+        .price-input-wrapper:focus-within { width: 180px; border-color: var(--neon-blue); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15); }
+        .price-input { background: transparent; border: none; width: 100%; font-size: 20px; font-weight: 800; color: var(--neon-blue); font-family: "SF Pro Rounded", sans-serif; text-align: right; }
         .price-input::placeholder { color: rgba(134, 134, 139, 0.5); font-weight: 600;}
-        /* ================================================================ */
 
-        /* 核心数据网格 (重构为4宫格) */
+        /* 核心数据网格 */
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
         .stat-box { background: var(--input-bg); padding: 12px; border-radius: 16px; }
         .stat-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
-        .stat-val { font-size: 16px; font-weight: 700; }
+        .stat-val { font-size: 16px; font-weight: 700; font-family: "SF Pro Rounded", sans-serif;}
         .color-profit { color: var(--neon-red); }
         .color-loss { color: var(--neon-green); }
 
@@ -155,7 +120,7 @@
         .tx-type { font-size: 13px; font-weight: 700; }
         .tx-date { font-size: 11px; color: var(--text-secondary); }
         .tx-right { text-align: right; display: flex; flex-direction: column; gap: 4px; }
-        .tx-amount { font-size: 14px; font-weight: 700; }
+        .tx-amount { font-size: 14px; font-weight: 700; font-family: "SF Pro Rounded", sans-serif;}
         .tx-detail { font-size: 11px; color: var(--text-secondary); }
 
         .type-buy { color: var(--neon-red); }
@@ -163,7 +128,7 @@
         .type-div { color: var(--neon-orange); }
         .type-fee { color: var(--neon-blue); }
 
-        /* --- 表单弹窗 --- */
+        /* --- 弹窗体系 (Modal Sheet) --- */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; display: flex; align-items: flex-end; justify-content: center; }
         .modal-overlay.is-active { opacity: 1; pointer-events: auto; }
         .modal-sheet { background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glass-border); width: 100%; max-width: 480px; height: calc(100dvh - 16px); max-height: 96vh; border-radius: 32px 32px 0 0; padding: 20px 14px; padding-bottom: calc(env(safe-area-inset-bottom) + 20px); transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); display: flex; flex-direction: column; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); }
@@ -174,16 +139,27 @@
         .sheet-body { flex: 1; overflow-y: auto; padding-right: 4px; padding-bottom: 80px; }
         .sheet-body::-webkit-scrollbar { display: none; }
 
+        /* --- 资产统计总览 特殊样式 --- */
+        .global-hero { text-align: center; padding: 24px 20px; background: var(--input-bg); border-radius: 24px; margin-bottom: 16px; border: 1px solid var(--glass-border); }
+        .global-hero-label { font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;}
+        .global-hero-value { font-size: 42px; font-weight: 800; font-family: "SF Pro Rounded", sans-serif; margin-bottom: 8px; color: var(--text-primary); }
+        .global-hero-profit { font-size: 20px; font-weight: 700; font-family: "SF Pro Rounded", sans-serif; }
+        
+        .rank-card { display: flex; justify-content: space-between; align-items: center; background: var(--input-bg); padding: 16px; border-radius: 16px; margin-bottom: 10px; border: 1px solid var(--glass-border);}
+        .rank-info { display: flex; flex-direction: column; gap: 4px; }
+        .rank-title { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;}
+        .rank-name { font-size: 16px; font-weight: 700; }
+        .rank-val { font-size: 16px; font-weight: 700; font-family: "SF Pro Rounded", sans-serif; text-align: right; }
+
+        /* 表单元素 */
         .input-group { margin-bottom: 12px; position: relative; }
         .input-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; display: block; padding-left: 4px;}
         .glass-input { width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); padding: 12px 10px; border-radius: 14px; font-size: 16px; color: var(--text-primary); font-family: inherit; transition: all 0.3s ease; }
         .glass-input:focus { border-color: var(--neon-blue); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15); }
         textarea.glass-input { min-height: 80px; resize: none; }
         
-        /* 强制覆盖 iOS 原生时间选择器的样式，保证与 Textarea 绝对等宽 */
         input[type="datetime-local"].glass-input { -webkit-appearance: none; appearance: none; display: block; width: 100%; min-height: 44px; }
         input[type="datetime-local"].glass-input::-webkit-date-and-time-value { text-align: left; }
-
         .form-row-2 { display: flex; gap: 8px; margin-bottom: 12px; }
         .form-row-2 .input-group { margin-bottom: 0; flex: 1; }
 
@@ -204,11 +180,11 @@
         .btn-icon-close { background: var(--input-bg); border: none; width: 30px; height: 30px; border-radius: 15px; color: var(--text-primary); font-size: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .btn-danger { background: rgba(255,59,48,0.1); color: var(--neon-red); border: 1px solid rgba(255,59,48,0.2); padding: 14px; border-radius: 18px; font-size: 16px; font-weight: 700; width: 100%; margin-top: 10px; cursor: pointer; }
 
-        /* 菜单弹窗 */
+        /* 菜单弹窗 (Action Sheet) */
         .action-sheet { width: 100%; max-width: 400px; padding: 16px; padding-bottom: calc(env(safe-area-inset-bottom) + 16px); transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .modal-overlay.is-active .action-sheet { transform: translateY(0); }
         .action-group { background: var(--action-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-radius: 20px; margin-bottom: 12px; overflow: hidden; border: 1px solid var(--glass-border); }
-        .action-btn { width: 100%; padding: 18px; background: transparent; border: none; font-size: 17px; font-weight: 600; color: var(--neon-blue); border-bottom: 1px solid var(--glass-border); cursor: pointer; }
+        .action-btn { width: 100%; padding: 18px; background: transparent; border: none; font-size: 17px; font-weight: 600; color: var(--neon-blue); border-bottom: 1px solid var(--glass-border); cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px;}
         .action-btn:last-child { border-bottom: none; }
         .action-btn:active { background: var(--input-bg); }
         .action-btn-danger { color: var(--neon-red); }
@@ -224,7 +200,7 @@
 
         <div class="dynamic-island-container">
             <div class="dynamic-island">
-                <button class="island-btn" @click="showDataMenu = true" title="数据管理">
+                <button class="island-btn" @click="showDataMenu = true" title="菜单">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle>
                     </svg>
@@ -243,8 +219,6 @@
             </div>
 
             <div class="asset-card" v-for="group in groupedAssets" :key="group.name">
-                
-                <!-- 资产标题区 (附带 ROI 徽章) -->
                 <div class="card-header">
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <div class="asset-name">{{ group.name }}</div>
@@ -257,7 +231,6 @@
                     </div>
                 </div>
 
-                <!-- 现价全宽调节条 -->
                 <div class="current-price-bar">
                     <div class="price-bar-left">
                         <span class="price-label">目前单价</span>
@@ -273,7 +246,6 @@
                     </div>
                 </div>
 
-                <!-- 4宫格统计区 -->
                 <div class="stats-grid">
                     <div class="stat-box">
                         <div class="stat-label">持仓市值 (Value)</div>
@@ -309,25 +281,26 @@
                         <div class="tx-right">
                             <span class="tx-amount">{{ formatNumber((tx.price * tx.quantity) || tx.fee || 0) }}</span>
                             <span class="tx-detail">
-                                <template v-if="tx.price && tx.quantity">
-                                    {{ tx.price }} × {{ tx.quantity }}
-                                </template>
-                                <template v-else-if="tx.fee">
-                                    手续费: {{ tx.fee }}
-                                </template>
+                                <template v-if="tx.price && tx.quantity">{{ tx.price }} × {{ tx.quantity }}</template>
+                                <template v-else-if="tx.fee">手续费: {{ tx.fee }}</template>
                             </span>
                         </div>
                     </div>
                 </div>
-
             </div>
         </main>
 
+        <!-- 左侧菜单 (包含进入全局统计的入口) -->
         <div class="modal-overlay" :class="{'is-active': showDataMenu}" @click.self="showDataMenu = false">
             <div class="action-sheet">
                 <div class="action-group">
-                    <button class="action-btn" @click="triggerImport">📥 导入数据</button>
-                    <button class="action-btn" @click="exportData">📤 导出备份</button>
+                    <button class="action-btn" @click="openStatsMenu">
+                        📊 资产统计总览
+                    </button>
+                </div>
+                <div class="action-group">
+                    <button class="action-btn" @click="triggerImport">📥 导入数据备份</button>
+                    <button class="action-btn" @click="exportData">📤 导出本地数据</button>
                 </div>
                 <div class="action-group">
                     <button class="action-btn action-btn-danger" @click="clearAllData">🗑️ 清空所有数据</button>
@@ -338,6 +311,77 @@
             </div>
         </div>
 
+        <!-- ================= 全新：资产统计总览 (二级菜单) ================= -->
+        <div class="modal-overlay" :class="{'is-active': showStatsMenu}">
+            <div class="modal-sheet">
+                <div class="sheet-drag-handle"></div>
+                <div class="sheet-header">
+                    <div class="sheet-title">资产统计总览</div>
+                    <button class="btn-icon-close" @click="showStatsMenu = false">✕</button>
+                </div>
+
+                <div class="sheet-body">
+                    <!-- 核心大满贯展示区 -->
+                    <div class="global-hero">
+                        <div class="global-hero-label">总持仓市值 (Market Value)</div>
+                        <div class="global-hero-value">¥{{ formatNumber(globalStats.totalValue) }}</div>
+                        <div class="global-hero-profit" :class="getProfitClass(globalStats.totalProfit)">
+                            {{ globalStats.totalProfit > 0 ? '+' : '' }}{{ formatNumber(globalStats.totalProfit) }} ({{ globalStats.totalRoiText }})
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-label">总净投入本金</div>
+                            <div class="stat-val">{{ formatNumber(globalStats.totalCost) }}</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">记录标的数</div>
+                            <div class="stat-val">{{ groupedAssets.length }} 个</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">累计产生分红</div>
+                            <div class="stat-val color-profit">+{{ formatNumber(globalStats.totalDividends) }}</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">累计产生手续费</div>
+                            <div class="stat-val" style="color: var(--neon-blue);">-{{ formatNumber(globalStats.totalFees) }}</div>
+                        </div>
+                    </div>
+
+                    <div style="margin: 24px 0 12px 4px; font-weight: 700; font-size: 18px;">持仓表现极值</div>
+                    
+                    <div class="rank-card" v-if="performanceRank.best">
+                        <div class="rank-info">
+                            <span class="rank-title color-profit">🔥 最佳表现 (Top Gainer)</span>
+                            <span class="rank-name">{{ performanceRank.best.name }}</span>
+                        </div>
+                        <div class="rank-val color-profit">
+                            +{{ formatNumber(performanceRank.best.profit) }}<br>
+                            <span style="font-size: 13px;">{{ performanceRank.best.roiText }}</span>
+                        </div>
+                    </div>
+
+                    <div class="rank-card" v-if="performanceRank.worst">
+                        <div class="rank-info">
+                            <span class="rank-title color-loss">🧊 最差表现 (Top Loser)</span>
+                            <span class="rank-name">{{ performanceRank.worst.name }}</span>
+                        </div>
+                        <div class="rank-val color-loss">
+                            {{ formatNumber(performanceRank.worst.profit) }}<br>
+                            <span style="font-size: 13px;">{{ performanceRank.worst.roiText }}</span>
+                        </div>
+                    </div>
+
+                    <div v-if="!performanceRank.best && !performanceRank.worst" class="empty-state" style="margin-top: 20px;">
+                        暂无盈亏数据产生
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+
+        <!-- 交易表单 -->
         <div class="modal-overlay" :class="{'is-active': dialog}">
             <div class="modal-sheet">
                 <div class="sheet-drag-handle"></div>
@@ -420,6 +464,7 @@
             setup() {
                 const dialog = ref(false);
                 const showDataMenu = ref(false);
+                const showStatsMenu = ref(false); // 控制全局统计菜单
                 const expandedGroups = ref(new Set());
                 
                 const transactions = ref([]); 
@@ -432,6 +477,7 @@
 
                 const formTitle = computed(() => editedIndex.value === -1 ? '新建交易' : '修改交易');
 
+                // 分组计算逻辑 (增加了 netCost, fees, dividends 等用于全局统计的数据返回)
                 const groupedAssets = computed(() => {
                     const groups = {};
                     
@@ -468,6 +514,9 @@
                         let currentPrice = parseFloat(assetMeta.value[g.name]?.currentPrice || g.lastTradePrice || 0);
 
                         g.qty = qty;
+                        g.netCost = netCost; // 暴露给全局统计
+                        g.fees = fees;       // 暴露给全局统计
+                        g.dividends = dividends; // 暴露给全局统计
                         g.avgCost = qty > 0 ? (netCost / qty) : 0;
                         g.marketValue = qty * currentPrice;
                         g.profit = g.marketValue - netCost;
@@ -482,6 +531,39 @@
                         return g;
                     });
                 });
+
+                // ==================== 全局统计计算 ====================
+                const globalStats = computed(() => {
+                    let totalCost = 0, totalValue = 0, totalProfit = 0;
+                    let totalFees = 0, totalDividends = 0;
+                    
+                    groupedAssets.value.forEach(g => {
+                        totalCost += g.netCost;
+                        totalValue += g.marketValue;
+                        totalProfit += g.profit;
+                        totalFees += g.fees;
+                        totalDividends += g.dividends;
+                    });
+
+                    let totalRoiText = '0.00%';
+                    if (totalCost > 0) {
+                        totalRoiText = ((totalProfit / totalCost) * 100).toFixed(2) + '%';
+                    } else if (totalProfit > 0) {
+                        totalRoiText = '已收回本金';
+                    }
+
+                    return { totalCost, totalValue, totalProfit, totalRoiText, totalFees, totalDividends };
+                });
+
+                // 计算表现最好与最差的标的
+                const performanceRank = computed(() => {
+                    const sorted = [...groupedAssets.value].sort((a, b) => b.profit - a.profit);
+                    return {
+                        best: sorted.length > 0 && sorted[0].profit > 0 ? sorted[0] : null,
+                        worst: sorted.length > 0 && sorted[sorted.length - 1].profit < 0 ? sorted[sorted.length - 1] : null
+                    };
+                });
+                // =======================================================
 
                 const toggleGroup = (name) => {
                     const newSet = new Set(expandedGroups.value);
@@ -536,6 +618,12 @@
                     }
                 };
                 
+                // 打开统计菜单
+                const openStatsMenu = () => {
+                    showDataMenu.value = false;
+                    setTimeout(() => { showStatsMenu.value = true; }, 50); // 微延迟保证动画顺滑
+                };
+
                 const exportData = () => {
                     if (transactions.value.length === 0) return alert("没有数据可导出");
                     const dump = { transactions: transactions.value, meta: assetMeta.value };
@@ -633,8 +721,9 @@
                 watch(transactions, (newVal) => localStorage.setItem('ios26_investment_data', JSON.stringify(newVal)), { deep: true });
 
                 return {
-                    dialog, showDataMenu, expandedGroups, transactions, assetMeta, groupedAssets, editedItem, editedIndex, formTitle, transactionTypes,
-                    toggleGroup, updatePrice, openDialog, closeDialog, save, editTransaction, confirmDelete, 
+                    dialog, showDataMenu, showStatsMenu, expandedGroups, transactions, assetMeta, groupedAssets, 
+                    globalStats, performanceRank, editedItem, editedIndex, formTitle, transactionTypes,
+                    toggleGroup, updatePrice, openDialog, closeDialog, openStatsMenu, save, editTransaction, confirmDelete, 
                     getPillColorClass, getTxTypeClass, getProfitClass, formatNumber, formatDateSimple,
                     exportData, triggerImport, handleImport, clearAllData
                 };
