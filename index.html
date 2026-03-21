@@ -21,7 +21,7 @@
             --input-bg: rgba(255, 255, 255, 0.6);
             --action-bg: rgba(255, 255, 255, 0.75);
             
-            --neon-red: #ff3b30; /* 盈利红 (台/A股习惯) */
+            --neon-red: #ff3b30; /* 盈利红 (台股习惯) */
             --neon-green: #34c759; /* 亏损绿 */
             --neon-blue: #007aff;
             --neon-orange: #ff9500;
@@ -108,12 +108,17 @@
         .color-profit { color: var(--neon-red); }
         .color-loss { color: var(--neon-green); }
 
-        /* 交易流水折叠面板 */
-        .tx-accordion-btn { width: 100%; background: transparent; border: 1px dashed var(--glass-border); border-radius: 12px; padding: 10px; font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        /* AI 与 流水 折叠按钮 */
+        .card-actions { display: flex; gap: 8px; margin-top: 10px; }
+        .tx-accordion-btn { flex: 1; background: transparent; border: 1px dashed var(--glass-border); border-radius: 12px; padding: 10px; font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 4px; transition: background 0.2s;}
         .tx-accordion-btn:active { background: var(--input-bg); }
+
+        /* ✨ AI 洞察按钮 */
+        .btn-ai-insight { flex: 1; background: linear-gradient(135deg, #FF2E93 0%, #FF8000 100%); color: #fff; border: none; border-radius: 12px; padding: 10px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(255, 46, 147, 0.3); transition: transform 0.2s; }
+        .btn-ai-insight:active { transform: scale(0.96); }
+
+        /* 流水列表 */
         .tx-list { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
-        
-        /* 单笔流水记录 */
         .tx-item { background: var(--input-bg); border-radius: 12px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border: 1px solid transparent; transition: border 0.2s; }
         .tx-item:active { border-color: var(--neon-blue); }
         .tx-left { display: flex; flex-direction: column; gap: 4px; }
@@ -144,12 +149,23 @@
         .global-hero-label { font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;}
         .global-hero-value { font-size: 42px; font-weight: 800; font-family: "SF Pro Rounded", sans-serif; margin-bottom: 8px; color: var(--text-primary); }
         .global-hero-profit { font-size: 20px; font-weight: 700; font-family: "SF Pro Rounded", sans-serif; }
-        
         .rank-card { display: flex; justify-content: space-between; align-items: center; background: var(--input-bg); padding: 16px; border-radius: 16px; margin-bottom: 10px; border: 1px solid var(--glass-border);}
         .rank-info { display: flex; flex-direction: column; gap: 4px; }
         .rank-title { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;}
         .rank-name { font-size: 16px; font-weight: 700; }
         .rank-val { font-size: 16px; font-weight: 700; font-family: "SF Pro Rounded", sans-serif; text-align: right; }
+
+        /* ================= AI 洞察弹窗样式 ================= */
+        .ai-loading-box { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; text-align: center; color: var(--text-secondary);}
+        .ai-orb { width: 60px; height: 60px; border-radius: 30px; background: linear-gradient(135deg, #FF2E93, #FF8000); animation: ai-pulse 1.5s infinite alternate; margin-bottom: 20px; filter: blur(8px); }
+        @keyframes ai-pulse { 0% { transform: scale(0.9); opacity: 0.6; } 100% { transform: scale(1.2); opacity: 1; } }
+        
+        .ai-section-title { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 6px; margin: 20px 0 12px 4px; }
+        .ai-advice-card { background: rgba(255, 46, 147, 0.05); border: 1px solid rgba(255, 46, 147, 0.2); border-radius: 16px; padding: 16px; font-size: 15px; line-height: 1.6; color: var(--text-primary); margin-bottom: 24px; box-shadow: 0 4px 12px rgba(255, 46, 147, 0.05);}
+        .ai-news-item { background: var(--input-bg); border-radius: 16px; padding: 14px; margin-bottom: 10px; border: 1px solid var(--glass-border); transition: transform 0.2s; cursor: pointer; }
+        .ai-news-item:active { transform: scale(0.98); }
+        .ai-news-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .ai-news-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); }
 
         /* 表单元素 */
         .input-group { margin-bottom: 12px; position: relative; }
@@ -157,7 +173,6 @@
         .glass-input { width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); padding: 12px 10px; border-radius: 14px; font-size: 16px; color: var(--text-primary); font-family: inherit; transition: all 0.3s ease; }
         .glass-input:focus { border-color: var(--neon-blue); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15); }
         textarea.glass-input { min-height: 80px; resize: none; }
-        
         input[type="datetime-local"].glass-input { -webkit-appearance: none; appearance: none; display: block; width: 100%; min-height: 44px; }
         input[type="datetime-local"].glass-input::-webkit-date-and-time-value { text-align: left; }
         .form-row-2 { display: flex; gap: 8px; margin-bottom: 12px; }
@@ -191,13 +206,13 @@
 
         .empty-state { text-align: center; color: var(--text-secondary); margin-top: 30vh; font-size: 15px; font-weight: 500; }
         .empty-orb { width: 80px; height: 80px; margin: 0 auto 20px auto; border-radius: 40px; background: radial-gradient(circle at 30% 30%, var(--neon-blue), transparent); filter: blur(10px); opacity: 0.5; animation: pulse 4s infinite alternate; }
-        @keyframes pulse { 0% { transform: scale(0.8); opacity: 0.3; } 100% { transform: scale(1.2); opacity: 0.6; } }
     </style>
 </head>
 <body>
     <div id="app">
         <input type="file" id="fileInput" accept=".json" @change="handleImport" style="display: none">
 
+        <!-- 顶部灵动岛 -->
         <div class="dynamic-island-container">
             <div class="dynamic-island">
                 <button class="island-btn" @click="showDataMenu = true" title="菜单">
@@ -218,6 +233,7 @@
                 尚未记录任何交易<br><span style="font-size: 13px; opacity: 0.7;">点击上方 + 开启您的财富映射</span>
             </div>
 
+            <!-- 主页资产卡片 -->
             <div class="asset-card" v-for="group in groupedAssets" :key="group.name">
                 <div class="card-header">
                     <div style="display: flex; align-items: center; gap: 8px;">
@@ -267,11 +283,19 @@
                     </div>
                 </div>
 
-                <button class="tx-accordion-btn" @click="toggleGroup(group.name)">
-                    <span>查看此标的交易记录 ({{ group.transactions.length }}笔)</span>
-                    <span :style="{ transform: expandedGroups.has(group.name) ? 'rotate(180deg)' : 'rotate(0)' }" style="transition: 0.3s;">▼</span>
-                </button>
+                <!-- 操作按钮区 -->
+                <div class="card-actions">
+                    <button class="tx-accordion-btn" @click="toggleGroup(group.name)">
+                        <span :style="{ transform: expandedGroups.has(group.name) ? 'rotate(180deg)' : 'rotate(0)' }" style="transition: 0.3s; font-size: 10px;">▼</span>
+                        交易流水 ({{ group.transactions.length }})
+                    </button>
+                    <!-- 全新 AI 洞察入口 -->
+                    <button class="btn-ai-insight" @click="openAiAnalysis(group)">
+                        ✨ AI 洞察
+                    </button>
+                </div>
 
+                <!-- 隐藏的流水列表 -->
                 <div class="tx-list" v-show="expandedGroups.has(group.name)">
                     <div class="tx-item" v-for="tx in group.transactions" :key="tx.id" @click="editTransaction(tx)">
                         <div class="tx-left">
@@ -290,13 +314,11 @@
             </div>
         </main>
 
-        <!-- 左侧菜单 (包含进入全局统计的入口) -->
+        <!-- 左上角菜单选项 -->
         <div class="modal-overlay" :class="{'is-active': showDataMenu}" @click.self="showDataMenu = false">
             <div class="action-sheet">
                 <div class="action-group">
-                    <button class="action-btn" @click="openStatsMenu">
-                        📊 资产统计总览
-                    </button>
+                    <button class="action-btn" @click="openStatsMenu">📊 资产统计总览</button>
                 </div>
                 <div class="action-group">
                     <button class="action-btn" @click="triggerImport">📥 导入数据备份</button>
@@ -311,7 +333,7 @@
             </div>
         </div>
 
-        <!-- ================= 全新：资产统计总览 (二级菜单) ================= -->
+        <!-- 资产统计总览 -->
         <div class="modal-overlay" :class="{'is-active': showStatsMenu}">
             <div class="modal-sheet">
                 <div class="sheet-drag-handle"></div>
@@ -321,7 +343,6 @@
                 </div>
 
                 <div class="sheet-body">
-                    <!-- 核心大满贯展示区 -->
                     <div class="global-hero">
                         <div class="global-hero-label">总持仓市值 (Market Value)</div>
                         <div class="global-hero-value">¥{{ formatNumber(globalStats.totalValue) }}</div>
@@ -331,22 +352,10 @@
                     </div>
 
                     <div class="stats-grid">
-                        <div class="stat-box">
-                            <div class="stat-label">总净投入本金</div>
-                            <div class="stat-val">{{ formatNumber(globalStats.totalCost) }}</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">记录标的数</div>
-                            <div class="stat-val">{{ groupedAssets.length }} 个</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">累计产生分红</div>
-                            <div class="stat-val color-profit">+{{ formatNumber(globalStats.totalDividends) }}</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">累计产生手续费</div>
-                            <div class="stat-val" style="color: var(--neon-blue);">-{{ formatNumber(globalStats.totalFees) }}</div>
-                        </div>
+                        <div class="stat-box"><div class="stat-label">总净投入本金</div><div class="stat-val">{{ formatNumber(globalStats.totalCost) }}</div></div>
+                        <div class="stat-box"><div class="stat-label">记录标的数</div><div class="stat-val">{{ groupedAssets.length }} 个</div></div>
+                        <div class="stat-box"><div class="stat-label">累计产生分红</div><div class="stat-val color-profit">+{{ formatNumber(globalStats.totalDividends) }}</div></div>
+                        <div class="stat-box"><div class="stat-label">累计产生手续费</div><div class="stat-val" style="color: var(--neon-blue);">-{{ formatNumber(globalStats.totalFees) }}</div></div>
                     </div>
 
                     <div style="margin: 24px 0 12px 4px; font-weight: 700; font-size: 18px;">持仓表现极值</div>
@@ -356,10 +365,7 @@
                             <span class="rank-title color-profit">🔥 最佳表现 (Top Gainer)</span>
                             <span class="rank-name">{{ performanceRank.best.name }}</span>
                         </div>
-                        <div class="rank-val color-profit">
-                            +{{ formatNumber(performanceRank.best.profit) }}<br>
-                            <span style="font-size: 13px;">{{ performanceRank.best.roiText }}</span>
-                        </div>
+                        <div class="rank-val color-profit">+{{ formatNumber(performanceRank.best.profit) }}<br><span style="font-size: 13px;">{{ performanceRank.best.roiText }}</span></div>
                     </div>
 
                     <div class="rank-card" v-if="performanceRank.worst">
@@ -367,19 +373,51 @@
                             <span class="rank-title color-loss">🧊 最差表现 (Top Loser)</span>
                             <span class="rank-name">{{ performanceRank.worst.name }}</span>
                         </div>
-                        <div class="rank-val color-loss">
-                            {{ formatNumber(performanceRank.worst.profit) }}<br>
-                            <span style="font-size: 13px;">{{ performanceRank.worst.roiText }}</span>
-                        </div>
-                    </div>
-
-                    <div v-if="!performanceRank.best && !performanceRank.worst" class="empty-state" style="margin-top: 20px;">
-                        暂无盈亏数据产生
+                        <div class="rank-val color-loss">{{ formatNumber(performanceRank.worst.profit) }}<br><span style="font-size: 13px;">{{ performanceRank.worst.roiText }}</span></div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
+
+        <!-- ================= 全新：AI 洞察与新闻弹窗 ================= -->
+        <div class="modal-overlay" :class="{'is-active': showAiModal}">
+            <div class="modal-sheet">
+                <div class="sheet-drag-handle"></div>
+                <div class="sheet-header">
+                    <div class="sheet-title">✨ AI 洞察 - {{ aiActiveAsset?.name }}</div>
+                    <button class="btn-icon-close" @click="showAiModal = false">✕</button>
+                </div>
+
+                <div class="sheet-body">
+                    <!-- 加载状态 -->
+                    <div class="ai-loading-box" v-if="aiLoading">
+                        <div class="ai-orb"></div>
+                        <h3 style="margin-bottom: 8px;">AI 正在深度分析中</h3>
+                        <p style="font-size: 13px; max-width: 80%;">正在扫描全网实时新闻、分析基本面，并结合您当前的持仓成本与盈亏数据计算策略...</p>
+                    </div>
+
+                    <!-- 分析结果 -->
+                    <div v-else-if="aiData">
+                        <!-- AI 投资建议 -->
+                        <div class="ai-section-title">💡 专属投资建议</div>
+                        <div class="ai-advice-card">
+                            {{ aiData.advice }}
+                        </div>
+
+                        <!-- 模拟新闻流 -->
+                        <div class="ai-section-title">📰 近期市场动态</div>
+                        <div class="ai-news-item" v-for="(news, idx) in aiData.news" :key="idx" @click="alert('演示功能：在实际应用中，点击此处将跳转至新闻详情页。')">
+                            <div class="ai-news-title">{{ news.title }}</div>
+                            <div class="ai-news-meta">
+                                <span>{{ news.source }}</span>
+                                <span>{{ news.time }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ========================================================= -->
 
         <!-- 交易表单 -->
         <div class="modal-overlay" :class="{'is-active': dialog}">
@@ -395,11 +433,7 @@
                         <label class="input-label">交易类型</label>
                         <div class="type-pills-container">
                             <div v-for="type in transactionTypes" :key="type" 
-                                 class="type-pill" 
-                                 :class="[
-                                     {'is-active': editedItem.type === type},
-                                     getPillColorClass(type)
-                                 ]"
+                                 class="type-pill" :class="[{'is-active': editedItem.type === type}, getPillColorClass(type)]"
                                  @click="editedItem.type = type">
                                 {{ type }}
                             </div>
@@ -464,9 +498,15 @@
             setup() {
                 const dialog = ref(false);
                 const showDataMenu = ref(false);
-                const showStatsMenu = ref(false); // 控制全局统计菜单
+                const showStatsMenu = ref(false);
                 const expandedGroups = ref(new Set());
                 
+                // AI 功能状态
+                const showAiModal = ref(false);
+                const aiLoading = ref(false);
+                const aiActiveAsset = ref(null);
+                const aiData = ref(null);
+
                 const transactions = ref([]); 
                 const assetMeta = ref({}); 
 
@@ -477,85 +517,57 @@
 
                 const formTitle = computed(() => editedIndex.value === -1 ? '新建交易' : '修改交易');
 
-                // 分组计算逻辑 (增加了 netCost, fees, dividends 等用于全局统计的数据返回)
+                // 核心资产包计算
                 const groupedAssets = computed(() => {
                     const groups = {};
-                    
                     transactions.value.forEach(t => {
-                        if (!groups[t.name]) {
-                            groups[t.name] = { name: t.name, code: t.code, transactions:[], lastTradePrice: 0 };
-                        }
+                        if (!groups[t.name]) groups[t.name] = { name: t.name, code: t.code, transactions:[], lastTradePrice: 0 };
                         groups[t.name].transactions.push(t);
                         if (t.price > 0) groups[t.name].lastTradePrice = t.price; 
                     });
 
                     return Object.values(groups).map(g => {
                         let qty = 0, invested = 0, realized = 0, fees = 0, dividends = 0;
-                        
                         g.transactions.forEach(t => {
-                            let q = parseFloat(t.quantity || 0);
-                            let p = parseFloat(t.price || 0);
-                            let f = parseFloat(t.fee || 0);
+                            let q = parseFloat(t.quantity || 0), p = parseFloat(t.price || 0), f = parseFloat(t.fee || 0);
                             let amount = p * q;
-                            
                             fees += f;
-                            if (['买入', '加仓'].includes(t.type)) {
-                                qty += q;
-                                invested += amount;
-                            } else if (['卖出', '减仓'].includes(t.type)) {
-                                qty -= q;
-                                realized += amount;
-                            } else if (t.type === '分红') {
-                                dividends += amount || parseFloat(t.totalAmount || 0); 
-                            }
+                            if (['买入', '加仓'].includes(t.type)) { qty += q; invested += amount; }
+                            else if (['卖出', '减仓'].includes(t.type)) { qty -= q; realized += amount; }
+                            else if (t.type === '分红') { dividends += amount || parseFloat(t.totalAmount || 0); }
                         });
 
                         let netCost = invested + fees - realized - dividends;
                         let currentPrice = parseFloat(assetMeta.value[g.name]?.currentPrice || g.lastTradePrice || 0);
 
-                        g.qty = qty;
-                        g.netCost = netCost; // 暴露给全局统计
-                        g.fees = fees;       // 暴露给全局统计
-                        g.dividends = dividends; // 暴露给全局统计
+                        g.qty = qty; g.netCost = netCost; g.fees = fees; g.dividends = dividends;
                         g.avgCost = qty > 0 ? (netCost / qty) : 0;
                         g.marketValue = qty * currentPrice;
                         g.profit = g.marketValue - netCost;
                         
-                        if (netCost > 0) {
-                            g.roiText = ((g.profit / netCost) * 100).toFixed(2) + '%';
-                        } else {
-                            g.roiText = g.profit > 0 ? '已收回本金' : '0.00%';
-                        }
+                        if (netCost > 0) g.roiText = ((g.profit / netCost) * 100).toFixed(2) + '%';
+                        else g.roiText = g.profit > 0 ? '已收回本金' : '0.00%';
 
                         g.transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
                         return g;
                     });
                 });
 
-                // ==================== 全局统计计算 ====================
+                // 全局统计计算
                 const globalStats = computed(() => {
-                    let totalCost = 0, totalValue = 0, totalProfit = 0;
-                    let totalFees = 0, totalDividends = 0;
-                    
+                    let totalCost = 0, totalValue = 0, totalProfit = 0, totalFees = 0, totalDividends = 0;
                     groupedAssets.value.forEach(g => {
-                        totalCost += g.netCost;
-                        totalValue += g.marketValue;
-                        totalProfit += g.profit;
-                        totalFees += g.fees;
-                        totalDividends += g.dividends;
+                        totalCost += g.netCost; totalValue += g.marketValue; totalProfit += g.profit;
+                        totalFees += g.fees; totalDividends += g.dividends;
                     });
 
                     let totalRoiText = '0.00%';
-                    if (totalCost > 0) {
-                        totalRoiText = ((totalProfit / totalCost) * 100).toFixed(2) + '%';
-                    } else if (totalProfit > 0) {
-                        totalRoiText = '已收回本金';
-                    }
+                    if (totalCost > 0) totalRoiText = ((totalProfit / totalCost) * 100).toFixed(2) + '%';
+                    else if (totalProfit > 0) totalRoiText = '已收回本金';
 
                     return { totalCost, totalValue, totalProfit, totalRoiText, totalFees, totalDividends };
                 });
 
-                // 计算表现最好与最差的标的
                 const performanceRank = computed(() => {
                     const sorted = [...groupedAssets.value].sort((a, b) => b.profit - a.profit);
                     return {
@@ -563,12 +575,66 @@
                         worst: sorted.length > 0 && sorted[sorted.length - 1].profit < 0 ? sorted[sorted.length - 1] : null
                     };
                 });
-                // =======================================================
+
+                // ==================== 🌟 核心：模拟 AI 生成逻辑 ====================
+                const openAiAnalysis = (group) => {
+                    aiActiveAsset.value = group;
+                    aiData.value = null;
+                    aiLoading.value = true;
+                    showAiModal.value = true;
+
+                    // 模拟网络请求延迟 (1.5秒)
+                    setTimeout(() => {
+                        const name = group.name.toUpperCase();
+                        let newsMock =[];
+                        let adviceContext = "";
+
+                        // 1. 根据名字特征生成“假新闻”
+                        if (name.includes('台积电') || name.includes('TSMC') || name.includes('2330')) {
+                            newsMock =[
+                                { title: `外资重申【${group.name}】买入评级，受惠AI芯片强劲需求，先进制程产能满载至年底。`, source: '彭博财经', time: '2小时前' },
+                                { title: `【${group.name}】最新财报超预期，毛利率维持高位，供应链透露明年资本支出再创新高。`, source: '经济日报', time: '5小时前' },
+                                { title: `半导体板块震荡，分析师指【${group.name}】护城河坚固，短期回调即是布局良机。`, source: 'Yahoo Finance', time: '1天前' }
+                            ];
+                        } else if (name.includes('BTC') || name.includes('比特币') || name.includes('ETH')) {
+                            newsMock =[
+                                { title: `【${group.name}】突破关键阻力位！华尔街现货 ETF 资金呈现净流入，机构情绪回暖。`, source: 'CoinDesk', time: '1小时前' },
+                                { title: `链上数据追踪：巨鲸地址过去24小时内大额增持【${group.name}】。`, source: '区块律动', time: '3小时前' },
+                                { title: `监管动态：美联储降息预期升温，或为【${group.name}】等加密资产注入流动性。`, source: '华尔街见闻', time: '昨夜' }
+                            ];
+                        } else {
+                            // 兜底通用新闻
+                            newsMock =[
+                                { title: `【${group.name}】近期机构资金流向出现分歧，后市方向有待基本面进一步确认。`, source: '市场观察', time: '3小时前' },
+                                { title: `行业观察：【${group.name}】所在板块面临宏观经济周期考验，分析师建议关注其最新现金流水平。`, source: '财经网', time: '5小时前' },
+                                { title: `最新研报指出【${group.name}】估值处于历史中位区间。`, source: 'Reuters', time: '昨夜' }
+                            ];
+                        }
+
+                        // 2. 根据用户盈亏状况生成建议
+                        const profit = group.profit;
+                        const cost = group.avgCost;
+                        const current = assetMeta.value[group.name]?.currentPrice || group.lastTradePrice;
+                        
+                        if (group.qty <= 0) {
+                            adviceContext = `您目前并未持有【${group.name}】的仓位（数量为0）。根据近期的新闻动向和市场情绪，如果您对该标的的长期逻辑依然看好，可以考虑在当前现价（${current}）附近寻找底部建仓的机会；否则建议继续空仓观望。`;
+                        } else if (profit > 0) {
+                            adviceContext = `恭喜！您目前持有【${group.name}】处于盈利状态（浮盈 ${formatNumber(profit)}，收益率 ${group.roiText}）。您的持仓均本 (${formatNumber(cost)}) 具有显著的安全垫优势。考虑到近期宏观环境波动，若您属于保守型投资者，建议可以采取【分批止盈】的策略锁定部分利润；若您看好其后市表现，可将防守线设置在您的成本价附近，继续让利润奔跑。`;
+                        } else if (profit < 0) {
+                            adviceContext = `您当前持有【${group.name}】处于浮亏状态（浮亏 ${formatNumber(profit)}）。由于您的均本（${formatNumber(cost)}）高于目前现价（${current}），建议您重新审视当初买入的逻辑是否发生改变：如果公司/标的基本面依然稳健且近期新闻偏向利好，当前或许是一个降低成本的【定投/加仓】区间；如果逻辑已经走弱，建议严格执行交易纪律，果断止损以控制下行风险。`;
+                        } else {
+                            adviceContext = `您当前持有【${group.name}】处于盈亏平衡点附近。建议密切关注下方的新闻动态，等待明确的向上或向下突破信号再做下一步的加仓或减仓动作。`;
+                        }
+
+                        aiData.value = { news: newsMock, advice: adviceContext };
+                        aiLoading.value = false;
+                    }, 1500);
+                };
+                // ==============================================================
 
                 const toggleGroup = (name) => {
                     const newSet = new Set(expandedGroups.value);
-                    if (newSet.has(name)) newSet.delete(name);
-                    else newSet.add(name);
+                    if (newSet.has(name)) newSet.delete(name); else newSet.add(name);
                     expandedGroups.value = newSet;
                 };
 
@@ -581,103 +647,59 @@
                     }
                 };
 
-                const initDate = () => {
-                    const now = new Date();
-                    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-                    return now.toISOString().slice(0, 16);
-                };
-
-                const openDialog = () => {
-                    editedIndex.value = -1;
-                    editedItem.value = { ...defaultItem, date: initDate() };
-                    dialog.value = true;
-                };
-
-                const editTransaction = (item) => {
-                    editedIndex.value = transactions.value.findIndex(t => t.id === item.id);
-                    editedItem.value = { ...item };
-                    dialog.value = true;
-                };
-
+                const openDialog = () => { editedIndex.value = -1; editedItem.value = { ...defaultItem, date: initDate() }; dialog.value = true; };
+                const editTransaction = (item) => { editedIndex.value = transactions.value.findIndex(t => t.id === item.id); editedItem.value = { ...item }; dialog.value = true; };
                 const closeDialog = () => { dialog.value = false; };
+                const initDate = () => { const now = new Date(); now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); return now.toISOString().slice(0, 16); };
 
                 const save = () => {
-                    if (editedIndex.value > -1) {
-                        transactions.value[editedIndex.value] = { ...editedItem.value };
-                    } else {
-                        editedItem.value.id = Date.now();
-                        transactions.value.push({ ...editedItem.value });
-                    }
+                    if (editedIndex.value > -1) transactions.value[editedIndex.value] = { ...editedItem.value };
+                    else { editedItem.value.id = Date.now(); transactions.value.push({ ...editedItem.value }); }
                     closeDialog();
                 };
 
                 const confirmDelete = () => {
-                    if (confirm('是否永久抹除该条流水记录？')) {
-                        transactions.value.splice(editedIndex.value, 1);
-                        closeDialog();
-                    }
+                    if (confirm('是否永久抹除该条流水记录？')) { transactions.value.splice(editedIndex.value, 1); closeDialog(); }
                 };
                 
-                // 打开统计菜单
-                const openStatsMenu = () => {
-                    showDataMenu.value = false;
-                    setTimeout(() => { showStatsMenu.value = true; }, 50); // 微延迟保证动画顺滑
-                };
+                const openStatsMenu = () => { showDataMenu.value = false; setTimeout(() => { showStatsMenu.value = true; }, 50); };
 
                 const exportData = () => {
                     if (transactions.value.length === 0) return alert("没有数据可导出");
                     const dump = { transactions: transactions.value, meta: assetMeta.value };
                     const blob = new Blob([JSON.stringify(dump, null, 2)], { type: "application/json" });
-                    const a = document.createElement("a");
-                    a.href = URL.createObjectURL(blob);
+                    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
                     a.download = `TradeNest_InvestLog_${new Date().toISOString().slice(0, 10)}.json`;
-                    a.click();
-                    showDataMenu.value = false;
+                    a.click(); showDataMenu.value = false;
                 };
 
                 const triggerImport = () => { document.getElementById('fileInput').click(); };
 
                 const handleImport = (event) => {
-                    const file = event.target.files[0];
-                    if (!file) return;
+                    const file = event.target.files[0]; if (!file) return;
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         try {
                             const data = JSON.parse(e.target.result);
                             let importedTxs = Array.isArray(data) ? data : (data.transactions ||[]);
-                            
                             if (data.meta) assetMeta.value = { ...assetMeta.value, ...data.meta };
-
                             const existingIds = new Set(transactions.value.map(t => t.id));
                             let newCount = 0; let updateCount = 0;
-                            
                             importedTxs.forEach(item => {
                                 if (item.id) {
-                                    if (!existingIds.has(item.id)) {
-                                        transactions.value.push(item);
-                                        existingIds.add(item.id);
-                                        newCount++;
-                                    } else {
-                                        const idx = transactions.value.findIndex(t => t.id === item.id);
-                                        transactions.value[idx] = item;
-                                        updateCount++;
-                                    }
+                                    if (!existingIds.has(item.id)) { transactions.value.push(item); existingIds.add(item.id); newCount++; } 
+                                    else { transactions.value[transactions.value.findIndex(t => t.id === item.id)] = item; updateCount++; }
                                 }
                             });
                             alert(`导入成功！新增 ${newCount} 条，更新 ${updateCount} 条。`);
                         } catch (error) { alert('解析文件失败。'); }
-                        event.target.value = '';
-                        showDataMenu.value = false;
+                        event.target.value = ''; showDataMenu.value = false;
                     };
                     reader.readAsText(file);
                 };
 
                 const clearAllData = () => {
-                    if (confirm('警告：此操作将永久抹除所有本地记录！\n确定要继续吗？')) {
-                        transactions.value =[];
-                        assetMeta.value = {};
-                        showDataMenu.value = false;
-                    }
+                    if (confirm('警告：此操作将永久抹除所有本地记录！\n确定要继续吗？')) { transactions.value =[]; assetMeta.value = {}; showDataMenu.value = false; }
                 };
 
                 const getPillColorClass = (type) => {
@@ -686,44 +708,27 @@
                     if (['分红'].includes(type)) return 'pill-div';
                     return 'pill-fee'; 
                 };
-                
                 const getTxTypeClass = (type) => {
                     if (['买入', '加仓'].includes(type)) return 'type-buy';
                     if (['卖出', '减仓'].includes(type)) return 'type-sell';
                     if (['分红'].includes(type)) return 'type-div';
                     return 'type-fee'; 
                 };
-
-                const getProfitClass = (val) => {
-                    if (val > 0) return 'color-profit';
-                    if (val < 0) return 'color-loss';
-                    return '';
-                };
-
-                const formatNumber = (num) => {
-                    if(num === null || num === undefined) return '0.00';
-                    return parseFloat(num).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                };
-                
-                const formatDateSimple = (dateStr) => {
-                    if (!dateStr) return '';
-                    const d = new Date(dateStr);
-                    return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
-                };
+                const getProfitClass = (val) => { if (val > 0) return 'color-profit'; if (val < 0) return 'color-loss'; return ''; };
+                const formatNumber = (num) => { if(num === null || num === undefined) return '0.00'; return parseFloat(num).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+                const formatDateSimple = (dateStr) => { if (!dateStr) return ''; const d = new Date(dateStr); return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`; };
 
                 onMounted(() => {
-                    const savedTxs = localStorage.getItem('ios26_investment_data');
-                    const savedMeta = localStorage.getItem('ios26_asset_meta');
+                    const savedTxs = localStorage.getItem('ios26_investment_data'); const savedMeta = localStorage.getItem('ios26_asset_meta');
                     if (savedTxs) transactions.value = JSON.parse(savedTxs);
                     if (savedMeta) assetMeta.value = JSON.parse(savedMeta);
                 });
-                
                 watch(transactions, (newVal) => localStorage.setItem('ios26_investment_data', JSON.stringify(newVal)), { deep: true });
 
                 return {
-                    dialog, showDataMenu, showStatsMenu, expandedGroups, transactions, assetMeta, groupedAssets, 
-                    globalStats, performanceRank, editedItem, editedIndex, formTitle, transactionTypes,
-                    toggleGroup, updatePrice, openDialog, closeDialog, openStatsMenu, save, editTransaction, confirmDelete, 
+                    dialog, showDataMenu, showStatsMenu, showAiModal, aiLoading, aiActiveAsset, aiData,
+                    expandedGroups, transactions, assetMeta, groupedAssets, globalStats, performanceRank, editedItem, editedIndex, formTitle, transactionTypes,
+                    toggleGroup, updatePrice, openDialog, closeDialog, openStatsMenu, openAiAnalysis, save, editTransaction, confirmDelete, 
                     getPillColorClass, getTxTypeClass, getProfitClass, formatNumber, formatDateSimple,
                     exportData, triggerImport, handleImport, clearAllData
                 };
