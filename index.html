@@ -21,7 +21,7 @@
             --input-bg: rgba(255, 255, 255, 0.6);
             --action-bg: rgba(255, 255, 255, 0.75);
             
-            --neon-red: #ff3b30; /* 盈利红 (台股习惯) */
+            --neon-red: #ff3b30; /* 盈利红 */
             --neon-green: #34c759; /* 亏损绿 */
             --neon-blue: #007aff;
             --neon-orange: #ff9500;
@@ -155,16 +155,18 @@
         .rank-name { font-size: 16px; font-weight: 700; }
         .rank-val { font-size: 16px; font-weight: 700; font-family: "SF Pro Rounded", sans-serif; text-align: right; }
 
-        /* ================= AI 洞察弹窗样式 ================= */
-        .ai-loading-box { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; text-align: center; color: var(--text-secondary);}
+        /* ================= AI 洞察与新闻区域 ================= */
+        .ai-loading-box { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 50vh; text-align: center; color: var(--text-secondary);}
         .ai-orb { width: 60px; height: 60px; border-radius: 30px; background: linear-gradient(135deg, #FF2E93, #FF8000); animation: ai-pulse 1.5s infinite alternate; margin-bottom: 20px; filter: blur(8px); }
         @keyframes ai-pulse { 0% { transform: scale(0.9); opacity: 0.6; } 100% { transform: scale(1.2); opacity: 1; } }
         
         .ai-section-title { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 6px; margin: 20px 0 12px 4px; }
         .ai-advice-card { background: rgba(255, 46, 147, 0.05); border: 1px solid rgba(255, 46, 147, 0.2); border-radius: 16px; padding: 16px; font-size: 15px; line-height: 1.6; color: var(--text-primary); margin-bottom: 24px; box-shadow: 0 4px 12px rgba(255, 46, 147, 0.05);}
-        .ai-news-item { background: var(--input-bg); border-radius: 16px; padding: 14px; margin-bottom: 10px; border: 1px solid var(--glass-border); transition: transform 0.2s; cursor: pointer; }
-        .ai-news-item:active { transform: scale(0.98); }
-        .ai-news-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* 真实新闻链接样式 */
+        a.ai-news-item { display: block; text-decoration: none; color: inherit; background: var(--input-bg); border-radius: 16px; padding: 14px; margin-bottom: 10px; border: 1px solid var(--glass-border); transition: transform 0.2s; cursor: pointer; }
+        a.ai-news-item:active { transform: scale(0.98); background: var(--glass-bg); }
+        .ai-news-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text-primary); }
         .ai-news-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); }
 
         /* 表单元素 */
@@ -203,9 +205,6 @@
         .action-btn:last-child { border-bottom: none; }
         .action-btn:active { background: var(--input-bg); }
         .action-btn-danger { color: var(--neon-red); }
-
-        .empty-state { text-align: center; color: var(--text-secondary); margin-top: 30vh; font-size: 15px; font-weight: 500; }
-        .empty-orb { width: 80px; height: 80px; margin: 0 auto 20px auto; border-radius: 40px; background: radial-gradient(circle at 30% 30%, var(--neon-blue), transparent); filter: blur(10px); opacity: 0.5; animation: pulse 4s infinite alternate; }
     </style>
 </head>
 <body>
@@ -230,7 +229,7 @@
         <main class="main-content">
             <div class="empty-state" v-if="groupedAssets.length === 0">
                 <div class="empty-orb"></div>
-                尚未记录任何交易<br><span style="font-size: 13px; opacity: 0.7;">点击上方 + 开启您的财富映射</span>
+                尚未记录任何交易<br><span style="font-size: 13px; opacity: 0.7;">点击上方 + 开启您的 TradeNest</span>
             </div>
 
             <!-- 主页资产卡片 -->
@@ -289,7 +288,6 @@
                         <span :style="{ transform: expandedGroups.has(group.name) ? 'rotate(180deg)' : 'rotate(0)' }" style="transition: 0.3s; font-size: 10px;">▼</span>
                         交易流水 ({{ group.transactions.length }})
                     </button>
-                    <!-- 全新 AI 洞察入口 -->
                     <button class="btn-ai-insight" @click="openAiAnalysis(group)">
                         ✨ AI 洞察
                     </button>
@@ -325,7 +323,7 @@
                     <button class="action-btn" @click="exportData">📤 导出本地数据</button>
                 </div>
                 <div class="action-group">
-                    <button class="action-btn action-btn-danger" @click="clearAllData">🗑️ 清空所有数据</button>
+                    <button class="action-btn action-btn-danger" @click="clearAllData">🗑️ 清空所有记录</button>
                 </div>
                 <div class="action-group">
                     <button class="action-btn" style="font-weight: 700; color: var(--text-primary);" @click="showDataMenu = false">取消</button>
@@ -379,7 +377,7 @@
             </div>
         </div>
 
-        <!-- ================= 全新：AI 洞察与新闻弹窗 ================= -->
+        <!-- ================= 实时网络 AI 洞察与新闻 ================= -->
         <div class="modal-overlay" :class="{'is-active': showAiModal}">
             <div class="modal-sheet">
                 <div class="sheet-drag-handle"></div>
@@ -389,30 +387,27 @@
                 </div>
 
                 <div class="sheet-body">
-                    <!-- 加载状态 -->
+                    <!-- 网络请求加载状态 -->
                     <div class="ai-loading-box" v-if="aiLoading">
                         <div class="ai-orb"></div>
-                        <h3 style="margin-bottom: 8px;">AI 正在深度分析中</h3>
-                        <p style="font-size: 13px; max-width: 80%;">正在扫描全网实时新闻、分析基本面，并结合您当前的持仓成本与盈亏数据计算策略...</p>
+                        <h3 style="margin-bottom: 8px;">AI 正在联网检索中</h3>
+                        <p style="font-size: 13px; max-width: 80%;">正在扫描 Google News 实时财经动态、分析基本面，并结合您当前的持仓成本计算策略...</p>
                     </div>
 
-                    <!-- 分析结果 -->
+                    <!-- 分析结果与真实新闻流 -->
                     <div v-else-if="aiData">
-                        <!-- AI 投资建议 -->
                         <div class="ai-section-title">💡 专属投资建议</div>
-                        <div class="ai-advice-card">
-                            {{ aiData.advice }}
-                        </div>
+                        <div class="ai-advice-card">{{ aiData.advice }}</div>
 
-                        <!-- 模拟新闻流 -->
-                        <div class="ai-section-title">📰 近期市场动态</div>
-                        <div class="ai-news-item" v-for="(news, idx) in aiData.news" :key="idx" @click="alert('演示功能：在实际应用中，点击此处将跳转至新闻详情页。')">
+                        <div class="ai-section-title">📰 实时财经新闻</div>
+                        <!-- 点击跳转真实网页 -->
+                        <a :href="news.link" target="_blank" class="ai-news-item" v-for="(news, idx) in aiData.news" :key="idx">
                             <div class="ai-news-title">{{ news.title }}</div>
                             <div class="ai-news-meta">
                                 <span>{{ news.source }}</span>
                                 <span>{{ news.time }}</span>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -448,7 +443,7 @@
                     <div class="form-row-2">
                         <div class="input-group" style="flex: 2;">
                             <label class="input-label">标的名称</label>
-                            <input type="text" v-model="editedItem.name" placeholder="必填 (如: 台积电)" class="glass-input">
+                            <input type="text" v-model="editedItem.name" placeholder="必填 (如: 腾讯)" class="glass-input">
                         </div>
                         <div class="input-group" style="flex: 1;">
                             <label class="input-label">代码(选填)</label>
@@ -576,59 +571,70 @@
                     };
                 });
 
-                // ==================== 🌟 核心：模拟 AI 生成逻辑 ====================
-                const openAiAnalysis = (group) => {
+                // ==================== 🌐 核心更新：调用 API 抓取真实网络新闻 ====================
+                const openAiAnalysis = async (group) => {
                     aiActiveAsset.value = group;
                     aiData.value = null;
                     aiLoading.value = true;
                     showAiModal.value = true;
 
-                    // 模拟网络请求延迟 (1.5秒)
-                    setTimeout(() => {
-                        const name = group.name.toUpperCase();
-                        let newsMock =[];
-                        let adviceContext = "";
+                    try {
+                        // 使用 Google News 简体中文 RSS 接口，外加免密 rss2json 代理解决浏览器跨域
+                        const query = encodeURIComponent(group.name + ' 股票 OR 财经 OR 投资');
+                        const rssUrl = `https://news.google.com/rss/search?q=${query}&hl=zh-CN&gl=CN&ceid=CN:zh-Hans`;
+                        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
 
-                        // 1. 根据名字特征生成“假新闻”
-                        if (name.includes('台积电') || name.includes('TSMC') || name.includes('2330')) {
-                            newsMock =[
-                                { title: `外资重申【${group.name}】买入评级，受惠AI芯片强劲需求，先进制程产能满载至年底。`, source: '彭博财经', time: '2小时前' },
-                                { title: `【${group.name}】最新财报超预期，毛利率维持高位，供应链透露明年资本支出再创新高。`, source: '经济日报', time: '5小时前' },
-                                { title: `半导体板块震荡，分析师指【${group.name}】护城河坚固，短期回调即是布局良机。`, source: 'Yahoo Finance', time: '1天前' }
-                            ];
-                        } else if (name.includes('BTC') || name.includes('比特币') || name.includes('ETH')) {
-                            newsMock =[
-                                { title: `【${group.name}】突破关键阻力位！华尔街现货 ETF 资金呈现净流入，机构情绪回暖。`, source: 'CoinDesk', time: '1小时前' },
-                                { title: `链上数据追踪：巨鲸地址过去24小时内大额增持【${group.name}】。`, source: '区块律动', time: '3小时前' },
-                                { title: `监管动态：美联储降息预期升温，或为【${group.name}】等加密资产注入流动性。`, source: '华尔街见闻', time: '昨夜' }
-                            ];
+                        const response = await fetch(apiUrl);
+                        const data = await response.json();
+
+                        let realNews =[];
+                        if (data.status === 'ok' && data.items && data.items.length > 0) {
+                            realNews = data.items.slice(0, 4).map(item => {
+                                // Google News 标题通常包含 " - 来源"，进行切分优化显示
+                                let title = item.title;
+                                let source = '财经新闻';
+                                const splitIndex = title.lastIndexOf(' - ');
+                                if (splitIndex !== -1) {
+                                    source = title.substring(splitIndex + 3);
+                                    title = title.substring(0, splitIndex);
+                                }
+                                
+                                const pubDate = new Date(item.pubDate.replace(/-/g, '/'));
+                                const timeStr = `${pubDate.getMonth()+1}/${pubDate.getDate()} ${pubDate.getHours().toString().padStart(2,'0')}:${pubDate.getMinutes().toString().padStart(2,'0')}`;
+
+                                return { title, source, time: timeStr, link: item.link };
+                            });
                         } else {
-                            // 兜底通用新闻
-                            newsMock =[
-                                { title: `【${group.name}】近期机构资金流向出现分歧，后市方向有待基本面进一步确认。`, source: '市场观察', time: '3小时前' },
-                                { title: `行业观察：【${group.name}】所在板块面临宏观经济周期考验，分析师建议关注其最新现金流水平。`, source: '财经网', time: '5小时前' },
-                                { title: `最新研报指出【${group.name}】估值处于历史中位区间。`, source: 'Reuters', time: '昨夜' }
-                            ];
+                            realNews =[{ title: `目前暂无关于【${group.name}】的最新中文财经资讯。`, source: '系统', time: '刚刚', link: '#' }];
                         }
 
-                        // 2. 根据用户盈亏状况生成建议
+                        // 结合用户真实数据生成投资建议
+                        let adviceContext = "";
                         const profit = group.profit;
                         const cost = group.avgCost;
                         const current = assetMeta.value[group.name]?.currentPrice || group.lastTradePrice;
-                        
+
                         if (group.qty <= 0) {
-                            adviceContext = `您目前并未持有【${group.name}】的仓位（数量为0）。根据近期的新闻动向和市场情绪，如果您对该标的的长期逻辑依然看好，可以考虑在当前现价（${current}）附近寻找底部建仓的机会；否则建议继续空仓观望。`;
+                            adviceContext = `您目前并未持有【${group.name}】的仓位（数量为0）。根据近期的新闻动向和市场情绪，如果您对该标的的长期逻辑依然看好，可以考虑在当前现价（${formatNumber(current)}）附近寻找底部建仓的机会；否则建议继续空仓观望。`;
                         } else if (profit > 0) {
-                            adviceContext = `恭喜！您目前持有【${group.name}】处于盈利状态（浮盈 ${formatNumber(profit)}，收益率 ${group.roiText}）。您的持仓均本 (${formatNumber(cost)}) 具有显著的安全垫优势。考虑到近期宏观环境波动，若您属于保守型投资者，建议可以采取【分批止盈】的策略锁定部分利润；若您看好其后市表现，可将防守线设置在您的成本价附近，继续让利润奔跑。`;
+                            adviceContext = `恭喜！您目前持有【${group.name}】处于盈利状态（浮盈 ${formatNumber(profit)}，收益率 ${group.roiText}）。您的持仓均本 (${formatNumber(cost)}) 具有显著的安全垫优势。结合最新市场资讯，若您属于保守型投资者，建议可考虑【分批止盈】策略锁定部分利润；若看好后市，可将防守线设置在成本价附近，让利润奔跑。`;
                         } else if (profit < 0) {
-                            adviceContext = `您当前持有【${group.name}】处于浮亏状态（浮亏 ${formatNumber(profit)}）。由于您的均本（${formatNumber(cost)}）高于目前现价（${current}），建议您重新审视当初买入的逻辑是否发生改变：如果公司/标的基本面依然稳健且近期新闻偏向利好，当前或许是一个降低成本的【定投/加仓】区间；如果逻辑已经走弱，建议严格执行交易纪律，果断止损以控制下行风险。`;
+                            adviceContext = `您当前持有【${group.name}】处于亏损状态（浮亏 ${formatNumber(profit)}）。您的持仓均本（${formatNumber(cost)}）高于目前现价（${formatNumber(current)}）。建议您结合上方最新新闻，审视当初买入的逻辑是否改变：若基本面稳健且新闻偏向利好，当前或为降低成本的【定投/加仓】区间；若逻辑走弱，建议严格执行交易纪律，果断【止损】以控制下行风险。`;
                         } else {
                             adviceContext = `您当前持有【${group.name}】处于盈亏平衡点附近。建议密切关注下方的新闻动态，等待明确的向上或向下突破信号再做下一步的加仓或减仓动作。`;
                         }
 
-                        aiData.value = { news: newsMock, advice: adviceContext };
+                        aiData.value = { news: realNews, advice: adviceContext };
+
+                    } catch (error) {
+                        console.error("新闻获取失败:", error);
+                        aiData.value = { 
+                            news:[{ title: '无法获取网络实时新闻，请检查您的网络连接。', source: '系统提示', time: '刚刚', link: '#' }],
+                            advice: '网络请求失败，无法结合最新市场情绪进行分析。请稍后再试。'
+                        };
+                    } finally {
                         aiLoading.value = false;
-                    }, 1500);
+                    }
                 };
                 // ==============================================================
 
@@ -665,7 +671,7 @@
                 const openStatsMenu = () => { showDataMenu.value = false; setTimeout(() => { showStatsMenu.value = true; }, 50); };
 
                 const exportData = () => {
-                    if (transactions.value.length === 0) return alert("没有数据可导出");
+                    if (transactions.value.length === 0) return alert("没有数据可供导出");
                     const dump = { transactions: transactions.value, meta: assetMeta.value };
                     const blob = new Blob([JSON.stringify(dump, null, 2)], { type: "application/json" });
                     const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
