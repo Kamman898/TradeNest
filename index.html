@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>TradeNest</title>
     <!-- 专属纯代码矢量图标 -->
-    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cmVjdCB3aWR0aD0nMTAwJyBoZWlnaHQ9JzEwMCcgcng9JzIyJyBmaWxsPScjMDA3YWZmJy8+PHBhdGggZD0nTTI1IDY1IEw0NSA0NSBMNjAgNTUgTDc1IDMwJyBzdHJva2U9J3doaXRlJyBzdHJva2Utd2lkdGg9JzgnIGZpbGw9J25vbmUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPjxwb2x5bGluZSBwb2ludHM9JzYwIDMwIDc1IDMwIDc1IDQ1JyBzdHJva2U9J3doaXRlJyBzdHJva2Utd2lkdGg9JzgnIGZpbGw9J25vbmUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPjwvc3ZnPg==">
-    
+    <link rel="icon"
+        href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cmVjdCB3aWR0aD0nMTAwJyBoZWlnaHQ9JzEwMCcgcng9JzIyJyBmaWxsPScjMDA3YWZmJy8+PHBhdGggZD0nTTI1IDY1IEw0NSA0NSBMNjAgNTUgTDc1IDMwJyBzdHJva2U9J3doaXRlJyBzdHJva2Utd2lkdGg9JzgnIGZpbGw9J25vbmUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPjxwb2x5bGluZSBwb2ludHM9JzYwIDMwIDc1IDMwIDc1IDQ1JyBzdHJva2U9J3doaXRlJyBzdHJva2Utd2lkdGg9JzgnIGZpbGw9J25vbmUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPjwvc3ZnPg==">
+
     <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.prod.js"></script>
     <style>
         /* --- iOS 26 空间计算风格全局变量 --- */
@@ -20,9 +23,11 @@
             --island-text: #ffffff;
             --input-bg: rgba(255, 255, 255, 0.6);
             --action-bg: rgba(255, 255, 255, 0.75);
-            
-            --neon-red: #ff3b30; /* 盈利红 */
-            --neon-green: #34c759; /* 亏损绿 */
+
+            --neon-red: #ff3b30;
+            /* 盈利红 */
+            --neon-green: #34c759;
+            /* 亏损绿 */
             --neon-blue: #007aff;
             --neon-orange: #ff9500;
         }
@@ -38,7 +43,7 @@
                 --island-text: #ffffff;
                 --input-bg: rgba(0, 0, 0, 0.3);
                 --action-bg: rgba(30, 30, 30, 0.75);
-                
+
                 --neon-red: #ff453a;
                 --neon-green: #32d74b;
                 --neon-blue: #0a84ff;
@@ -46,13 +51,19 @@
             }
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
 
         body {
-            margin: 0; padding: 0;
+            margin: 0;
+            padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Text", sans-serif;
-            color: var(--text-primary); background-color: #f2f2f7;
-            background-image: 
+            color: var(--text-primary);
+            background-color: #f2f2f7;
+            background-image:
                 radial-gradient(circle at 15% 50%, rgba(10, 132, 255, 0.15), transparent 40%),
                 radial-gradient(circle at 85% 30%, rgba(52, 199, 89, 0.1), transparent 40%),
                 radial-gradient(circle at 50% 80%, rgba(255, 59, 48, 0.1), transparent 40%);
@@ -65,7 +76,7 @@
         @media (prefers-color-scheme: dark) {
             body {
                 background-color: #000000;
-                background-image: 
+                background-image:
                     radial-gradient(circle at 15% 50%, rgba(10, 132, 255, 0.2), transparent 40%),
                     radial-gradient(circle at 85% 30%, rgba(52, 199, 89, 0.15), transparent 40%),
                     radial-gradient(circle at 50% 80%, rgba(255, 59, 48, 0.15), transparent 40%);
@@ -73,140 +84,809 @@
         }
 
         /* --- 导航栏 --- */
-        .dynamic-island-container { position: fixed; top: calc(env(safe-area-inset-top) + 12px); left: 0; right: 0; display: flex; justify-content: center; z-index: 990; }
-        .dynamic-island { background: var(--island-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); color: var(--island-text); height: 44px; border-radius: 22px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); width: 280px; }
-        .island-title { font-weight: 600; font-size: 15px; letter-spacing: 0.5px; }
-        .island-btn { background: rgba(255,255,255,0.2); border: none; color: white; height: 30px; width: 30px; border-radius: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s; }
-        .island-btn:active { transform: scale(0.9); }
+        .dynamic-island-container {
+            position: fixed;
+            top: calc(env(safe-area-inset-top) + 12px);
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 990;
+        }
 
-        .main-content { padding-top: 80px; padding-bottom: 40px; max-width: 480px; margin: 0 auto; }
+        .dynamic-island {
+            background: var(--island-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            color: var(--island-text);
+            height: 44px;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px 0 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            width: 280px;
+        }
+
+        .island-title {
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .island-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            height: 30px;
+            width: 30px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .island-btn:active {
+            transform: scale(0.9);
+        }
+
+        .main-content {
+            padding-top: 80px;
+            padding-bottom: 40px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
 
         /* --- 资产组合卡片 --- */
-        .asset-card { background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: 24px; margin: 16px; padding: 16px; box-shadow: var(--glass-shadow); position: relative; overflow: hidden; }
-        
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .asset-name { font-size: 22px; font-weight: 800; display: flex; align-items: center; gap: 8px;}
-        .asset-code { font-size: 12px; color: var(--text-secondary); background: var(--input-bg); padding: 3px 8px; border-radius: 8px; font-weight: 600;}
-        .header-roi { font-size: 16px; font-weight: 700; font-family: "SF Pro Rounded", sans-serif; display: flex; align-items: center; gap: 2px;}
+        .asset-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            margin: 16px;
+            padding: 16px;
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .asset-name {
+            font-size: 22px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .asset-code {
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: var(--input-bg);
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .header-roi {
+            font-size: 16px;
+            font-weight: 700;
+            font-family: "SF Pro Rounded", sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
 
         /* 现价全宽调节条 */
-        .current-price-bar { background: rgba(0, 122, 255, 0.05); border: 1px solid rgba(0, 122, 255, 0.15); border-radius: 16px; padding: 12px 14px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0, 122, 255, 0.05); }
-        @media (prefers-color-scheme: dark) { .current-price-bar { background: rgba(10, 132, 255, 0.1); border-color: rgba(10, 132, 255, 0.2); } }
-        .price-bar-left { display: flex; flex-direction: column; }
-        .price-label { font-size: 14px; font-weight: 700; color: var(--text-primary); }
-        .price-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
-        .price-input-wrapper { display: flex; align-items: center; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 6px 12px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); width: 140px; transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s; }
-        .price-input-wrapper:focus-within { width: 180px; border-color: var(--neon-blue); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15); }
-        .price-input { background: transparent; border: none; width: 100%; font-size: 20px; font-weight: 800; color: var(--neon-blue); font-family: "SF Pro Rounded", sans-serif; text-align: right; }
-        .price-input::placeholder { color: rgba(134, 134, 139, 0.5); font-weight: 600;}
+        .current-price-bar {
+            background: rgba(0, 122, 255, 0.05);
+            border: 1px solid rgba(0, 122, 255, 0.15);
+            border-radius: 16px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.05);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .current-price-bar {
+                background: rgba(10, 132, 255, 0.1);
+                border-color: rgba(10, 132, 255, 0.2);
+            }
+        }
+
+        .price-bar-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .price-sub {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .price-input-wrapper {
+            display: flex;
+            align-items: center;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 6px 12px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+            width: 140px;
+            transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s;
+        }
+
+        .price-input-wrapper:focus-within {
+            width: 180px;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+        }
+
+        .price-input {
+            background: transparent;
+            border: none;
+            width: 100%;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--neon-blue);
+            font-family: "SF Pro Rounded", sans-serif;
+            text-align: right;
+        }
+
+        .price-input::placeholder {
+            color: rgba(134, 134, 139, 0.5);
+            font-weight: 600;
+        }
 
         /* 核心数据网格 */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-        .stat-box { background: var(--input-bg); padding: 12px; border-radius: 16px; }
-        .stat-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
-        .stat-val { font-size: 16px; font-weight: 700; font-family: "SF Pro Rounded", sans-serif;}
-        .color-profit { color: var(--neon-red); }
-        .color-loss { color: var(--neon-green); }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .stat-box {
+            background: var(--input-bg);
+            padding: 12px;
+            border-radius: 16px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .stat-val {
+            font-size: 16px;
+            font-weight: 700;
+            font-family: "SF Pro Rounded", sans-serif;
+        }
+
+        .color-profit {
+            color: var(--neon-red);
+        }
+
+        .color-loss {
+            color: var(--neon-green);
+        }
 
         /* AI 与 流水 折叠按钮 */
-        .card-actions { display: flex; gap: 8px; margin-top: 10px; }
-        .tx-accordion-btn { flex: 1; background: transparent; border: 1px dashed var(--glass-border); border-radius: 12px; padding: 10px; font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 4px; transition: background 0.2s;}
-        .tx-accordion-btn:active { background: var(--input-bg); }
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tx-accordion-btn {
+            flex: 1;
+            background: transparent;
+            border: 1px dashed var(--glass-border);
+            border-radius: 12px;
+            padding: 10px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            transition: background 0.2s;
+        }
+
+        .tx-accordion-btn:active {
+            background: var(--input-bg);
+        }
 
         /* ✨ AI 洞察按钮 */
-        .btn-ai-insight { flex: 1; background: linear-gradient(135deg, #FF2E93 0%, #FF8000 100%); color: #fff; border: none; border-radius: 12px; padding: 10px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(255, 46, 147, 0.3); transition: transform 0.2s; }
-        .btn-ai-insight:active { transform: scale(0.96); }
+        .btn-ai-insight {
+            flex: 1;
+            background: linear-gradient(135deg, #FF2E93 0%, #FF8000 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(255, 46, 147, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .btn-ai-insight:active {
+            transform: scale(0.96);
+        }
 
         /* 流水列表 */
-        .tx-list { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
-        .tx-item { background: var(--input-bg); border-radius: 12px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border: 1px solid transparent; transition: border 0.2s; }
-        .tx-item:active { border-color: var(--neon-blue); }
-        .tx-left { display: flex; flex-direction: column; gap: 4px; }
-        .tx-type { font-size: 13px; font-weight: 700; }
-        .tx-date { font-size: 11px; color: var(--text-secondary); }
-        .tx-right { text-align: right; display: flex; flex-direction: column; gap: 4px; }
-        .tx-amount { font-size: 14px; font-weight: 700; font-family: "SF Pro Rounded", sans-serif;}
-        .tx-detail { font-size: 11px; color: var(--text-secondary); }
+        .tx-list {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
 
-        .type-buy { color: var(--neon-red); }
-        .type-sell { color: var(--neon-green); }
-        .type-div { color: var(--neon-orange); }
-        .type-fee { color: var(--neon-blue); }
+        .tx-item {
+            background: var(--input-bg);
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: border 0.2s;
+        }
+
+        .tx-item:active {
+            border-color: var(--neon-blue);
+        }
+
+        .tx-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tx-type {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .tx-date {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .tx-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tx-amount {
+            font-size: 14px;
+            font-weight: 700;
+            font-family: "SF Pro Rounded", sans-serif;
+        }
+
+        .tx-detail {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .type-buy {
+            color: var(--neon-red);
+        }
+
+        .type-sell {
+            color: var(--neon-green);
+        }
+
+        .type-div {
+            color: var(--neon-orange);
+        }
+
+        .type-fee {
+            color: var(--neon-blue);
+        }
 
         /* --- 弹窗体系 (Modal Sheet) --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; display: flex; align-items: flex-end; justify-content: center; }
-        .modal-overlay.is-active { opacity: 1; pointer-events: auto; }
-        .modal-sheet { background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glass-border); width: 100%; max-width: 480px; height: calc(100dvh - 16px); max-height: 96vh; border-radius: 32px 32px 0 0; padding: 20px 14px; padding-bottom: calc(env(safe-area-inset-bottom) + 20px); transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); display: flex; flex-direction: column; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); }
-        .modal-overlay.is-active .modal-sheet { transform: translateY(0); }
-        .sheet-drag-handle { width: 40px; height: 5px; background: var(--text-secondary); border-radius: 3px; margin: 0 auto 12px auto; opacity: 0.5; }
-        .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-        .sheet-title { font-size: 20px; font-weight: 800; }
-        .sheet-body { flex: 1; overflow-y: auto; padding-right: 4px; padding-bottom: 80px; }
-        .sheet-body::-webkit-scrollbar { display: none; }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-overlay.is-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-sheet {
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            width: 100%;
+            max-width: 480px;
+            height: calc(100dvh - 16px);
+            max-height: 96vh;
+            border-radius: 32px 32px 0 0;
+            padding: 20px 14px;
+            padding-bottom: calc(env(safe-area-inset-bottom) + 20px);
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-overlay.is-active .modal-sheet {
+            transform: translateY(0);
+        }
+
+        .sheet-drag-handle {
+            width: 40px;
+            height: 5px;
+            background: var(--text-secondary);
+            border-radius: 3px;
+            margin: 0 auto 12px auto;
+            opacity: 0.5;
+        }
+
+        .sheet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .sheet-title {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .sheet-body {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+            padding-bottom: 80px;
+        }
+
+        .sheet-body::-webkit-scrollbar {
+            display: none;
+        }
 
         /* --- 资产统计总览 特殊样式 --- */
-        .global-hero { text-align: center; padding: 24px 20px; background: var(--input-bg); border-radius: 24px; margin-bottom: 16px; border: 1px solid var(--glass-border); }
-        .global-hero-label { font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;}
-        .global-hero-value { font-size: 42px; font-weight: 800; font-family: "SF Pro Rounded", sans-serif; margin-bottom: 8px; color: var(--text-primary); }
-        .global-hero-profit { font-size: 20px; font-weight: 700; font-family: "SF Pro Rounded", sans-serif; }
-        .rank-card { display: flex; justify-content: space-between; align-items: center; background: var(--input-bg); padding: 16px; border-radius: 16px; margin-bottom: 10px; border: 1px solid var(--glass-border);}
-        .rank-info { display: flex; flex-direction: column; gap: 4px; }
-        .rank-title { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;}
-        .rank-name { font-size: 16px; font-weight: 700; }
-        .rank-val { font-size: 16px; font-weight: 700; font-family: "SF Pro Rounded", sans-serif; text-align: right; }
+        .global-hero {
+            text-align: center;
+            padding: 24px 20px;
+            background: var(--input-bg);
+            border-radius: 24px;
+            margin-bottom: 16px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .global-hero-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .global-hero-value {
+            font-size: 42px;
+            font-weight: 800;
+            font-family: "SF Pro Rounded", sans-serif;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .global-hero-profit {
+            font-size: 20px;
+            font-weight: 700;
+            font-family: "SF Pro Rounded", sans-serif;
+        }
+
+        .rank-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--input-bg);
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 10px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .rank-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .rank-title {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .rank-name {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .rank-val {
+            font-size: 16px;
+            font-weight: 700;
+            font-family: "SF Pro Rounded", sans-serif;
+            text-align: right;
+        }
 
         /* ================= AI 洞察与新闻区域 ================= */
-        .ai-loading-box { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 50vh; text-align: center; color: var(--text-secondary);}
-        .ai-orb { width: 60px; height: 60px; border-radius: 30px; background: linear-gradient(135deg, #FF2E93, #FF8000); animation: ai-pulse 1.5s infinite alternate; margin-bottom: 20px; filter: blur(8px); }
-        @keyframes ai-pulse { 0% { transform: scale(0.9); opacity: 0.6; } 100% { transform: scale(1.2); opacity: 1; } }
-        
-        .ai-section-title { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 6px; margin: 20px 0 12px 4px; }
-        .ai-advice-card { background: rgba(255, 46, 147, 0.05); border: 1px solid rgba(255, 46, 147, 0.2); border-radius: 16px; padding: 16px; font-size: 15px; line-height: 1.6; color: var(--text-primary); margin-bottom: 24px; box-shadow: 0 4px 12px rgba(255, 46, 147, 0.05);}
-        
+        .ai-loading-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 50vh;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .ai-orb {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #FF2E93, #FF8000);
+            animation: ai-pulse 1.5s infinite alternate;
+            margin-bottom: 20px;
+            filter: blur(8px);
+        }
+
+        @keyframes ai-pulse {
+            0% {
+                transform: scale(0.9);
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .ai-section-title {
+            font-size: 16px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 20px 0 12px 4px;
+        }
+
+        .ai-advice-card {
+            background: rgba(255, 46, 147, 0.05);
+            border: 1px solid rgba(255, 46, 147, 0.2);
+            border-radius: 16px;
+            padding: 16px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(255, 46, 147, 0.05);
+        }
+
         /* 真实新闻链接样式 */
-        a.ai-news-item { display: block; text-decoration: none; color: inherit; background: var(--input-bg); border-radius: 16px; padding: 14px; margin-bottom: 10px; border: 1px solid var(--glass-border); transition: transform 0.2s; cursor: pointer; }
-        a.ai-news-item:active { transform: scale(0.98); background: var(--glass-bg); }
-        .ai-news-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text-primary); }
-        .ai-news-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); }
+        a.ai-news-item {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            background: var(--input-bg);
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 10px;
+            border: 1px solid var(--glass-border);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        a.ai-news-item:active {
+            transform: scale(0.98);
+            background: var(--glass-bg);
+        }
+
+        .ai-news-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            color: var(--text-primary);
+        }
+
+        .ai-news-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
 
         /* 表单元素 */
-        .input-group { margin-bottom: 12px; position: relative; }
-        .input-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; display: block; padding-left: 4px;}
-        .glass-input { width: 100%; background: var(--input-bg); border: 1px solid var(--glass-border); padding: 12px 10px; border-radius: 14px; font-size: 16px; color: var(--text-primary); font-family: inherit; transition: all 0.3s ease; }
-        .glass-input:focus { border-color: var(--neon-blue); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15); }
-        textarea.glass-input { min-height: 80px; resize: none; }
-        input[type="datetime-local"].glass-input { -webkit-appearance: none; appearance: none; display: block; width: 100%; min-height: 44px; }
-        input[type="datetime-local"].glass-input::-webkit-date-and-time-value { text-align: left; }
-        .form-row-2 { display: flex; gap: 8px; margin-bottom: 12px; }
-        .form-row-2 .input-group { margin-bottom: 0; flex: 1; }
+        .input-group {
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .input-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            display: block;
+            padding-left: 4px;
+        }
+
+        .glass-input {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            padding: 12px 10px;
+            border-radius: 14px;
+            font-size: 16px;
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .glass-input:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+        }
+
+        textarea.glass-input {
+            min-height: 80px;
+            resize: none;
+        }
+
+        input[type="datetime-local"].glass-input {
+            -webkit-appearance: none;
+            appearance: none;
+            display: block;
+            width: 100%;
+            min-height: 44px;
+        }
+
+        input[type="datetime-local"].glass-input::-webkit-date-and-time-value {
+            text-align: left;
+        }
+
+        .form-row-2 {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .form-row-2 .input-group {
+            margin-bottom: 0;
+            flex: 1;
+        }
 
         /* 类型胶囊 */
-        .type-pills-container { display: flex; overflow-x: auto; gap: 8px; padding-bottom: 6px; padding-top: 4px; -ms-overflow-style: none; scrollbar-width: none; }
-        .type-pills-container::-webkit-scrollbar { display: none; }
-        .type-pill { position: relative; padding: 8px 16px; border-radius: 20px; background: var(--input-bg); border: 1px solid var(--glass-border); color: var(--text-secondary); font-size: 14px; font-weight: 600; white-space: nowrap; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); overflow: hidden; }
-        .type-pill:active { transform: scale(0.92); transition-duration: 0.1s; }
-        .type-pill.is-active { color: #fff; transform: translateY(-2px) scale(1.05); }
-        .type-pill.pill-buy.is-active { background: var(--neon-red); border-color: var(--neon-red); box-shadow: 0 4px 12px -2px rgba(255, 59, 48, 0.4); }
-        .type-pill.pill-sell.is-active { background: var(--neon-green); border-color: var(--neon-green); box-shadow: 0 4px 12px -2px rgba(52, 199, 89, 0.4); }
-        .type-pill.pill-div.is-active { background: var(--neon-orange); border-color: var(--neon-orange); }
-        .type-pill.pill-fee.is-active { background: var(--neon-blue); border-color: var(--neon-blue); }
+        .type-pills-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding-bottom: 6px;
+            padding-top: 4px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
-        .btn-primary { background: var(--neon-blue); color: #fff; border: none; padding: 14px; border-radius: 18px; font-size: 16px; font-weight: 700; width: 100%; cursor: pointer; box-shadow: 0 4px 15px rgba(0,122,255,0.4); margin-top: 8px; transition: transform 0.2s; }
-        .btn-primary:active { transform: scale(0.96); }
-        .btn-primary:disabled { opacity: 0.5; box-shadow: none; }
-        .btn-icon-close { background: var(--input-bg); border: none; width: 30px; height: 30px; border-radius: 15px; color: var(--text-primary); font-size: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .btn-danger { background: rgba(255,59,48,0.1); color: var(--neon-red); border: 1px solid rgba(255,59,48,0.2); padding: 14px; border-radius: 18px; font-size: 16px; font-weight: 700; width: 100%; margin-top: 10px; cursor: pointer; }
+        .type-pills-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .type-pill {
+            position: relative;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+
+        .type-pill:active {
+            transform: scale(0.92);
+            transition-duration: 0.1s;
+        }
+
+        .type-pill.is-active {
+            color: #fff;
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        .type-pill.pill-buy.is-active {
+            background: var(--neon-red);
+            border-color: var(--neon-red);
+            box-shadow: 0 4px 12px -2px rgba(255, 59, 48, 0.4);
+        }
+
+        .type-pill.pill-sell.is-active {
+            background: var(--neon-green);
+            border-color: var(--neon-green);
+            box-shadow: 0 4px 12px -2px rgba(52, 199, 89, 0.4);
+        }
+
+        .type-pill.pill-div.is-active {
+            background: var(--neon-orange);
+            border-color: var(--neon-orange);
+        }
+
+        .type-pill.pill-fee.is-active {
+            background: var(--neon-blue);
+            border-color: var(--neon-blue);
+        }
+
+        .btn-primary {
+            background: var(--neon-blue);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 18px;
+            font-size: 16px;
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+            margin-top: 8px;
+            transition: transform 0.2s;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.96);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            box-shadow: none;
+        }
+
+        .btn-icon-close {
+            background: var(--input-bg);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            color: var(--text-primary);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            background: rgba(255, 59, 48, 0.1);
+            color: var(--neon-red);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+            padding: 14px;
+            border-radius: 18px;
+            font-size: 16px;
+            font-weight: 700;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+        }
 
         /* 菜单弹窗 (Action Sheet) */
-        .action-sheet { width: 100%; max-width: 400px; padding: 16px; padding-bottom: calc(env(safe-area-inset-bottom) + 16px); transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .modal-overlay.is-active .action-sheet { transform: translateY(0); }
-        .action-group { background: var(--action-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-radius: 20px; margin-bottom: 12px; overflow: hidden; border: 1px solid var(--glass-border); }
-        .action-btn { width: 100%; padding: 18px; background: transparent; border: none; font-size: 17px; font-weight: 600; color: var(--neon-blue); border-bottom: 1px solid var(--glass-border); cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px;}
-        .action-btn:last-child { border-bottom: none; }
-        .action-btn:active { background: var(--input-bg); }
-        .action-btn-danger { color: var(--neon-red); }
+        .action-sheet {
+            width: 100%;
+            max-width: 400px;
+            padding: 16px;
+            padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .modal-overlay.is-active .action-sheet {
+            transform: translateY(0);
+        }
+
+        .action-group {
+            background: var(--action-bg);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 20px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 18px;
+            background: transparent;
+            border: none;
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--neon-blue);
+            border-bottom: 1px solid var(--glass-border);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn:last-child {
+            border-bottom: none;
+        }
+
+        .action-btn:active {
+            background: var(--input-bg);
+        }
+
+        .action-btn-danger {
+            color: var(--neon-red);
+        }
     </style>
 </head>
+
 <body>
     <div id="app">
         <input type="file" id="fileInput" accept=".json" @change="handleImport" style="display: none">
@@ -215,13 +895,19 @@
         <div class="dynamic-island-container">
             <div class="dynamic-island">
                 <button class="island-btn" @click="showDataMenu = true" title="菜单">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="19" cy="12" r="1"></circle>
+                        <circle cx="5" cy="12" r="1"></circle>
                     </svg>
                 </button>
                 <div class="island-title">TradeNest</div>
                 <button class="island-btn" @click="openDialog" style="background: var(--neon-blue);">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
                 </button>
             </div>
         </div>
@@ -252,12 +938,9 @@
                         <span class="price-sub">Current Price</span>
                     </div>
                     <div class="price-input-wrapper">
-                        <input type="number" 
-                               class="price-input" 
-                               step="0.001"
-                               :value="assetMeta[group.name]?.currentPrice || group.lastTradePrice" 
-                               @input="updatePrice(group.name, $event.target.value)"
-                               placeholder="0.00">
+                        <input type="number" class="price-input" step="0.001"
+                            :value="assetMeta[group.name]?.currentPrice || group.lastTradePrice"
+                            @input="updatePrice(group.name, $event.target.value)" placeholder="0.00">
                     </div>
                 </div>
 
@@ -285,7 +968,8 @@
                 <!-- 操作按钮区 -->
                 <div class="card-actions">
                     <button class="tx-accordion-btn" @click="toggleGroup(group.name)">
-                        <span :style="{ transform: expandedGroups.has(group.name) ? 'rotate(180deg)' : 'rotate(0)' }" style="transition: 0.3s; font-size: 10px;">▼</span>
+                        <span :style="{ transform: expandedGroups.has(group.name) ? 'rotate(180deg)' : 'rotate(0)' }"
+                            style="transition: 0.3s; font-size: 10px;">▼</span>
                         交易流水 ({{ group.transactions.length }})
                     </button>
                     <button class="btn-ai-insight" @click="openAiAnalysis(group)">
@@ -326,7 +1010,8 @@
                     <button class="action-btn action-btn-danger" @click="clearAllData">🗑️ 清空所有记录</button>
                 </div>
                 <div class="action-group">
-                    <button class="action-btn" style="font-weight: 700; color: var(--text-primary);" @click="showDataMenu = false">取消</button>
+                    <button class="action-btn" style="font-weight: 700; color: var(--text-primary);"
+                        @click="showDataMenu = false">取消</button>
                 </div>
             </div>
         </div>
@@ -345,25 +1030,40 @@
                         <div class="global-hero-label">总持仓市值 (Market Value)</div>
                         <div class="global-hero-value">¥{{ formatNumber(globalStats.totalValue) }}</div>
                         <div class="global-hero-profit" :class="getProfitClass(globalStats.totalProfit)">
-                            {{ globalStats.totalProfit > 0 ? '+' : '' }}{{ formatNumber(globalStats.totalProfit) }} ({{ globalStats.totalRoiText }})
+                            {{ globalStats.totalProfit > 0 ? '+' : '' }}{{ formatNumber(globalStats.totalProfit) }} ({{
+                            globalStats.totalRoiText }})
                         </div>
                     </div>
 
                     <div class="stats-grid">
-                        <div class="stat-box"><div class="stat-label">总净投入本金</div><div class="stat-val">{{ formatNumber(globalStats.totalCost) }}</div></div>
-                        <div class="stat-box"><div class="stat-label">记录标的数</div><div class="stat-val">{{ groupedAssets.length }} 个</div></div>
-                        <div class="stat-box"><div class="stat-label">累计产生分红</div><div class="stat-val color-profit">+{{ formatNumber(globalStats.totalDividends) }}</div></div>
-                        <div class="stat-box"><div class="stat-label">累计产生手续费</div><div class="stat-val" style="color: var(--neon-blue);">-{{ formatNumber(globalStats.totalFees) }}</div></div>
+                        <div class="stat-box">
+                            <div class="stat-label">总净投入本金</div>
+                            <div class="stat-val">{{ formatNumber(globalStats.totalCost) }}</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">记录标的数</div>
+                            <div class="stat-val">{{ groupedAssets.length }} 个</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">累计产生分红</div>
+                            <div class="stat-val color-profit">+{{ formatNumber(globalStats.totalDividends) }}</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">累计产生手续费</div>
+                            <div class="stat-val" style="color: var(--neon-blue);">-{{
+                                formatNumber(globalStats.totalFees) }}</div>
+                        </div>
                     </div>
 
                     <div style="margin: 24px 0 12px 4px; font-weight: 700; font-size: 18px;">持仓表现极值</div>
-                    
+
                     <div class="rank-card" v-if="performanceRank.best">
                         <div class="rank-info">
                             <span class="rank-title color-profit">🔥 最佳表现 (Top Gainer)</span>
                             <span class="rank-name">{{ performanceRank.best.name }}</span>
                         </div>
-                        <div class="rank-val color-profit">+{{ formatNumber(performanceRank.best.profit) }}<br><span style="font-size: 13px;">{{ performanceRank.best.roiText }}</span></div>
+                        <div class="rank-val color-profit">+{{ formatNumber(performanceRank.best.profit) }}<br><span
+                                style="font-size: 13px;">{{ performanceRank.best.roiText }}</span></div>
                     </div>
 
                     <div class="rank-card" v-if="performanceRank.worst">
@@ -371,7 +1071,8 @@
                             <span class="rank-title color-loss">🧊 最差表现 (Top Loser)</span>
                             <span class="rank-name">{{ performanceRank.worst.name }}</span>
                         </div>
-                        <div class="rank-val color-loss">{{ formatNumber(performanceRank.worst.profit) }}<br><span style="font-size: 13px;">{{ performanceRank.worst.roiText }}</span></div>
+                        <div class="rank-val color-loss">{{ formatNumber(performanceRank.worst.profit) }}<br><span
+                                style="font-size: 13px;">{{ performanceRank.worst.roiText }}</span></div>
                     </div>
                 </div>
             </div>
@@ -391,7 +1092,7 @@
                     <div class="ai-loading-box" v-if="aiLoading">
                         <div class="ai-orb"></div>
                         <h3 style="margin-bottom: 8px;">AI 正在联网检索中</h3>
-                        <p style="font-size: 13px; max-width: 80%;">正在扫描 Google News 实时财经动态、分析基本面，并结合您当前的持仓成本计算策略...</p>
+                        <p style="font-size: 13px; max-width: 80%;">正在扫描全网实时财经动态、分析基本面，并结合您当前的持仓成本计算策略...</p>
                     </div>
 
                     <!-- 分析结果与真实新闻流 -->
@@ -401,7 +1102,8 @@
 
                         <div class="ai-section-title">📰 实时财经新闻</div>
                         <!-- 点击跳转真实网页 -->
-                        <a :href="news.link" target="_blank" class="ai-news-item" v-for="(news, idx) in aiData.news" :key="idx">
+                        <a :href="news.link" target="_blank" class="ai-news-item" v-for="(news, idx) in aiData.news"
+                            :key="idx">
                             <div class="ai-news-title">{{ news.title }}</div>
                             <div class="ai-news-meta">
                                 <span>{{ news.source }}</span>
@@ -427,9 +1129,9 @@
                     <div class="input-group">
                         <label class="input-label">交易类型</label>
                         <div class="type-pills-container">
-                            <div v-for="type in transactionTypes" :key="type" 
-                                 class="type-pill" :class="[{'is-active': editedItem.type === type}, getPillColorClass(type)]"
-                                 @click="editedItem.type = type">
+                            <div v-for="type in transactionTypes" :key="type" class="type-pill"
+                                :class="[{'is-active': editedItem.type === type}, getPillColorClass(type)]"
+                                @click="editedItem.type = type">
                                 {{ type }}
                             </div>
                         </div>
@@ -454,18 +1156,21 @@
                     <div class="form-row-2">
                         <div class="input-group">
                             <label class="input-label">单价</label>
-                            <input type="number" step="0.0001" v-model.number="editedItem.price" placeholder="0.00" class="glass-input">
+                            <input type="number" step="0.0001" v-model.number="editedItem.price" placeholder="0.00"
+                                class="glass-input">
                         </div>
                         <div class="input-group">
                             <label class="input-label">数量</label>
-                            <input type="number" step="0.0001" v-model.number="editedItem.quantity" placeholder="0" class="glass-input">
+                            <input type="number" step="0.0001" v-model.number="editedItem.quantity" placeholder="0"
+                                class="glass-input">
                         </div>
                     </div>
 
                     <div class="form-row-2">
                         <div class="input-group">
                             <label class="input-label">手续费</label>
-                            <input type="number" step="0.01" v-model.number="editedItem.fee" placeholder="0.00" class="glass-input">
+                            <input type="number" step="0.01" v-model.number="editedItem.fee" placeholder="0.00"
+                                class="glass-input">
                         </div>
                         <div class="input-group">
                             <label class="input-label">平台</label>
@@ -475,7 +1180,8 @@
 
                     <div class="input-group">
                         <label class="input-label">决策日志 (选填)</label>
-                        <textarea v-model="editedItem.notes" placeholder="记录当下的思考：为什么做这笔交易？" class="glass-input"></textarea>
+                        <textarea v-model="editedItem.notes" placeholder="记录当下的思考：为什么做这笔交易？"
+                            class="glass-input"></textarea>
                     </div>
 
                     <button class="btn-primary" @click="save" :disabled="!editedItem.name">保存记录</button>
@@ -495,18 +1201,18 @@
                 const showDataMenu = ref(false);
                 const showStatsMenu = ref(false);
                 const expandedGroups = ref(new Set());
-                
+
                 // AI 功能状态
                 const showAiModal = ref(false);
                 const aiLoading = ref(false);
                 const aiActiveAsset = ref(null);
                 const aiData = ref(null);
 
-                const transactions = ref([]); 
-                const assetMeta = ref({}); 
+                const transactions = ref([]);
+                const assetMeta = ref({});
 
                 const editedIndex = ref(-1);
-                const transactionTypes =['买入', '卖出', '加仓', '减仓', '分红', '手续费'];
+                const transactionTypes = ['买入', '卖出', '加仓', '减仓', '分红', '手续费'];
                 const defaultItem = { id: null, type: '买入', name: '', code: '', price: null, quantity: null, fee: null, date: '', platform: '', notes: '' };
                 const editedItem = ref({ ...defaultItem });
 
@@ -516,9 +1222,9 @@
                 const groupedAssets = computed(() => {
                     const groups = {};
                     transactions.value.forEach(t => {
-                        if (!groups[t.name]) groups[t.name] = { name: t.name, code: t.code, transactions:[], lastTradePrice: 0 };
+                        if (!groups[t.name]) groups[t.name] = { name: t.name, code: t.code, transactions: [], lastTradePrice: 0 };
                         groups[t.name].transactions.push(t);
-                        if (t.price > 0) groups[t.name].lastTradePrice = t.price; 
+                        if (t.price > 0) groups[t.name].lastTradePrice = t.price;
                     });
 
                     return Object.values(groups).map(g => {
@@ -539,7 +1245,7 @@
                         g.avgCost = qty > 0 ? (netCost / qty) : 0;
                         g.marketValue = qty * currentPrice;
                         g.profit = g.marketValue - netCost;
-                        
+
                         if (netCost > 0) g.roiText = ((g.profit / netCost) * 100).toFixed(2) + '%';
                         else g.roiText = g.profit > 0 ? '已收回本金' : '0.00%';
 
@@ -571,7 +1277,7 @@
                     };
                 });
 
-                // ==================== 🌐 核心更新：调用 API 抓取真实网络新闻 ====================
+                // ==================== 🌐 核心更新：使用 Tavily API 抓取真实网络新闻 ====================
                 const openAiAnalysis = async (group) => {
                     aiActiveAsset.value = group;
                     aiData.value = null;
@@ -579,33 +1285,49 @@
                     showAiModal.value = true;
 
                     try {
-                        // 使用 Google News 简体中文 RSS 接口，外加免密 rss2json 代理解决浏览器跨域
-                        const query = encodeURIComponent(group.name + ' 股票 OR 财经 OR 投资');
-                        const rssUrl = `https://news.google.com/rss/search?q=${query}&hl=zh-CN&gl=CN&ceid=CN:zh-Hans`;
-                        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+                        // 调用 Tavily Search API
+                        const apiUrl = 'https://api.tavily.com/search';
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                api_key: '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', // 用户指定的固定 API Key
+                                query: `${group.name} 股票 财经 最新新闻`,
+                                topic: 'news',
+                                days: 7,
+                                max_results: 4
+                            })
+                        });
 
-                        const response = await fetch(apiUrl);
                         const data = await response.json();
+                        let realNews = [];
 
-                        let realNews =[];
-                        if (data.status === 'ok' && data.items && data.items.length > 0) {
-                            realNews = data.items.slice(0, 4).map(item => {
-                                // Google News 标题通常包含 " - 来源"，进行切分优化显示
+                        if (data.results && data.results.length > 0) {
+                            realNews = data.results.map(item => {
                                 let title = item.title;
+                                let link = item.url;
                                 let source = '财经新闻';
-                                const splitIndex = title.lastIndexOf(' - ');
-                                if (splitIndex !== -1) {
-                                    source = title.substring(splitIndex + 3);
-                                    title = title.substring(0, splitIndex);
-                                }
-                                
-                                const pubDate = new Date(item.pubDate.replace(/-/g, '/'));
-                                const timeStr = `${pubDate.getMonth()+1}/${pubDate.getDate()} ${pubDate.getHours().toString().padStart(2,'0')}:${pubDate.getMinutes().toString().padStart(2,'0')}`;
 
-                                return { title, source, time: timeStr, link: item.link };
+                                // 尝试从 URL 提取域名作为来源
+                                try {
+                                    source = new URL(item.url).hostname.replace('www.', '');
+                                } catch (e) { }
+
+                                // 格式化日期
+                                let timeStr = '近期';
+                                if (item.published_date) {
+                                    const pubDate = new Date(item.published_date);
+                                    if (!isNaN(pubDate)) {
+                                        timeStr = `${pubDate.getMonth() + 1}/${pubDate.getDate()} ${pubDate.getHours().toString().padStart(2, '0')}:${pubDate.getMinutes().toString().padStart(2, '0')}`;
+                                    }
+                                }
+
+                                return { title, source, time: timeStr, link };
                             });
                         } else {
-                            realNews =[{ title: `目前暂无关于【${group.name}】的最新中文财经资讯。`, source: '系统', time: '刚刚', link: '#' }];
+                            realNews = [{ title: `目前暂无关于【${group.name}】的最新中文财经资讯。`, source: '系统', time: '刚刚', link: '#' }];
                         }
 
                         // 结合用户真实数据生成投资建议
@@ -628,8 +1350,8 @@
 
                     } catch (error) {
                         console.error("新闻获取失败:", error);
-                        aiData.value = { 
-                            news:[{ title: '无法获取网络实时新闻，请检查您的网络连接。', source: '系统提示', time: '刚刚', link: '#' }],
+                        aiData.value = {
+                            news: [{ title: '无法获取网络实时新闻，请检查您的网络连接或 API Key 是否有效。', source: '系统提示', time: '刚刚', link: '#' }],
                             advice: '网络请求失败，无法结合最新市场情绪进行分析。请稍后再试。'
                         };
                     } finally {
@@ -667,7 +1389,7 @@
                 const confirmDelete = () => {
                     if (confirm('是否永久抹除该条流水记录？')) { transactions.value.splice(editedIndex.value, 1); closeDialog(); }
                 };
-                
+
                 const openStatsMenu = () => { showDataMenu.value = false; setTimeout(() => { showStatsMenu.value = true; }, 50); };
 
                 const exportData = () => {
@@ -687,13 +1409,13 @@
                     reader.onload = (e) => {
                         try {
                             const data = JSON.parse(e.target.result);
-                            let importedTxs = Array.isArray(data) ? data : (data.transactions ||[]);
+                            let importedTxs = Array.isArray(data) ? data : (data.transactions || []);
                             if (data.meta) assetMeta.value = { ...assetMeta.value, ...data.meta };
                             const existingIds = new Set(transactions.value.map(t => t.id));
                             let newCount = 0; let updateCount = 0;
                             importedTxs.forEach(item => {
                                 if (item.id) {
-                                    if (!existingIds.has(item.id)) { transactions.value.push(item); existingIds.add(item.id); newCount++; } 
+                                    if (!existingIds.has(item.id)) { transactions.value.push(item); existingIds.add(item.id); newCount++; }
                                     else { transactions.value[transactions.value.findIndex(t => t.id === item.id)] = item; updateCount++; }
                                 }
                             });
@@ -705,23 +1427,23 @@
                 };
 
                 const clearAllData = () => {
-                    if (confirm('警告：此操作将永久抹除所有本地记录！\n确定要继续吗？')) { transactions.value =[]; assetMeta.value = {}; showDataMenu.value = false; }
+                    if (confirm('警告：此操作将永久抹除所有本地记录！\n确定要继续吗？')) { transactions.value = []; assetMeta.value = {}; showDataMenu.value = false; }
                 };
 
                 const getPillColorClass = (type) => {
                     if (['买入', '加仓'].includes(type)) return 'pill-buy';
                     if (['卖出', '减仓'].includes(type)) return 'pill-sell';
                     if (['分红'].includes(type)) return 'pill-div';
-                    return 'pill-fee'; 
+                    return 'pill-fee';
                 };
                 const getTxTypeClass = (type) => {
                     if (['买入', '加仓'].includes(type)) return 'type-buy';
                     if (['卖出', '减仓'].includes(type)) return 'type-sell';
                     if (['分红'].includes(type)) return 'type-div';
-                    return 'type-fee'; 
+                    return 'type-fee';
                 };
                 const getProfitClass = (val) => { if (val > 0) return 'color-profit'; if (val < 0) return 'color-loss'; return ''; };
-                const formatNumber = (num) => { if(num === null || num === undefined) return '0.00'; return parseFloat(num).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+                const formatNumber = (num) => { if (num === null || num === undefined) return '0.00'; return parseFloat(num).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
                 const formatDateSimple = (dateStr) => { if (!dateStr) return ''; const d = new Date(dateStr); return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`; };
 
                 onMounted(() => {
@@ -734,7 +1456,7 @@
                 return {
                     dialog, showDataMenu, showStatsMenu, showAiModal, aiLoading, aiActiveAsset, aiData,
                     expandedGroups, transactions, assetMeta, groupedAssets, globalStats, performanceRank, editedItem, editedIndex, formTitle, transactionTypes,
-                    toggleGroup, updatePrice, openDialog, closeDialog, openStatsMenu, openAiAnalysis, save, editTransaction, confirmDelete, 
+                    toggleGroup, updatePrice, openDialog, closeDialog, openStatsMenu, openAiAnalysis, save, editTransaction, confirmDelete,
                     getPillColorClass, getTxTypeClass, getProfitClass, formatNumber, formatDateSimple,
                     exportData, triggerImport, handleImport, clearAllData
                 };
@@ -742,4 +1464,5 @@
         }).mount('#app');
     </script>
 </body>
+
 </html>
